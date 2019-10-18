@@ -37,6 +37,10 @@ The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 # Setup Backend
+I advise to go through tutorial linked below, which I based flask API.
+
+[Python guide I followed for creating basic flask api structure.](https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.freecodecamp.org%2Fnews%2Fstructuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563%2F%3Ffbclid%3DIwAR1LUt_GeIZ06S-Kya47OTK_mrMGPRE2xo6LJbICbOJ2TVn5DePJc5_CjDc&h=AT0mpNo-RsrYWfU6FlDtP0bVP-k7ooMx-7ktWf0M1efelTPkLQJqRDEMV4pdl2KH1z_wzz7gXltFT43cUNviW97zlIL7JTQT0-mRtI6shGUgSxNR3so6p2wh1CQxL_QAmBhS9A)
+
 In the **Pop-Grupa-A-Backend** project directory, you can run:
 
 ### `pip install requirements.txt`
