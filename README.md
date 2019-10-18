@@ -67,3 +67,6 @@ To create and run docker images follow instruction below:
 ## Note: 
 On _Linux_ and _MAC_ systems connection to postgres probably won't work. In order to fix that, you have to change in
 **docker-compose.yml**  in DATABASE_URL env variable **_host.docker.internal_** to your computer IP address
+
+[How to link pull request in GitHub to Azure Devops Board](https://docs.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)  
+[![Board Status](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/_apis/work/boardbadge/c475f19d-f275-4e12-9765-2b8b3332eb38)](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/_boards/board/t/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/Microsoft.RequirementCategory/)
