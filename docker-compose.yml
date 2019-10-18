@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  front-pop:
+    container_name: front-pop
+    build: ./Pop-Grupa-A-Frontend
+    volumes:
+      - './Pop-Grupa-A-Frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true 
+  
+  backend-pop:
+    container_name: backend-pop
+    build: 
+      context: ./Pop-Grupa-A-Backend/app
+      dockerfile: Dockerfile
+    volumes:
+      - './Pop-Grupa-A-Backend:/app'
+    ports:
+      - '5000:5000'
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: ./app/manage.py
+      DATABASE_URL: 'postgresql://admin:123456@host.docker.internal:5432/balticlsc' #overwrite .env provided variable
+  
+  # postgres:
+  #   container_name: postgres
+  #   restart: always
+  #   image: postgres:10
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRES_USER}#     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#     - POSTGRES_DB=${POSTGRES_DB}
+#   volumes:
+#     - flask-app-db:/var/lib/postgresql/data
+#   ports:
+#     - "5432:5432"
+
