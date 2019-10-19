@@ -10,13 +10,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You can just run `docker-compose up -d --build` in main folder to have all setup ready to development. Also you can edit and live view your changes in both front- and backend apps.
+You can just run `docker-compose up -d --build` in main folder to have all setup ready to development. Also you can edit and live view your changes in both front and backend apps.
 
 In order to run this application, you need to have npm (Node Package Manager) installed.
 It comes with Node.js.
 
 * [Node.js and NPM](https://www.npmjs.com/get-npm) - Installation guide for Node.js and NPM
-*  [Python 3.6 or higher](https://www.python.org/downloads/release/python-375/)
+* [Python 3.6 or higher](https://www.python.org/downloads/release/python-375/)
 
 
 # Setup FrontEnd
@@ -49,6 +49,9 @@ In the **Pop-Grupa-A-Backend** project directory, you can run:
 Installs required dependencies for starting up the project.
 (it might take a while, so wait patiently)
 
+Next, when you have your local postgres database __balticlsc__ created with user __admin__ and password __123456__ run:
+### `python manage.py db upgrade` -- applies migration to database
+
 After installing all dependencies, run:
 
 ### `python manage.py run`
@@ -66,8 +69,14 @@ To create and run docker images follow instruction below:
 2. Navigate to directory containing 2 projects with **docker-compose.yml** file
 3. In console run `docker-compose up -d --build` - it will build images and spin up the containers. They will be accessed on localhost:3000 and localhost:5000. Any changes made in both projects will be automatically refreshed in containers (hot-reloading)
 ## Note:
-On _Linux_ and _MAC_ systems connection to postgres probably won't work. In order to fix that, you have to change in
-**docker-compose.yml**  in DATABASE_URL env variable **_host.docker.internal_** to your computer IP address
+Migration to database in __entrypoint.sh__ might not be applied due to windows line endings.
+To fix that, you may have to go inside API container and run the script automatically.
+- `docker exec -it backend-pop sh` - this command moves you inside the container
+- `python manage.py db upgrade` - runs migration to postgres database
+## Note2:
+If you want to browse docker-created database, run those commands:
+- `docker exec -t postgres bin\bash`
+- `psql -U admin balticlsc`
 
-[How to link pull request in GitHub to Azure Devops Board](https://docs.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)
+[How to link pull request in GitHub to Azure Devops Board](https://docs.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)  
 [![Board Status](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/_apis/work/boardbadge/c475f19d-f275-4e12-9765-2b8b3332eb38)](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/_boards/board/t/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/Microsoft.RequirementCategory/)
