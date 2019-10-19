@@ -63,7 +63,7 @@ API  will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 # Docker
-[Docker for Windows Installation](https://docs.docker.com/docker-for-windows/install/)
+[Docker for Windows Installation](https://docs.docker.com/docker-for-windows/install/)  
 To create and run docker images follow instruction below:
 1. Launch **Powershell IDE** or different console
 2. Navigate to directory containing 2 projects with **docker-compose.yml** file
@@ -75,7 +75,7 @@ To fix that, you may have to go inside API container and run the script automati
 - `python manage.py db upgrade` - runs migration to postgres database
 ## Note2:
 If you want to browse docker-created database, run those commands:
-- `docker exec -t postgres bin\bash`
+- `docker exec -it postgres sh`
 - `psql -U admin balticlsc`
 
 [How to link pull request in GitHub to Azure Devops Board](https://docs.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)  
