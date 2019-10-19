@@ -4,11 +4,11 @@ import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from main import create_app, db
+from app.main import create_app, db
 
-from main.model import ComputationAccount
-from main.model import ComputationApplication
-from main.model import ComputationTask
+from app.main.model import ComputationAccount
+# from app.main.model import ComputationApplication
+# from app.main.model import ComputationTask
 
 app = create_app('dev')
 
