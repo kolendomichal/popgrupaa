@@ -1,4 +1,5 @@
 from app.main import db
+from app.main.model import ComputationTask
 from app.main.model.ComputationAccount import ComputationAccount
 
 

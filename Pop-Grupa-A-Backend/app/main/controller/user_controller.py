@@ -16,7 +16,7 @@ class UserList(Resource):
     def post(self):
         """Creates a new User """
         data = request.json
-        return add_user(data=data)
+        return add_user(user=data)
 
 
 @api.route('/<public_id>')

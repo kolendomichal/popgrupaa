@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ComputationStatus(Enum):
     SUBMITTED = 1
     ASSIGNED = 2
