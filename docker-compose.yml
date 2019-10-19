@@ -17,7 +17,7 @@ services:
   backend-pop:
     container_name: backend-pop
     build:
-      context: ./Pop-Grupa-A-Backend/app
+      context: ./Pop-Grupa-A-Backend
       dockerfile: Dockerfile
     volumes:
       - './Pop-Grupa-A-Backend:/app'

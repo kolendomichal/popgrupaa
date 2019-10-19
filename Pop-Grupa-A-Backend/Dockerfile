@@ -13,12 +13,12 @@ RUN pip install --upgrade --quiet pip --no-cache-dir -r requirements.txt
 #expose port 5000
 EXPOSE 5000
 
-RUN ls
+RUN ls -la
 
-RUN chmod +x entrypoint.sh
+RUN chmod a+x entrypoint.sh
 
-# CMD [ "/bin/sh", "entrypoint.sh" ]
-CMD [ "flask", "run", "--host=0.0.0.0" ]
+# CMD [ "python", "manage.py", "run" ]
+CMD [ "/bin/sh", "entrypoint.sh" ]
 
 
 
