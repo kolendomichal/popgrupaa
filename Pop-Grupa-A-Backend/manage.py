@@ -6,7 +6,10 @@ from flask_script import Manager
 
 from app.main import create_app, db
 from app import blueprint
-from app.main.model import user
+
+from app.main.model import ComputationAccount
+from app.main.model import ComputationApplication
+from app.main.model import ComputationTask
 
 app = create_app('dev')
 app.register_blueprint(blueprint)
@@ -21,7 +24,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run()
+    app.run(host= '0.0.0.0')
 
 
 @manager.command
