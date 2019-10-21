@@ -44,7 +44,7 @@ I advise to go through tutorial linked below, which I based flask API.
 
 In the **Pop-Grupa-A-Backend** project directory, you can run:
 
-### `pip install requirements.txt`
+### `pip install -r requirements.txt`
 
 Installs required dependencies for starting up the project.
 (it might take a while, so wait patiently)
