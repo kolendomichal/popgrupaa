@@ -2,12 +2,16 @@ from app.main import db
 from app.main.model import ComputationTask
 from app.main.model.ComputationTask import ComputationTask
 from datetime import date
+from datetime import datetime
 
 
 def add_task(task):
     new_task = ComputationTask(
         status = task['status'],
-        user_id = task['user_id']
+        start_date= datetime.now(),
+        end_date= datetime.now(),
+        user_id = task['user_id'],
+        app_id = task['app_id']
     )
     save_changes(new_task)
     response_object = {
@@ -18,7 +22,7 @@ def add_task(task):
 
 
 def get_tasks_for_user(userId):
-    return ComputationTask.query.filter_by(User_id=userId).all()
+    return ComputationTask.query.filter_by(user_id=userId).all()
 
 
 def save_changes(data):

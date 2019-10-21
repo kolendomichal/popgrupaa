@@ -16,7 +16,8 @@ class TaskDto:
     task = api.model('task', {
         'id': fields.Integer(description='task Identifier'),
         'status': fields.Integer(description='task status'),
-        'start_time': fields.Date(description='task start time date'),
-        'end_time': fields.Date(description='task end time date'),
+        'start_date': fields.Date(description='task start time date'),
+        'end_date': fields.Date(description='task end time date'),
+        'app_id': fields.Integer(required=True, description='app Identifier'),
         'user_id': fields.Integer(required=True, description='user Identifier')
     })

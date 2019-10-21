@@ -16,3 +16,11 @@ class TaskList(Resource):
         """Creates a new Task"""
         data = request.json
         return add_task(task=data)
+
+@api.route('/<user_id>')
+@api.param('user_id', 'The User identifier')
+class TaskGet(Resource):
+    @api.doc('get user tasks')
+    @api.marshal_with(_task)
+    def get(self, user_id):
+        return get_tasks_for_user(user_id)
