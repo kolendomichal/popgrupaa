@@ -9,3 +9,14 @@ class UserDto:
         'password': fields.String(required=True, description='user password'),
         'id': fields.Integer(description='user Identifier')
     })
+
+
+class TaskDto:
+    api = Namespace('task', description='task related operations')
+    task = api.model('task', {
+        'id': fields.Integer(description='task Identifier'),
+        'status': fields.Integer(description='task status'),
+        'start_time': fields.Date(description='task start time date'),
+        'end_time': fields.Date(description='task end time date'),
+        'user_id': fields.Integer(required=True, description='user Identifier')
+    })
