@@ -62,6 +62,14 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 API  will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+## Browse docker database with pgAdmin4 manager
+If you have _pgadmin4_ installed on your machine, launch it and create a new server with information from **docker-compose.yml** file.  
+ - Port: 5433
+ - IP: 127.0.0.1
+ - Login: admin
+ - password: 123456
+Then you will be able to browse database through _pgadmin4_ manager.  
+
 # Docker
 [Docker for Windows Installation](https://docs.docker.com/docker-for-windows/install/)  
 To create and run docker images follow instruction below:
