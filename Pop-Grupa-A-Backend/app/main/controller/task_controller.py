@@ -1,11 +1,13 @@
 from flask import request
 from flask_restplus import Resource
-from ..util.dto import TaskDto
+from ..util.dto import TaskDto, StatusDto
 from ..repositories.task_repository import *
+from app.main.model.ComputationTask import ComputationTask
+
 
 api = TaskDto.api
 _task = TaskDto.task
-
+_status = StatusDto.status
 
 @api.route('/')
 class TaskList(Resource):
@@ -32,4 +34,7 @@ class TaskActivate(Resource):
     @api.doc('activates task')
     @api.marshal_with(_task)
     def post(self, task_id):
-        return activate_task(task_id)
+        task = ComputationTask.query.filter_by(task_id=task_id).all()
+        task['status'] = '3'
+        update_task(task)
+        return task

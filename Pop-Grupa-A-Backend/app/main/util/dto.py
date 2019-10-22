@@ -24,8 +24,7 @@ class TaskDto:
 
 class StatusDto:
     api = Namespace('task', description='status related operations')
-    task = api.model('task', {
-        'id': fields.Integer(description='Identifier'),
+    status = api.model('task', {
         'status': fields.Integer(description='task status'),
         'message': fields.Integer(description='task message'),
     })

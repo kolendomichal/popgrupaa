@@ -26,18 +26,15 @@ def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
 
-def activate_task(task_id):
+def update_task(task):
     try:
-        task = ComputationTask.query.filter_by(task_id=task_id).all()
+        save_changes(task)
     except:
         response_object = {
             'status': 'failure',
-            'message': 'Coundn\'t get task'
+            'message': 'Coundn\'t update task'
         }
         return 400
-    task['status'] = '3'
-    print(task)
-    save_changes(task)
     return task, 200
 
 def save_changes(data):
