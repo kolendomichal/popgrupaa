@@ -29,13 +29,14 @@ def get_tasks_for_user(userId):
 def update_task(task):
     try:
         save_changes(task)
+        return task, 200
     except:
         response_object = {
             'status': 'failure',
             'message': 'Coundn\'t update task'
         }
         return 400
-    return task, 200
+    
 
 def save_changes(data):
     print(data)
