@@ -26,7 +26,7 @@ class TaskGet(Resource):
         return get_tasks_for_user(user_id)
 
 @api.route('/<task_id>')
-@api.response(201, 'Task successfully activated.')
+@api.response(200, 'Task successfully activated.')
 @api.param('task_id', 'The task identifier')
 class TaskActivate(Resource):
     @api.doc('activates task')

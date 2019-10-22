@@ -1,6 +1,7 @@
 from app.main import db
 from app.main.model import ComputationTask
 from app.main.model.ComputationTask import ComputationTask
+from app.main.model.ComputationStatus import ComputationStatus
 from datetime import date
 from datetime import datetime
 
@@ -26,11 +27,24 @@ def get_tasks_for_user(userId):
 
 
 def activate_task(task_id):
-    task = ComputationTask.query.filter_by(task_id=task_id).all()
-    task['status'] = "activated"
-    print(task['status'])
-    return True
+    try:
+        task = ComputationTask.query.filter_by(task_id=task_id).all()
+    except:
+        response_object = {
+            'status': 'failure',
+            'message': 'Coundn\'t get task'
+        }
+        return 400
+    task['status'] = ComputationStatus.WORKING
+    print(task)
+    save_changes(task)
+    response_object = {
+        'status': 'success',
+        'message': 'Task successfuly activated.'
+    }
+    return response_object, 200
 
 def save_changes(data):
+    print(data)
     db.session.add(data)
     db.session.commit()
