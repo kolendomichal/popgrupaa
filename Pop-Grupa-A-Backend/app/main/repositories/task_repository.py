@@ -25,6 +25,12 @@ def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
 
+def activate_task(task_id):
+    task = ComputationTask.query.filter_by(task_id=task_id).all()
+    task['status'] = "activated"
+    print(task['status'])
+    return True
+
 def save_changes(data):
     db.session.add(data)
     db.session.commit()

@@ -24,3 +24,12 @@ class TaskGet(Resource):
     @api.marshal_with(_task)
     def get(self, user_id):
         return get_tasks_for_user(user_id)
+
+@api.route('/<task_id>')
+@api.response(201, 'Task successfully activated.')
+@api.param('task_id', 'The task identifier')
+class TaskActivate(Resource):
+    @api.doc('activates task')
+    @api.marshal_with(_task)
+    def post(self, task_id):
+        return activate_task(task_id)
