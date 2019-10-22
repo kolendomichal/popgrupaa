@@ -35,14 +35,10 @@ def activate_task(task_id):
             'message': 'Coundn\'t get task'
         }
         return 400
-    task['status'] = ComputationStatus.WORKING
+    task['status'] = '3'
     print(task)
     save_changes(task)
-    response_object = {
-        'status': 'success',
-        'message': 'Task successfuly activated.'
-    }
-    return response_object, 200
+    return task, 200
 
 def save_changes(data):
     print(data)
