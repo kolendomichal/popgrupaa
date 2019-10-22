@@ -5,7 +5,7 @@ class NavBar extends Component {
 
     render() {
         return (
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
                 <a class="navbar-brand" href="#">BalticLSC</a>
 
                 <div class="collapse navbar-collapse" id="navbarText">
@@ -16,7 +16,7 @@ class NavBar extends Component {
                     </ul>
                     <span class="navbar-text">
                         Log in
-    </span>
+                    </span>
                 </div>
             </nav>
         );

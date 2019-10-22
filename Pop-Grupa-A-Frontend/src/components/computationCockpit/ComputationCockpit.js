@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import AppList from './applicationList/AppList.js';
+import TaskList from './taskList/TaskList.js';
 import NavBar from '../navigationBar/NavBar.js';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const list = [
+const listitems = [
   {
-    id: 'a',
-    firstname: 'Robin',
-    lastname: 'Wieruch',
-    year: 1988,
+    id: 0,
+    context: "Test App1",
   },
   {
-    id: 'b',
-    firstname: 'Dave',
-    lastname: 'Davidds',
-    year: 1990,
+    id: 1,
+    context: "Test App2",
   },
-];
+  {
+    id: 2,
+    context: "Test App3",
+  },
+  {
+    id: 3,
+    context: "Test App4",
+  },
+  {
+    id: 4,
+    context: "Test App5",
+  }
+]
+
 
 class ComputationCockpit extends Component {
 
@@ -24,23 +34,12 @@ class ComputationCockpit extends Component {
     return (
       <div>
         <NavBar />
-
         <div class="container">
-
-          <div class="row">
-            <div class="col-sm">
-              Left side
-    </div>
-            <div class="col-sm">
-              Right side
-    </div>
-          </div>
-          <div className="Cockpit">
-            <p>Table</p>
-            <AppList name="Sara" />
-          </div>
+          <AppList />
+          <TaskList />
         </div>
       </div>
+
     );
   }
 }
