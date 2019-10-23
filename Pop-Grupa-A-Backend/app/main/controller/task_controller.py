@@ -10,7 +10,7 @@ _task = ComputationTaskDto.task
 
 
 @api.route('/')
-class TaskList(Resource):
+class TaskCreate(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
     @api.expect(_createModel, validate=True)

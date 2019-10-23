@@ -9,7 +9,7 @@ _user = UserDto.user
 
 
 @api.route('/')
-class UserList(Resource):
+class UserCreate(Resource):
     @api.response(201, 'User successfully created.')
     @api.doc('create a new user')
     @api.expect(_user, validate=True)
