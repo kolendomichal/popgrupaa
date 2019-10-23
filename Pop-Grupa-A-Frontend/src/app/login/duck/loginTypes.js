@@ -1,0 +1,5 @@
+const SUCCESSFUL_LOGIN = "SUCCESSFUL_LOGIN";
+
+export default {
+  SUCCESSFUL_LOGIN
+}
