@@ -86,5 +86,7 @@ If you want to browse docker-created database, run those commands:
 - `docker exec -it postgres sh`
 - `psql -U admin balticlsc`
 
+[![Build status](https://dev.azure.com/popgrupaa/POP%20grupa%20A/_apis/build/status/PR%20validation)](https://dev.azure.com/popgrupaa/POP%20grupa%20A/_build/latest?definitionId=1)
+
 [How to link pull request in GitHub to Azure Devops Board](https://docs.microsoft.com/en-us/azure/devops/boards/github/link-to-from-github?view=azure-devops)  
 [![Board Status](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/_apis/work/boardbadge/c475f19d-f275-4e12-9765-2b8b3332eb38)](https://dev.azure.com/popgrupaa/4e25e485-1bc5-4995-b7ba-e037895d93fc/_boards/board/t/5026bfd1-15a0-451c-8d86-8ba02e2a81c5/Microsoft.RequirementCategory/)
