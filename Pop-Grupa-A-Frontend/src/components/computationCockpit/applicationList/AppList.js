@@ -17,11 +17,12 @@ class AppList extends Component {
 
   createTask(e) {
     e.preventDefault();
-    fetch("http://localhost:5000/task", {
+    fetch("http://localhost:5000/task/", {
+      crossDomain:  true,
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        app_id: this.state.chosenAppI,
+        app_id: this.state.chosenAppId,
         user_id: this.state.userId
       })
     });

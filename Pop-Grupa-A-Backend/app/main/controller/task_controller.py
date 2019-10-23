@@ -8,16 +8,18 @@ api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
 _task = ComputationTaskDto.task
 
+
 @api.route('/')
 class TaskList(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
     @api.expect(_createModel, validate=True)
-    @cors.crossdomain(origin='*')
     def post(self):
         """Creates a new Task"""
         data = request.json
         return add_task(task=data)
+
+
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The User identifier')
