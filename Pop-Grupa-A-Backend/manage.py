@@ -36,6 +36,11 @@ def test():
         return 0
     return 1
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 if __name__ == '__main__':
     manager.run()

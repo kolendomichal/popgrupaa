@@ -2,6 +2,7 @@ from flask import request
 from flask_restplus import Resource
 from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto
 from ..repositories.task_repository import *
+from flask_restplus import cors
 
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
@@ -12,6 +13,7 @@ class TaskList(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
     @api.expect(_createModel, validate=True)
+    @cors.crossdomain(origin='*')
     def post(self):
         """Creates a new Task"""
         data = request.json
