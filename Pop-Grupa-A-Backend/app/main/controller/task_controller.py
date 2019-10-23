@@ -1,17 +1,17 @@
 from flask import request
 from flask_restplus import Resource
-from ..util.dto import TaskDto
+from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto
 from ..repositories.task_repository import *
 
-api = TaskDto.api
-_task = TaskDto.task
-
+api = ComputationTaskDto.api
+_createModel = ComputationTaskDto.createModel
+_task = ComputationTaskDto.task
 
 @api.route('/')
 class TaskList(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
-    @api.expect(_task, validate=True)
+    @api.expect(_createModel, validate=True)
     def post(self):
         """Creates a new Task"""
         data = request.json
