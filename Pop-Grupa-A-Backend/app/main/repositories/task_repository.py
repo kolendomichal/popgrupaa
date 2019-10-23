@@ -42,6 +42,19 @@ def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
 
+def get_tasks_for_task_id(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()
+
+
+def change_status_for_task(task, status):
+    task['status']=status 
+    return task
+
+
+def get_status(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()['status']
+
+
 def update_task(task):
     try:
         save_changes(task)
