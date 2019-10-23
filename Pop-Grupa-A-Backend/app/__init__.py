@@ -11,9 +11,9 @@ from .main.controller.task_controller import api as task_ns
 blueprint = Blueprint('api', __name__)
 
 api = Api(blueprint,
-          title='FLASK RESTPLUS API BOILER-PLATE WITH JWT',
+          title='REST API for BalticLSC project',
           version='1.0',
-          description='a boilerplate for flask restplus web service'
+          description='REST API for BalticLSC project.'
           )
 
 api.add_namespace(user_ns, path='/user')
