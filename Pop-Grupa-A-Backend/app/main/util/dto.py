@@ -18,3 +18,11 @@ class ApplicationDto:
         'icon': fields.String(required=False, description='application icon as string of bytes'),
         'id': fields.Integer(description='application identifier')
     })
+
+class TaskDto:
+    api = Namespace('task', description='task related operations')
+    task = api.model('task', {
+        'status': fields.String(required=False, description='task status'),
+        'start_time': fields.DateTime(required=False, description='task start time'),
+        'end_time': fields.DateTime(required=False, description='task end time')
+    })
