@@ -39,6 +39,5 @@ def update_task(task):
     
 
 def save_changes(data):
-    print(data)
     db.session.add(data)
     db.session.commit()

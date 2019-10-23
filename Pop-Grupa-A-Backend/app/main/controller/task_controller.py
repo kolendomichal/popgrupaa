@@ -28,7 +28,7 @@ class TaskGet(Resource):
         return get_tasks_for_user(user_id)
 
 @api.route('/<task_id>')
-@api.response(200, 'Task successfully activated.')
+@api.response(200, 'Task successfully activated')
 @api.response(400, 'Task not found')
 @api.param('task_id', 'The task identifier')
 class TaskActivate(Resource):
@@ -38,13 +38,6 @@ class TaskActivate(Resource):
         try:
             task = ComputationTask.query.filter_by(task_id=task_id).all()
             task['status'] = '3'
-            return update_task(task)
+            return 200, update_task(task)
         except:
-            return {
-                  "id": 0,
-                  "status": 0,
-                  "start_date":  datetime.now(),
-                  "end_date":  datetime.now(),
-                  "app_id": 0,
-                  "user_id": 0
-                }
+            return 404, "task not found"
