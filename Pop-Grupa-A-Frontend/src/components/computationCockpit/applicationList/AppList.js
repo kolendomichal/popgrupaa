@@ -4,12 +4,29 @@ class AppList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {chosenAppId: -1};
+    this.state = {
+      chosenAppId: -1,
+      userId: 1,
+    };
+    this.createTask = this.createTask.bind(this);
   }
 
   onAppClick = (chosenAppId) => {
-    this.setState({chosenAppId});   
+    this.setState({ chosenAppId });
   }
+
+  createTask(e) {
+    e.preventDefault();
+    fetch("http://localhost:5000/task", {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_id: this.state.chosenAppI,
+        user_id: this.state.userId
+      })
+    });
+  }
+
 
   mockedList = {
     listitems: [
@@ -46,7 +63,7 @@ class AppList extends Component {
     ]
   };
 
-  
+
 
   render() {
 
@@ -55,41 +72,41 @@ class AppList extends Component {
     };
 
     return (
-        <div class="row p-1">
-          <div class="col-sm">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th class="text-left" scope="col">Name</th>
-                  <th class="text-left" scope="col">Author</th>
+      <div class="row p-1">
+        <div class="col-sm">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-left" scope="col">Name</th>
+                <th class="text-left" scope="col">Author</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.mockedList.listitems.map(listitem => (
+                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === this.state.chosenAppId ? chosenAppStyle : null} >
+                  <td class="text-left">{listitem.context}</td>
+                  <td class="text-left">{listitem.author}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {this.mockedList.listitems.map(listitem => (
-                  <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)}  style = {listitem.id === this.state.chosenAppId ? chosenAppStyle : null} >
-                    <td class="text-left">{listitem.context}</td>
-                    <td class="text-left">{listitem.author}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div class="col-sm pr-4">
-            <div class="row mb-3" style = {{height: "70%"}}>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm pr-4">
+          <div class="row mb-3" style={{ height: "70%" }}>
             <span class={this.state.chosenAppId !== -1 ? "border" : null}>
-            <div class="text-left p-3">
-           
-                  <h4>{this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].context}</h4>
-                  {this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].description}
-                  
-            </div>
-            </span>
+              <div class="text-left p-3">
+
+                <h4>{this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].context}</h4>
+                {this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].description}
+
               </div>
-              <div class="row">
-              {this.state.chosenAppId !== -1 && <button type="button" class="btn btn-secondary btn-block">Create new computation task</button>}
-            </div>
+            </span>
+          </div>
+          <div class="row">
+            {this.state.chosenAppId !== -1 && <button type="button" class="btn btn-secondary btn-block" onClick={this.createTask} >Create new computation task</button>}
           </div>
         </div>
+      </div>
     );
   }
 }
