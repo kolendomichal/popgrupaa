@@ -2,39 +2,59 @@ import React, { Component } from 'react';
 
 class AppList extends Component {
 
-  state = {
+  constructor(props) {
+    super(props);
+    this.state = {chosenAppId: -1};
+  }
+
+  onAppClick = (chosenAppId) => {
+    this.setState({chosenAppId});   
+  }
+
+  mockedList = {
     listitems: [
       {
         id: 0,
         context: "Test App1",
         author: "Anrzej",
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
       },
       {
         id: 1,
         context: "Test App2",
-        author: "Anrzej",
+        author: "Bartek",
+        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
       },
       {
         id: 2,
         context: "Test App3",
-        author: "Anrzej",
+        author: "Michał",
+        description: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur."
       },
       {
         id: 3,
         context: "Test App4",
-        author: "Anrzej",
+        author: "Piotr",
+        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
       },
       {
         id: 4,
         context: "Test App5",
-        author: "Anrzej",
+        author: "Filip",
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
       }
     ]
   };
 
+  
+
   render() {
+
+    const chosenAppStyle = {
+      backgroundColor: "DodgerBlue"
+    };
+
     return (
-      <React.Fragment>
         <div class="row p-1">
           <div class="col-sm">
             <table class="table table-striped table-bordered table-hover">
@@ -45,8 +65,8 @@ class AppList extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.listitems.map(listitem => (
-                  <tr key={listitem.id}>
+                {this.mockedList.listitems.map(listitem => (
+                  <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)}  style = {listitem.id === this.state.chosenAppId ? chosenAppStyle : null} >
                     <td class="text-left">{listitem.context}</td>
                     <td class="text-left">{listitem.author}</td>
                   </tr>
@@ -55,22 +75,21 @@ class AppList extends Component {
             </table>
           </div>
           <div class="col-sm pr-4">
-            <div class="row mb-3">
-            <span class="border">
+            <div class="row mb-3" style = {{height: "70%"}}>
+            <span class={this.state.chosenAppId !== -1 ? "border" : null}>
             <div class="text-left p-3">
            
-                  <h4>Test App2</h4>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia, ante vel fringilla porttitor, tortor eros pharetra magna, ut blandit est lorem id ligula. In hac habitasse platea dictumst. Proin tempus volutpat eros eget commodo. Ut dignissim libero sed tellus auctor, sed iaculis nisl blandit. Morbi arcu diam, dictum sed justo eget, sagittis malesuada est. Morbi commodo convallis suscipit. Morbi enim eros, suscipit quis vestibulum a, pharetra in arcu. Curabitur a consequat est, eu tempor diam.
-          
+                  <h4>{this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].context}</h4>
+                  {this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId].description}
+                  
             </div>
             </span>
               </div>
               <div class="row">
-              <button type="button" class="btn btn-secondary btn-block">Create new computation task</button>
-                </div>
+              {this.state.chosenAppId !== -1 && <button type="button" class="btn btn-secondary btn-block">Create new computation task</button>}
+            </div>
           </div>
         </div>
-      </React.Fragment>
     );
   }
 }
