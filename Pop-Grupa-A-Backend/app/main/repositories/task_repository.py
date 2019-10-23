@@ -35,7 +35,7 @@ def update_task(task):
             'status': 'failure',
             'message': 'Coundn\'t update task'
         }
-        return 400
+        return response_object, 400
     
 
 def save_changes(data):
