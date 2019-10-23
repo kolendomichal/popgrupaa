@@ -1,16 +1,44 @@
 from app.main import db
-from app.main.model.ComputationTask import ComputationTask
+
+from datetime import date
+from datetime import datetime
+
 from app.main.model.ComputationAccount import ComputationAccount
+from app.main.model.ComputationTask import ComputationTask
+from app.main.model.ComputationStatus import ComputationStatus
 
 
 def add_task(task):
-    save_changes(task)
-    return task
+    new_task = ComputationTask(
+        status = task['status'],
+        start_date= datetime.now(),
+        end_date= datetime.now(),
+        user_id = task['user_id'],
+        app_id = task['app_id']
+    )
+    save_changes(new_task)
+    response_object = {
+        'status': 'success',
+        'message': 'Task successfuly created.'
+    }
+    return response_object, 201
 
 
 def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
+
+def update_task(task):
+    try:
+        save_changes(task)
+        return task, 200
+    except:
+        response_object = {
+            'status': 'failure',
+            'message': 'Coundn\'t update task'
+        }
+        return response_object, 400
+    
 
 def save_changes(data):
     db.session.add(data)
