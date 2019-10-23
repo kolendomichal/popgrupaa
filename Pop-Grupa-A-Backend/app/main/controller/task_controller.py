@@ -1,19 +1,21 @@
 from flask import request
 from flask_restplus import Resource
-from ..util.dto import TaskDto, StatusDto
+from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto, StatusDto
 from ..repositories.task_repository import *
 from app.main.model.ComputationTask import ComputationTask
 
 
-api = TaskDto.api
-_task = TaskDto.task
+
+api = ComputationTaskDto.api
+_createModel = ComputationTaskDto.createModel
+_task = ComputationTaskDto.task
 _status = StatusDto.status
 
 @api.route('/')
 class TaskList(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
-    @api.expect(_task, validate=True)
+    @api.expect(_createModel, validate=True)
     def post(self):
         """Creates a new Task"""
         data = request.json
@@ -29,7 +31,7 @@ class TaskGet(Resource):
 
 @api.route('/<task_id>')
 @api.response(200, 'Task successfully activated')
-@api.response(400, 'Task not found')
+@api.response(404, 'Task not found')
 @api.param('task_id', 'The task identifier')
 class TaskActivate(Resource):
     @api.doc('activates task')
@@ -40,4 +42,4 @@ class TaskActivate(Resource):
             task['status'] = '3'
             return 200, update_task(task)
         except:
-            return 404, "task not found"
+            return 404

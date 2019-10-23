@@ -1,17 +1,7 @@
 from flask_restplus import Namespace, fields
 
 
-class UserDto:
-    api = Namespace('user', description='user related operations')
-    user = api.model('user', {
-        'email': fields.String(required=True, description='user email address'),
-        'username': fields.String(required=True, description='user username'),
-        'password': fields.String(required=True, description='user password'),
-        'id': fields.Integer(description='user Identifier')
-    })
-
-
-class TaskDto:
+class ComputationTaskDto:
     api = Namespace('task', description='task related operations')
     task = api.model('task', {
         'id': fields.Integer(description='task Identifier'),
@@ -22,9 +12,16 @@ class TaskDto:
         'user_id': fields.Integer(required=True, description='user Identifier')
     })
 
+
+
+    createModel = api.model('createModel', {
+        'app_id': fields.Integer(required=True, description='app Identifier'),
+        'user_id': fields.Integer(required=True, description='user Identifier')
+    })
+
 class StatusDto:
     api = Namespace('task', description='status related operations')
     status = api.model('task', {
         'status': fields.Integer(description='task status'),
-        'message': fields.Integer(description='task message'),
+        'message': fields.Integer(description='task message')
     })
