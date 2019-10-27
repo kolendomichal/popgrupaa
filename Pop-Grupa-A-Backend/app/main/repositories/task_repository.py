@@ -28,13 +28,13 @@ def add_task(task):
             'status': 'fail',
             'message': f"User with id = {task['user_id']} does not exist",
         }
-        return response_object, 404
+        return response_object, 400
 
     response_object = {
         'status': 'fail',
         'message': f"App with id = {task['app_id']} does not exist",
     }
-    return response_object, 404
+    return response_object, 400
 
 
 def get_tasks_for_user(userId):

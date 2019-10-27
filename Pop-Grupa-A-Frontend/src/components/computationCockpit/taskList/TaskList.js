@@ -5,7 +5,7 @@ class TaskList extends Component {
     state = {
         listitems: [
             {
-                id: 0,
+                id: 1,
                 UID: "f3a-g31fs-gq3tq3-gw52",
                 status: "active",
                 consumedCredits: "5$",
@@ -13,7 +13,7 @@ class TaskList extends Component {
                 endDate: "13-10-2019 14:01:23",
             },
             {
-                id: 0,
+                id: 2,
                 UID: "f21-g31fs-gq3tq3-gw52",
                 status: "finished",
                 consumedCredits: "15$",
@@ -21,7 +21,7 @@ class TaskList extends Component {
                 endDate: "13-10-2019 14:01:23",
             },
             {
-                id: 0,
+                id: 3,
                 UID: "532-g31fs-gq3tq3-gw52",
                 status: "active",
                 consumedCredits: "1$",
@@ -29,7 +29,7 @@ class TaskList extends Component {
                 endDate: "13-10-2019 14:01:23",
             },
             {
-                id: 0,
+                id: 4,
                 UID: "ff3-g31fs-gq3tq3-gw52",
                 status: "active",
                 consumedCredits: "53$",
@@ -42,45 +42,45 @@ class TaskList extends Component {
     render() {
         return (
             <React.Fragment>
-                <div class="row p-1">
-                    <div class="col-sm">
-                        <table class="table table-striped table-bordered table-hover">
+                <div className="row p-1">
+                    <div className="col-sm">
+                        <table className="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="text-left" scope="col">UID</th>
-                                    <th class="text-left" scope="col">Status</th>
-                                    <th class="text-left" scope="col">Consumed credits</th>
-                                    <th class="text-left" scope="col">Start date</th>
-                                    <th class="text-left" scope="col">End date</th>
+                                    <th className="text-left" scope="col">UID</th>
+                                    <th className="text-left" scope="col">Status</th>
+                                    <th className="text-left" scope="col">Consumed credits</th>
+                                    <th className="text-left" scope="col">Start date</th>
+                                    <th className="text-left" scope="col">End date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.listitems.map(listitem => (
                                     <tr key={listitem.id}>
-                                        <td class="text-left">{listitem.UID}</td>
-                                        <td class="text-left">{listitem.status}</td>
-                                        <td class="text-left">{listitem.consumedCredits}</td>
-                                        <td class="text-left">{listitem.startDate}</td>
-                                        <td class="text-left">{listitem.endDate}</td>
+                                        <td className="text-left">{listitem.UID}</td>
+                                        <td className="text-left">{listitem.status}</td>
+                                        <td className="text-left">{listitem.consumedCredits}</td>
+                                        <td className="text-left">{listitem.startDate}</td>
+                                        <td className="text-left">{listitem.endDate}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                        <div class="row">
-                            <div class="col-sm">
-                                <button type="button" class="btn btn-secondary btn-block">Set data store</button>
+                        <div className="row">
+                            <div className="col-sm">
+                                <button type="button" className="btn btn-secondary btn-block">Set data store</button>
                             </div>
-                            <div class="col-sm">
-                                <button type="button" class="btn btn-secondary btn-block">Show details</button>
+                            <div className="col-sm">
+                                <button type="button" className="btn btn-secondary btn-block">Show details</button>
                             </div>
-                            <div class="col-sm">
-                                <button type="button" class="btn btn-secondary btn-block">Activate</button>
+                            <div className="col-sm">
+                                <button type="button" className="btn btn-secondary btn-block">Activate</button>
                             </div>
-                            <div class="col-sm">
-                                <button type="button" class="btn btn-secondary btn-block">Pause</button>
+                            <div className="col-sm">
+                                <button type="button" className="btn btn-secondary btn-block">Pause</button>
                             </div>
-                            <div class="col-sm">
-                                <button type="button" class="btn btn-secondary btn-block">Abort</button>
+                            <div className="col-sm">
+                                <button type="button" className="btn btn-secondary btn-block">Abort</button>
                             </div>
                         </div>
                     </div>
