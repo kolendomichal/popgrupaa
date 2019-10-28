@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { taskUrl } from '../../commons/ApiLinks';
 
 class AppList extends Component {
 
@@ -8,16 +9,14 @@ class AppList extends Component {
       chosenAppId: -1,
       userId: 1,
     };
-    this.createTask = this.createTask.bind(this);
   }
 
   onAppClick = (chosenAppId) => {
     this.setState({ chosenAppId });
   }
 
-  createTask(e) {
-    e.preventDefault();
-    fetch("http://localhost:5000/task/", {
+  createTask = () => {
+    fetch(taskUrl, {
       crossDomain:  true,
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -112,7 +111,7 @@ class AppList extends Component {
             </span>
           </div>
           <div className="row">
-            {this.state.chosenAppId !== -1 && <button type="button" className="btn btn-secondary btn-block" onClick={this.createTask} >Create new computation task</button>}
+            {this.state.chosenAppId !== -1 && <button type="button" className="btn btn-secondary btn-block" onClick={() => this.createTask()} >Create new computation task</button>}
           </div>
         </div>
       </div>
