@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AppList from './applicationList/AppList.js';
-import TaskList from './taskList/TaskList.js';
+import AppList from './AppList.js';
+import TaskList from './TaskList.js';
 import NavBar from '../navigationBar/NavBar.js';
 import 'bootstrap/dist/css/bootstrap.css';
 
