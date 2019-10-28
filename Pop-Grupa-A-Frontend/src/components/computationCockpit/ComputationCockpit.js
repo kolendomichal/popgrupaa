@@ -12,14 +12,14 @@ class ComputationCockpit extends Component {
         newTaskCreated: false
     };
 }
-  updateTaskList = (needUpdate) => {this.setState({newTaskCreated:needUpdate})}
+  tasksShouldRefresh = (newTaskCreated) => {this.setState({newTaskCreated:newTaskCreated})}
   render() {
     return (
       <div>
         <NavBar />
         <div className="container">
-          <AppList updateTaskList={this.updateTaskList} />
-          <TaskList newTask={this.state.newTaskCreated}/>
+          <AppList tasksShouldRefresh={this.tasksShouldRefresh} />
+          <TaskList newTaskCreated={this.state.newTaskCreated} tasksShouldRefresh={this.tasksShouldRefresh}/>
         </div>
       </div>
 
