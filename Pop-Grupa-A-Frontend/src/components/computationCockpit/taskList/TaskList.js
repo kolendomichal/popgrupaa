@@ -11,7 +11,7 @@ class TaskList extends Component {
         };
     }
 
-    componentDidMount() {
+    getTasks() {
         fetch("http://localhost:5000/task/" + this.state.userId, {
             crossDomain: true,
             method: 'get',
@@ -22,6 +22,14 @@ class TaskList extends Component {
                     listitems: response
                 })
             });
+    }
+
+    componentDidMount() {
+        this.getTasks();
+    }
+
+    componentWillUpdate() {
+        this.getTasks();
     }
 
     render() {

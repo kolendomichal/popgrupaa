@@ -32,7 +32,8 @@ class AppList extends Component {
         chosenAppId: -1
       })
       alert(response.message);
-    });
+    })
+    this.props.updateTaskList(true)
   }
 
 
