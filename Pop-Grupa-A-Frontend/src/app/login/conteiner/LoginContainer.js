@@ -17,12 +17,10 @@ const LoginContainer = ({loginOperations, history}) => {
     </div>)
 };
 
-const mapStateToProps = (state) => ({
-});
 
 const mapDispatchToProps = (dispatch) => ({
   loginOperations: bindActionCreators(loginOperations, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
+export default connect(null, mapDispatchToProps)(LoginContainer)
 

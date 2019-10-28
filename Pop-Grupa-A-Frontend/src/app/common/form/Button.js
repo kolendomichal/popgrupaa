@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-const MyButton = ({onClick, label, ...other}) => {
+const StandardButton = ({onClick, label, ...other}) => {
   return (
     <Button variant="contained" color="primary" onClick={onClick} {...other}>
       {label}
@@ -9,4 +9,4 @@ const MyButton = ({onClick, label, ...other}) => {
   )
 };
 
-export default MyButton;
+export default StandardButton;
