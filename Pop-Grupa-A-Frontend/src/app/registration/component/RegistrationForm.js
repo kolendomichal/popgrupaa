@@ -3,40 +3,53 @@ import Input from "../../common/form/Input";
 import {Field, reduxForm} from "redux-form";
 import Button from "../../common/form/Button";
 import {FormNames} from "../../constants";
-import Paper from '@material-ui/core/Paper';
-import './RegistrationForm.css';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import {StyledCard} from '../../common/form/StyledCard';
 
 const RegistrationForm = ({handleSubmit, pristine, submitting, invalid}) => (
-  <Paper className="registration-form">
-    <Field name="userName" component={Input} type="text" label="Login"/>
-    <Field name="password" component={Input} type="password" label="Password"/>
-    <Field name="email" component={Input} type="email" label="E-mail"/>
-    <Button label="Registration" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
-  </Paper>
+    <StyledCard>
+        <Card.Body>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Field name="userName" component={Input} type="text" label="Login"/>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Field name="password" component={Input} type="password" label="Password"/>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Field name="email" component={Input} type="email" label="E-mail"/>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Button label="Registration" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
+                </Row>
+            </Container>
+        </Card.Body>
+    </StyledCard>
 );
 
 const validate = values => {
-  const errors = {};
-  const requiredFields = [
-    'userName',
-    'password',
-    'email'
-  ];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
+    const errors = {};
+    const requiredFields = [
+        'userName',
+        'password',
+        'email'
+    ];
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    });
+    if (
+        values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+        errors.email = 'Invalid email address'
     }
-  });
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address'
-  }
-  return errors
+    return errors
 };
 
 export default reduxForm({
-  form: FormNames.RegistrationForm,
-  validate
+    form: FormNames.RegistrationForm,
+    validate
 })(RegistrationForm)

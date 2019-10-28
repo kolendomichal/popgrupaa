@@ -1,16 +1,25 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import Form from 'react-bootstrap/Form';
 
-const Input = ({label, input, meta: { touched, invalid, error }, ...custom}) => (
-  <TextField
-    label={label}
-    placeholder={label}
-    error={touched && invalid}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-    variant="outlined"
-  />
+const Input = ({label, input, meta: {touched, invalid, error}, ...custom}, type) => (
+    <Form.Group validationState={invalid} style={{width: '100%'}}>
+        <Form.Control
+            type={type}
+            placeholder={label}
+            value={input.value}
+            onChange={input.onChange}
+            isInvalid={touched && invalid}
+            {...custom}
+            {...input}
+        />
+        <Form.Control.Feedback type="invalid">
+            {error}
+        </Form.Control.Feedback>
+    </Form.Group>
 );
 
+
+Input.defaultProps = {
+    type: "text"
+};
 export default Input;

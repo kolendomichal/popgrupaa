@@ -1,16 +1,12 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import Navbar from 'react-bootstrap/Navbar'
 
 const NavBar = () => (
-  <AppBar position="static">
-    <Toolbar>
-      <Typography variant="h6">
-        BalticLSC
-      </Typography>
-    </Toolbar>
-  </AppBar>
+    <Navbar bg="dark" variant="dark">
+        <Navbar.Brand href="/">
+            BatlicLSC
+        </Navbar.Brand>
+    </Navbar>
 );
 
 export default NavBar;

@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 
 const StandardButton = ({onClick, label, ...other}) => {
   return (
-    <Button variant="contained" color="primary" onClick={onClick} {...other}>
+    <Button variant="primary" onClick={onClick} {...other}>
       {label}
     </Button>
   )

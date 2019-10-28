@@ -1,17 +1,8 @@
 .login-form {
-    display: flex;
-    flex-direction: column;
     width: 30%;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    margin: 30px auto 0 auto;
+    margin: 0 auto 0 auto;
 }
 
 .login-form div {
-    width: 25vw;
     margin-bottom: 10px;
-}
-#register-link {
-    margin-top: 10px;
 }

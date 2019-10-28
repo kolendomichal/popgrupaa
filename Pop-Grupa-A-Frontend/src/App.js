@@ -8,22 +8,20 @@ import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import RegistrationContainer from "./app/registration/container/RegistrationContainer";
 
 function App() {
-  return (
-    <Provider store={store}>
-      <div>
-        <NavBar/>
-        <div>
-          <Router>
-            <Switch>
-              <Route path="/" exact component={LoginContainer}/>
-              <Route path="/sign-up" component={RegistrationContainer}/>}
-              />
-            </Switch>
-          </Router>
-        </div>
-      </div>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <NavBar/>
+            <div>
+                <Router>
+                    <Switch>
+                        <Route path="/login" exact component={LoginContainer}/>
+                        <Route path="/sign-up" component={RegistrationContainer}/>}
+                        />
+                    </Switch>
+                </Router>
+            </div>
+        </Provider>
+    );
 }
 
 export default App;
