@@ -1,12 +1,12 @@
 from flask import request
 from flask_restplus import Resource
 from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto
-from ..repositories.task_repository import *
+from ..services.task_service import *
 from flask_restplus import cors
 
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
-_task = ComputationTaskDto.task
+_taskDTO = ComputationTaskDto.task
 
 
 @api.route('/')
@@ -17,14 +17,29 @@ class TaskCreate(Resource):
     def post(self):
         """Creates a new Task"""
         data = request.json
-        return add_task(task=data)
 
+        response_message = add_task(task=data)
+        if response_message == 0:
+            return {
+                'status': 'success',
+                'message': 'Task successfuly created.'
+            }, 201
+        elif response_message == 1:
+            return {
+                'status': 'fail',
+                'message': f"User with id = {data['user_id']} does not exist",
+            }, 400
+        else:
+            return {
+                'status': 'fail',
+                'message': f"App with id = {data['app_id']} does not exist",
+            }, 400
 
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The User identifier')
 class TaskGet(Resource):
     @api.doc('get user tasks')
-    @api.marshal_with(_task)
+    @api.marshal_with(_taskDTO)
     def get(self, user_id):
         return get_tasks_for_user(user_id)
