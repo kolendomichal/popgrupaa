@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { taskUrl } from '../../commons/ApiLinks';
+import { getTasksForUser } from '../../services/taskService';
 
 class TaskList extends Component {
 
@@ -12,16 +12,14 @@ class TaskList extends Component {
     }
 
     getTasks() {
-        fetch(taskUrl + this.state.userId, {
-            crossDomain: true,
-            method: 'get',
-        })
-            .then(response => response.json())
-            .then(response => {
+        getTasksForUser(this.state.userId)
+        .then(response => 
                 this.setState({
                     listitems: response
                 })
-            });
+            );
+        
+        
     }
 
     componentDidMount() {

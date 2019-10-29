@@ -17,12 +17,20 @@ def add_task(task):
 
         task_repository.save_changes(new_task)
 
-        return 0
+        return {
+                'status': 'success',
+                'message': 'Task successfuly created.'
+                }, 201
+    if not db_app:
+        return {
+                'status': 'fail',
+                'message': f"App with id = {task['app_id']} does not exist",
+                }, 400
      
-    if not db_user:
-        return 1
-    
-    return 2
+    return {
+            'status': 'fail',
+            'message': f"User with id = {task['user_id']} does not exist",
+            }, 400
 
 
 def get_tasks_for_user(userId):
