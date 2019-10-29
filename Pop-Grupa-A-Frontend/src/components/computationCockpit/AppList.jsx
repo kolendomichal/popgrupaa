@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { taskUrl } from '../../commons/ApiLinks';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
 
 class AppList extends Component {
 
@@ -17,7 +21,7 @@ class AppList extends Component {
 
   createTask = () => {
     fetch(taskUrl, {
-      crossDomain:  true,
+      crossDomain: true,
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -25,13 +29,13 @@ class AppList extends Component {
         user_id: this.state.userId
       })
     })
-    .then(response => response.json())
-    .then(response => {
-      this.setState({
-        chosenAppId: -1
-      })
-      alert(response.message);
-    }).then(() => this.props.tasksShouldRefresh(true))
+      .then(response => response.json())
+      .then(response => {
+        this.setState({
+          chosenAppId: -1
+        })
+        alert(response.message);
+      }).then(() => this.props.tasksShouldRefresh(true))
   }
 
 
@@ -79,9 +83,9 @@ class AppList extends Component {
     };
 
     return (
-      <div className="row p-1">
-        <div className="col-sm">
-          <table className="table table-striped table-bordered table-hover">
+      <Row className="p-1">
+        <Col sm>
+          <Table striped bordered hover>
             <thead>
               <tr>
                 <th className="text-left" scope="col">Name</th>
@@ -96,10 +100,10 @@ class AppList extends Component {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </div>
-        <div className="col-sm pr-4">
-          <div className="row mb-3" style={{ height: "70%" }}>
+          </Table>
+        </Col>
+        <Col sm className="r-4">
+          <Row className="mb-3" style={{ height: "70%" }}>
             <span className={this.state.chosenAppId !== -1 ? "border" : null}>
               <div className="text-left p-3">
 
@@ -108,12 +112,12 @@ class AppList extends Component {
 
               </div>
             </span>
-          </div>
-          <div className="row">
-            {this.state.chosenAppId !== -1 && <button type="button" className="btn btn-secondary btn-block" onClick={() => this.createTask()} >Create new computation task</button>}
-          </div>
-        </div>
-      </div>
+          </Row>
+          <Row>
+            {this.state.chosenAppId !== -1 && <Button variant="secondary" block onClick={() => this.createTask()} >Create new computation task</Button>}
+          </Row>
+        </Col>
+      </Row>
     );
   }
 }

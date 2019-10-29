@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { taskUrl } from '../../commons/ApiLinks';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import Table from 'react-bootstrap/Table'
 
 class TaskList extends Component {
 
@@ -34,9 +38,9 @@ class TaskList extends Component {
 
     render() {
         return (
-            <div className="row p-1">
-                <div className="col-sm">
-                    <table className="table table-striped table-bordered table-hover">
+            <Row className="p-1">
+                <Col sm>
+                    <Table striped bordered hover>
                         <thead>
                             <tr>
                                 <th className="text-left" scope="col">UID(id)</th>
@@ -59,26 +63,26 @@ class TaskList extends Component {
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
-                    <div className="row">
-                        <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Set data store</button>
-                        </div>
-                        <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Show details</button>
-                        </div>
-                        <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Activate</button>
-                        </div>
-                        <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Pause</button>
-                        </div>
-                        <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Abort</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </Table>
+                    <Row>
+                        <Col sm>
+                            <Button variant="secondary" block>Set data store</Button>
+                        </Col>
+                        <Col sm>
+                            <Button variant="secondary" block>Show details</Button>
+                        </Col>
+                        <Col sm>
+                            <Button variant="secondary" block>Activate</Button>
+                        </Col>
+                        <Col sm>
+                            <Button variant="secondary" block>Pause</Button>
+                        </Col>
+                        <Col sm>
+                            <Button variant="secondary" block>Abort</Button>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
         );
     }
 }
