@@ -1,11 +1,11 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..util.dto import ApplicationDto
+from ..util.DTO.ComputationApplicationDTO import ComputationApplicationDto
 from ..repositories.application_repository import get_all_applications
 
-api = ApplicationDto.api
-_application = ApplicationDto.application
+api = ComputationApplicationDto.api
+_application = ComputationApplicationDto.application
 
 
 @api.route('/')

@@ -1,7 +1,7 @@
 from flask_restplus import Namespace, fields
 
 
-class ApplicationDto:
+class ComputationApplicationDto:
     api = Namespace('application', description='application related operations')
     application = api.model('application', {
         'name': fields.String(required=False, description='application name'),

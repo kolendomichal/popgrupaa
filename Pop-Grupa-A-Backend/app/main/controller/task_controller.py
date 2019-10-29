@@ -1,10 +1,8 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..util.DTO.TaskDTO import ComputationTaskDto
-from ..util.DTO.TaskDTO import ComputationTaskDto
-from ..util.DTO.TaskDTO import ComputationTaskDto
-from ..util.DTO.TaskDTO import ComputationTaskDto
+from ..util.DTO.ComputationTaskDTO import ComputationTaskDto
+from ..util.DTO.ComputationStatusDTO import ComputationStatusDto
 
 from ..repositories.task_repository import *
 from ..repositories.user_repository import get_user
@@ -15,8 +13,10 @@ from app.main.model.ComputationTask import ComputationTask
 
 
 api = ComputationTaskDto.api
-_createModel = ComputationTaskDto.createModel
 _task = ComputationTaskDto.task
+_createModel = ComputationTaskDto.createModel
+_task_user_list = ComputationTaskDto.task_user_list
+
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The User identifier')
