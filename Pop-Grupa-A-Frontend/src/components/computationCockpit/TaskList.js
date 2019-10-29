@@ -26,8 +26,11 @@ class TaskList extends Component {
         this.getTasks();
     }
 
-    componentWillUpdate() {
-        this.getTasks();
+    componentDidUpdate() {
+        if(this.props.newTaskCreated === true) {
+            this.getTasks();
+            this.props.tasksShouldRefresh(false);
+        }
     }
 
     render() {
