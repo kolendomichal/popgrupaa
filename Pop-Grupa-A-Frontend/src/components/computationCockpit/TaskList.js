@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import { getTasksForUser } from '../../services/taskService';
+import { taskUrl } from '../../commons/ApiLinks';
 
 class TaskList extends Component {
+
+    activateTask = () => {
+        fetch(taskUrl, {
+          crossDomain:  true,
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            task_id: this.state.chosenTaskId,
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+          this.setState({
+            chosenTaskId: -1
+          })
+          alert(response.message);
+        }).then(() => this.props.tasksShouldRefresh(true))
+      }
 
     constructor(props) {
         super(props);
@@ -34,6 +53,13 @@ class TaskList extends Component {
     }
 
     render() {
+
+
+    const chosenTaskStyle = {
+        backgroundColor: "DodgerBlue"
+      };
+  
+
         return (
             <div className="row p-1">
                 <div className="col-sm">
@@ -50,7 +76,7 @@ class TaskList extends Component {
                         </thead>
                         <tbody>
                             {this.state.listitems.map(listitem => (
-                                <tr key={listitem.id}>
+                                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === this.state.chosenTaskId ? chosenTaskStyle : null}>
                                     <td className="text-left">{listitem.id}</td>
                                     <td className="text-left">{listitem.status}</td>
                                     <td className="text-left">$</td>
@@ -69,7 +95,7 @@ class TaskList extends Component {
                             <button type="button" className="btn btn-secondary btn-block">Show details</button>
                         </div>
                         <div className="col-sm">
-                            <button type="button" className="btn btn-secondary btn-block">Activate</button>
+                        {this.state.chosenTaskId !== -1 && <button type="button" className="btn btn-secondary btn-block" onClick={() => this.activateTask()} >Activate</button>}
                         </div>
                         <div className="col-sm">
                             <button type="button" className="btn btn-secondary btn-block">Pause</button>
