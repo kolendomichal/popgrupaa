@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+import { getAppsForUser } from '../../services/appService';
 
 class AppList extends Component {
 
@@ -12,8 +13,23 @@ class AppList extends Component {
     this.state = {
       chosenAppId: -1,
       userId: 1,
+      appsList: []
     };
   }
+
+  getApps() {
+    getAppsForUser(this.state.userId)
+      .then(response =>
+        this.setState({
+          appsList: response
+        })
+      );
+  }
+
+  componentDidMount() {
+    this.getApps();
+  }
+
 
   onAppClick = (chosenAppId) => {
     this.setState({ chosenAppId });
@@ -38,63 +54,8 @@ class AppList extends Component {
       }).then(() => this.props.tasksShouldRefresh(true))
   }
 
-
-  mockedList = {
-    listitems: [
-      {
-        id: 1,
-        context: "Test App1",
-        author: "Anrzej",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-      },
-      {
-        id: 2,
-        context: "Test App2",
-        author: "Bartek",
-        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-      },
-      {
-        id: 3,
-        context: "Test App3",
-        author: "Michał",
-        description: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classNameical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur."
-      },
-      {
-        id: 4,
-        context: "Test App4",
-        author: "Piotr",
-        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-      },
-      {
-        id: 5,
-        context: "Test App5",
-        author: "Filip",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-      },
-      {
-        id: 6,
-        context: "Test App3",
-        author: "Michał",
-        description: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classNameical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur."
-      },
-      {
-        id: 7,
-        context: "Test App4",
-        author: "Piotr",
-        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
-      },
-      {
-        id: 8,
-        context: "Test App5",
-        author: "Filip",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-      }
-    ]
-  };
-
-
-
   render() {
+    var appId = this.state.chosenAppId;
 
     const chosenAppStyle = {
       backgroundColor: "DodgerBlue"
@@ -102,7 +63,7 @@ class AppList extends Component {
 
     return (
       <Row className="pl-1">
-        <Col sm style={{maxHeight:'40vh',overflow:'hidden', overflowY:'scroll', paddingRight:'0px'}}>
+        <Col sm style={{ maxHeight: '40vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -111,10 +72,10 @@ class AppList extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.mockedList.listitems.map(listitem => (
-                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === this.state.chosenAppId ? chosenAppStyle : null} >
-                  <td className="text-left">{listitem.context}</td>
-                  <td className="text-left">{listitem.author}</td>
+              {this.state.appsList.map(listitem => (
+                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === appId ? chosenAppStyle : null} >
+                  <td className="text-left">{listitem.name}</td>
+                  <td className="text-left">{listitem.description}</td>
                 </tr>
               ))}
             </tbody>
@@ -125,8 +86,8 @@ class AppList extends Component {
             <span className={this.state.chosenAppId !== -1 ? "border" : null}>
               <div className="text-left p-3">
 
-                <h4>{this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId - 1].context}</h4>
-                {this.state.chosenAppId !== -1 && this.mockedList.listitems[this.state.chosenAppId - 1].description}
+                <h4>{this.state.chosenAppId !== -1 && this.state.appsList.find(app => app.id === appId).name}</h4>
+                {this.state.chosenAppId !== -1 && this.state.appsList.find(app => app.id === appId).description}
 
               </div>
             </span>
