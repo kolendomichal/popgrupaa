@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD:Pop-Grupa-A-Frontend/src/components/computationCockpit/TaskList.jsx
 import { taskUrl } from '../../commons/ApiLinks';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+=======
+import { getTasksForUser } from '../../services/taskService';
+>>>>>>> dc3e4b33d0a128a4ca420c1d59ffb9d6571b0332:Pop-Grupa-A-Frontend/src/components/computationCockpit/TaskList.js
 
 class TaskList extends Component {
 
@@ -16,24 +20,25 @@ class TaskList extends Component {
     }
 
     getTasks() {
-        fetch(taskUrl + this.state.userId, {
-            crossDomain: true,
-            method: 'get',
-        })
-            .then(response => response.json())
-            .then(response => {
+        getTasksForUser(this.state.userId)
+        .then(response => 
                 this.setState({
                     listitems: response
                 })
-            });
+            );
+        
+        
     }
 
     componentDidMount() {
         this.getTasks();
     }
 
-    componentWillUpdate() {
-        this.getTasks();
+    componentDidUpdate() {
+        if(this.props.newTaskCreated === true) {
+            this.getTasks();
+            this.props.tasksShouldRefresh(false);
+        }
     }
 
     render() {

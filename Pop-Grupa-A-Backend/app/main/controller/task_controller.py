@@ -18,23 +18,7 @@ class TaskCreate(Resource):
         """Creates a new Task"""
         data = request.json
 
-        response_message = add_task(task=data)
-        if response_message == 0:
-            return {
-                'status': 'success',
-                'message': 'Task successfuly created.'
-            }, 201
-        elif response_message == 1:
-            return {
-                'status': 'fail',
-                'message': f"User with id = {data['user_id']} does not exist",
-            }, 400
-        else:
-            return {
-                'status': 'fail',
-                'message': f"App with id = {data['app_id']} does not exist",
-            }, 400
-
+        return add_task(task=data)
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The User identifier')
