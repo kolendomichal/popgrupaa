@@ -70,6 +70,24 @@ class AppList extends Component {
         context: "Test App5",
         author: "Filip",
         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+      },
+      {
+        id: 6,
+        context: "Test App3",
+        author: "Michał",
+        description: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classNameical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur."
+      },
+      {
+        id: 7,
+        context: "Test App4",
+        author: "Piotr",
+        description: "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets"
+      },
+      {
+        id: 8,
+        context: "Test App5",
+        author: "Filip",
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
       }
     ]
   };
@@ -83,8 +101,8 @@ class AppList extends Component {
     };
 
     return (
-      <Row className="p-1">
-        <Col sm>
+      <Row className="pl-1">
+        <Col sm style={{maxHeight:'40vh',overflow:'hidden', overflowY:'scroll', paddingRight:'0px'}}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -102,7 +120,7 @@ class AppList extends Component {
             </tbody>
           </Table>
         </Col>
-        <Col sm className="r-4">
+        <Col sm className="r-4 ml-3 mr-4">
           <Row className="mb-3" style={{ height: "70%" }}>
             <span className={this.state.chosenAppId !== -1 ? "border" : null}>
               <div className="text-left p-3">
