@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD:Pop-Grupa-A-Frontend/src/components/computationCockpit/TaskList.jsx
-import { taskUrl } from '../../commons/ApiLinks';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
-=======
 import { getTasksForUser } from '../../services/taskService';
->>>>>>> dc3e4b33d0a128a4ca420c1d59ffb9d6571b0332:Pop-Grupa-A-Frontend/src/components/computationCockpit/TaskList.js
 
 class TaskList extends Component {
 
