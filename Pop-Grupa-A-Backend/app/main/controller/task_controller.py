@@ -4,10 +4,9 @@ from flask_restplus import Resource
 from ..util.DTO.ComputationTaskDTO import ComputationTaskDto
 from ..util.DTO.ComputationStatusDTO import ComputationStatusDto
 
-from ..repositories.task_repository import *
-from ..repositories.user_repository import get_user
+from ..repositories.task_repository import update_task
 
-from ..service.task_service import get_tasks_for_user as tmp_get_tasks_for_user
+from ..services.task_service import get_tasks_for_user, add_task
 
 from app.main.model.ComputationTask import ComputationTask
 
@@ -28,17 +27,34 @@ class TaskListForUser(Resource):
     @api.marshal_with(_task_user_list, as_list=True)
     def get(self, user_id):
         """get computation tasks list for user"""
-        return tmp_get_tasks_for_user(user_id)
+        return get_tasks_for_user(user_id)
 
 @api.route('/')
-class TaskList(Resource):
+class TaskCreate(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
     @api.expect(_createModel, validate=True)
     def post(self):
         """Creates a new Task"""
         data = request.json
-        return add_task(task=data)
+
+        response_message = add_task(task=data)
+        if response_message == 0:
+            return {
+                'status': 'success',
+                'message': 'Task successfuly created.'
+            }, 201
+        elif response_message == 1:
+            return {
+                'status': 'fail',
+                'message': f"User with id = {data['user_id']} does not exist",
+            }, 400
+        else:
+            return {
+                'status': 'fail',
+                'message': f"App with id = {data['app_id']} does not exist",
+            }, 400
+
 
 @api.route('/<task_id>')
 @api.response(200, 'Task successfully activated')

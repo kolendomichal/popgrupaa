@@ -24,7 +24,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run(host= '0.0.0.0')
+    app.run(host='0.0.0.0')
 
 
 @manager.command
@@ -36,6 +36,13 @@ def test():
     if result.wasSuccessful():
         return 0
     return 1
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
 
 
 if __name__ == '__main__':
