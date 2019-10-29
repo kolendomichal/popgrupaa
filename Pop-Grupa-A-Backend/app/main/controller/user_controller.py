@@ -1,6 +1,5 @@
 from flask import request
 from flask_restplus import Resource
-
 from ..util.DTO.ComputationAccount.UserDTO import UserDto
 from ..repositories.user_repository import add_user, get_user
 
@@ -9,7 +8,7 @@ _user = UserDto.user
 
 
 @api.route('/')
-class UserList(Resource):
+class UserCreate(Resource):
     @api.response(201, 'User successfully created.')
     @api.doc('create a new user')
     @api.expect(_user, validate=True)

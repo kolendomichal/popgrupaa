@@ -1,26 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-class NavBar extends Component {
+function NavBar(){
+    return (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a className="navbar-brand" href="#">BalticLSC</a>
 
-    render() {
-        return (
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-                <a class="navbar-brand" href="#">BalticLSC</a>
-
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Computation Cockpit <span class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text">
-                        Log in
-                    </span>
-                </div>
-            </nav>
-        );
-    }
+            <div className="collapse navbar-collapse" id="navbarText">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item active">
+                        <a className="nav-link" href="#">Computation Cockpit <span className="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <span className="navbar-text">
+                    Log in
+                </span>
+            </div>
+        </nav>
+    );
 }
 
 export default NavBar;
