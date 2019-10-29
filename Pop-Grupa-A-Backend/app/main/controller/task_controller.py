@@ -3,12 +3,16 @@ from flask_restplus import Resource
 
 from ..util.dto import TaskDto, StatusDto
 from ..repositories.task_repository import *
-from ..repositories.user_repository import get_user     
+from ..repositories.user_repository import get_user
+
+from ..service.task_service import get_tasks_for_user as tmp_get_tasks_for_user
+
 from app.main.model.ComputationTask import ComputationTask
 
 
 api = TaskDto.api
 _task = TaskDto.task
+_task_user_list = TaskDto.task_user_list
 _status = StatusDto.status
 
 
@@ -19,15 +23,10 @@ _status = StatusDto.status
 @api.response(404, 'User with given id could not be found!')
 class TaskListForUser(Resource):
     @api.doc('Get list of computation tasks for user')
-    @api.marshal_with(_task, as_list=True)
+    @api.marshal_with(_task_user_list, as_list=True)
     def get(self, user_id):
         """get computation tasks list for user"""
-        user = get_user(user_id)
-        if not user:
-            api.abort(404, 'User with given id could not be found!')
-        tasks_list = get_tasks_for_user(user_id)
-        status_code = 204 if len(tasks_list) == 0 else 200
-        return tasks_list , status_code
+        return tmp_get_tasks_for_user(user_id)
 
 @api.route('/')
 class TaskList(Resource):
