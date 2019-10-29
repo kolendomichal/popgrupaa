@@ -1,7 +1,11 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..util.dto import TaskDto, StatusDto
+from ..util.DTO.TaskDTO import ComputationTaskDto
+from ..util.DTO.TaskDTO import ComputationTaskDto
+from ..util.DTO.TaskDTO import ComputationTaskDto
+from ..util.DTO.TaskDTO import ComputationTaskDto
+
 from ..repositories.task_repository import *
 from ..repositories.user_repository import get_user
 
@@ -10,11 +14,9 @@ from ..service.task_service import get_tasks_for_user as tmp_get_tasks_for_user
 from app.main.model.ComputationTask import ComputationTask
 
 
-api = TaskDto.api
-_task = TaskDto.task
-_task_user_list = TaskDto.task_user_list
-_status = StatusDto.status
-
+api = ComputationTaskDto.api
+_createModel = ComputationTaskDto.createModel
+_task = ComputationTaskDto.task
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The User identifier')
@@ -32,7 +34,7 @@ class TaskListForUser(Resource):
 class TaskList(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
-    @api.expect(_task, validate=True)
+    @api.expect(_createModel, validate=True)
     def post(self):
         """Creates a new Task"""
         data = request.json
