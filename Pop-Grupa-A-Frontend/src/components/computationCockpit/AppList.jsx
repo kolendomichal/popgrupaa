@@ -62,7 +62,7 @@ class AppList extends Component {
     };
 
     return (
-      <Row className="pl-1">
+      <Row className="pl-1 mb-4">
         <Col sm style={{ maxHeight: '40vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
           <Table striped bordered hover>
             <thead>
@@ -82,8 +82,8 @@ class AppList extends Component {
           </Table>
         </Col>
         <Col sm className="r-4 ml-3 mr-4">
-          <Row className="mb-3" style={{ height: "70%" }}>
-            <span className={this.state.chosenAppId !== -1 ? "border" : null}>
+          <Row className="mb-3" style={{ height: "32vh" }}>
+            <span className={this.state.chosenAppId !== -1 ? "border" : null}  style={{ minWidth: '100%' }}>
               <div className="text-left p-3">
 
                 <h4>{this.state.chosenAppId !== -1 && this.state.appsList.find(app => app.id === appId).name}</h4>
