@@ -1,13 +1,14 @@
 from flask import request
 from flask_restplus import Resource
 from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto
+from flask_restplus import Resource
+from ..util.DTO.ComputationTask.TaskDTO import StatusDto
 from ..services.task_service import *
 from flask_restplus import cors
 
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
 _taskDTO = ComputationTaskDto.task
-_status = StatusDto.status
 
 
 @api.route('/')
@@ -35,7 +36,7 @@ class TaskGet(Resource):
 @api.param('task_id', 'The Task identifier')
 class TaskActivate(Resource):
     @api.doc('activates task')
-    @api.marshal_with(_task)
+    @api.marshal_with(_taskDTO)
     def post(self, task_id):
         try:
             task = get_task_for_task_id(task_id=task_id).all()

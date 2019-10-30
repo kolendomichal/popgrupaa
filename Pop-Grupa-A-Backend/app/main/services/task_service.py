@@ -35,3 +35,15 @@ def add_task(task):
 
 def get_tasks_for_user(userId):
     return task_repository.get_tasks_for_user(userId=userId)
+
+def update_task(task):
+    try:
+        task_repository.save_changes(task)
+        return task, 200
+    except:
+        response_object = {
+            'status': 'failure',
+            'message': 'Coundn\'t update task'
+        }
+        return response_object, 404
+    
