@@ -1,4 +1,5 @@
 import React from 'react';
+import ComputationCockpit from './components/computationCockpit/ComputationCockpit.js';
 import './App.css';
 import {Provider} from 'react-redux';
 import store from './app/store';
@@ -15,8 +16,8 @@ function App() {
                 <Router>
                     <Switch>
                         <Route path="/login" exact component={LoginContainer}/>
-                        <Route path="/sign-up" component={RegistrationContainer}/>}
-                        />
+                        <Route path="/sign-up" component={RegistrationContainer}/>
+                        <Route path="/computation-cockpit" component={ComputationCockpit}/>
                     </Switch>
                 </Router>
             </div>

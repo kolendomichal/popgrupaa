@@ -1,15 +1,9 @@
 from app.main import db
-from app.main.model import ComputationTask
-from app.main.model.ComputationAccount import ComputationAccount
-
-
-def add_task(task):
-    save_changes(task)
-    return task
+from app.main.model.ComputationTask import ComputationTask
 
 
 def get_tasks_for_user(userId):
-    return ComputationTask.query.filter_by(User_id=userId).all()
+    return ComputationTask.query.filter_by(user_id=userId).all()
 
 
 def save_changes(data):
