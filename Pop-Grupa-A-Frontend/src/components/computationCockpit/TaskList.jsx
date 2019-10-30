@@ -22,8 +22,6 @@ class TaskList extends Component {
                     listitems: response
                 })
             );
-
-
     }
 
     componentDidMount() {
@@ -61,7 +59,7 @@ class TaskList extends Component {
                                         <td className="text-left">$</td>
                                         <td className="text-left">{listitem.start_date}</td>
                                         <td className="text-left">{listitem.end_date}</td>
-                                        <td className="text-left">{listitem.app_id}</td>
+                                        <td className="text-left">{listitem.app_name}</td>
                                     </tr>
                                 ))}
                             </tbody>
