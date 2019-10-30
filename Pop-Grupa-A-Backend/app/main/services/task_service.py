@@ -47,3 +47,15 @@ def update_task(task):
         }
         return response_object, 404
     
+def get_task_for_task_id(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()
+
+
+def change_status_for_task(task, status):
+    task['status']=status 
+    update_task(task)
+    return task
+
+
+def get_status(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()['status']

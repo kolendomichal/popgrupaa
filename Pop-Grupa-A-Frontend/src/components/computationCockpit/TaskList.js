@@ -22,6 +22,10 @@ class TaskList extends Component {
         }).then(() => this.props.tasksShouldRefresh(true))
       }
 
+    onTaskClick = (chosenTaskId) => {
+    this.setState({ chosenTaskId });
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -76,7 +80,7 @@ class TaskList extends Component {
                         </thead>
                         <tbody>
                             {this.state.listitems.map(listitem => (
-                                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === this.state.chosenTaskId ? chosenTaskStyle : null}>
+                                <tr key={listitem.id} onClick={() => this.onTaskClick(listitem.id)} style={listitem.id === this.state.chosenTaskId ? chosenTaskStyle : null}>
                                     <td className="text-left">{listitem.id}</td>
                                     <td className="text-left">{listitem.status}</td>
                                     <td className="text-left">$</td>

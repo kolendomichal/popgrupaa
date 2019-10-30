@@ -39,9 +39,8 @@ class TaskActivate(Resource):
     @api.marshal_with(_taskDTO)
     def post(self, task_id):
         try:
-            task = get_task_for_task_id(task_id=task_id).all()
-# NOTE: status 3 - Working
+            task = get_task_for_task_id(task_id=task_id)
             task = change_status_for_task(task, ComputationStatus.WORKING.value)
-            return 200, update_task(task)
+            return 200, task
         except:
             return 404
