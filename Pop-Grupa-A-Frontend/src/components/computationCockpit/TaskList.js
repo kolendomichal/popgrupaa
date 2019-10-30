@@ -15,9 +15,6 @@ class TaskList extends Component {
         })
         .then(response => response.json())
         .then(response => {
-          this.setState({
-            chosenTaskId: -1
-          })
           alert(response.message);
         }).then(() => this.props.tasksShouldRefresh(true))
       }
