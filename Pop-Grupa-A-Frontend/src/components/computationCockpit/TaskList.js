@@ -1,23 +1,8 @@
 import React, { Component } from 'react';
-import { getTasksForUser } from '../../services/taskService';
+import { getTasksForUser, activateTask } from '../../services/taskService';
 import { taskUrl } from '../../commons/ApiLinks';
 
 class TaskList extends Component {
-
-    activateTask = () => {
-        fetch(taskUrl, {
-          crossDomain:  true,
-          method: 'post',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            task_id: this.state.chosenTaskId,
-          })
-        })
-        .then(response => response.json())
-        .then(response => {
-          alert(response.message);
-        }).then(() => this.props.tasksShouldRefresh(true))
-      }
 
     onTaskClick = (chosenTaskId) => {
     this.setState({ chosenTaskId });
