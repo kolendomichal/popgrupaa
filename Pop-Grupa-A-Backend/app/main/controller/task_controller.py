@@ -6,7 +6,7 @@ from ..services.task_service import *
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
 _taskDTO = ComputationTaskDto.task
-_status = StatusDto.status
+
 
 @api.route('/')
 class TaskCreate(Resource):
@@ -41,3 +41,4 @@ class TaskActivate(Resource):
             return 200, update_task(task)
         except:
             return 404
+
