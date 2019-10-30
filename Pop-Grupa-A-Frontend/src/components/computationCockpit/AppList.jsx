@@ -17,17 +17,13 @@ class AppList extends Component {
     };
   }
 
-  getApps() {
-    getAppsForUser(this.state.userId)
-      .then(response =>
-        this.setState({
-          appsList: response
-        })
-      );
-  }
-
   componentDidMount() {
-    this.getApps();
+    getAppsForUser(this.state.userId)
+    .then(response =>
+      this.setState({
+        appsList: response
+      })
+    );
   }
 
 
@@ -55,7 +51,7 @@ class AppList extends Component {
   }
 
   render() {
-    var appId = this.state.chosenAppId;
+    const { chosenAppId, appsList } = this.state;
 
     const chosenAppStyle = {
       backgroundColor: "DodgerBlue"
@@ -72,10 +68,10 @@ class AppList extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.appsList.map(listitem => (
-                <tr key={listitem.id} onClick={() => this.onAppClick(listitem.id)} style={listitem.id === appId ? chosenAppStyle : null} >
-                  <td className="text-left">{listitem.name}</td>
-                  <td className="text-left">{listitem.description}</td>
+              {appsList.map(application => (
+                <tr key={application.id} onClick={() => this.onAppClick(application.id)} style={application.id === chosenAppId ? chosenAppStyle : null} >
+                  <td className="text-left">{application.name}</td>
+                  <td className="text-left">{application.description}</td>
                 </tr>
               ))}
             </tbody>
@@ -83,17 +79,17 @@ class AppList extends Component {
         </Col>
         <Col sm className="r-4 ml-3 mr-4">
           <Row className="mb-3" style={{ height: "32vh" }}>
-            <span className={this.state.chosenAppId !== -1 ? "border" : null}  style={{ minWidth: '100%' }}>
+            <span className={chosenAppId !== -1 ? "border" : null}  style={{ minWidth: '100%' }}>
               <div className="text-left p-3">
 
-                <h4>{this.state.chosenAppId !== -1 && this.state.appsList.find(app => app.id === appId).name}</h4>
-                {this.state.chosenAppId !== -1 && this.state.appsList.find(app => app.id === appId).description}
+                <h4>{chosenAppId !== -1 && appsList.find(app => app.id === chosenAppId).name}</h4>
+                {chosenAppId !== -1 && appsList.find(app => app.id === chosenAppId).description}
 
               </div>
             </span>
           </Row>
           <Row>
-            {this.state.chosenAppId !== -1 && <Button variant="secondary" block onClick={() => this.createTask()} >Create new computation task</Button>}
+            {chosenAppId!== -1 && <Button variant="secondary" block onClick={() => this.createTask()} >Create new computation task</Button>}
           </Row>
         </Col>
       </Row>

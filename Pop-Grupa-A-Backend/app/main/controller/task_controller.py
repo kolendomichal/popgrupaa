@@ -9,6 +9,7 @@ from ..repositories.task_repository import update_task
 from ..services.task_service import get_tasks_for_user, add_task
 
 from app.main.model.ComputationTask import ComputationTask
+from app.main.model.ComputationStatus import ComputationStatus
 
 
 api = ComputationTaskDto.api
@@ -49,7 +50,7 @@ class TaskActivate(Resource):
     def post(self, task_id):
         try:
             task = ComputationTask.query.filter_by(task_id=task_id).all()
-            task['status'] = '3'
+            task['status'] = ComputationStatus.WORKING.value
             return 200, update_task(task)
         except:
             return 404, "task not found"
