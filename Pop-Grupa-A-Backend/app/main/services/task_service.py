@@ -39,8 +39,7 @@ def add_task(task):
 def get_tasks_for_user(user_id):
         user = get_user(user_id)
         if not user:
-            response_object = { "message":"User with given id could not be found!"}
-            return abort(404, 'User with given id could not be found!') #response_object, 404
+            return abort(404, 'User with given id could not be found!')
         tasks_list = task_repository.get_tasks_for_user(user_id)
         status_code = 204 if len(tasks_list) == 0 else 200
         return tasks_list, status_code

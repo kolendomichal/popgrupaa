@@ -1,18 +1,19 @@
 import os
-import json
 import unittest
 import datetime
+from app.main.model.ComputationTask import ComputationTask
+from app.main.model.ComputationAccount import ComputationAccount
+from app.main.model.ComputationApplication import ComputationApplication
+from app.main.services.task_service import *
 from flask import current_app
+from app.main.repositories.user_repository import *
 from manage import app
 from app.main.config import basedir
 import app.main.repositories.application_repository as application_repository
 import app.main.repositories.user_repository as user_repository
-from app.main.model.ComputationTask import ComputationTask
-from app.main.model.ComputationAccount import ComputationAccount
-from app.main.model.ComputationApplication import ComputationApplication
 
 
-class test_task_controller(unittest.TestCase):
+class test_task_service(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -30,7 +31,7 @@ class test_task_controller(unittest.TestCase):
             email='email')
         user_repository.save_changes(user)
         application = ComputationApplication(
-            id=1,
+            id="1",
             description="a",
             name="a",
             icon="a"
@@ -39,18 +40,27 @@ class test_task_controller(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
+        db.session.rollback()
 
-    def test_get_user_tasks_returns_ok(self):
-        response = self.app.get('/task/1', follow_redirects=True)
-        self.assertEqual(response.status, "200 OK")
+    def test_add_task_with_wrong_appid_return_fail(self):
+        task = {'app_id': 2, 'user_id': 1}
+        response = add_task(task)
+        self.assertEqual(response[1], 400)
 
-    # def test_create_user_task_returns_ok(self):
-    #   task = {"app_id": 1, "user_id": 1}
-    #   task4 = "{ \"app_id\": 1, \"user_id\": 1}"
-    #   task2 = dict(app_id=1, user_id=1)
-    #   response = self.app.post('/task/',data=task4)
-    #   self.assertEqual(response.data, "201")
+    def test_add_task_with_wrong_userid_return_fail(self):
+        task = {'app_id': 1, 'user_id': 2}
+        response = add_task(task)
+        self.assertEqual(response[1], 400)
+
+    def test_add_task_success(self):
+        task = {'app_id': 1, 'user_id': 1}
+        response = add_task(task)
+        self.assertEqual(response[1], 201)
+
+    def test_get_tasks_for_user_returns_empty_list(self):
+        response = get_tasks_for_user(999)
+        print(response)
+        self.assertEqual(response, [])
 
 
 if __name__ == "__main__":

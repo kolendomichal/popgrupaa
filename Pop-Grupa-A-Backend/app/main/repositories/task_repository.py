@@ -5,7 +5,6 @@ from app.main.model.ComputationTask import ComputationTask
 def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
-
 def update_task(task):
     try:
         save_changes(task)
