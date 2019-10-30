@@ -54,8 +54,14 @@ def get_status(id):
     return status
 
 def update_task(task):
+    db_user = ComputationAccount.query.filter_by(id=task['user_id']).first()
+    db_app = ComputationApplication.query.filter_by(id=task['app_id']).first()
+
+    if db_user and db_app:
+        updated_task = task
+
     try:
-        save_changes(task)
+        save_changes(updated_task)
         return task, 200
     except:
         response_object = {
