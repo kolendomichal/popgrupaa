@@ -14,7 +14,6 @@ from app.main.model.ComputationTask import ComputationTask
 api = ComputationTaskDto.api
 _task = ComputationTaskDto.task
 _createModel = ComputationTaskDto.createModel
-_task_user_list = ComputationTaskDto.task_user_list
 
 
 @api.route('/<user_id>')
@@ -24,7 +23,7 @@ _task_user_list = ComputationTaskDto.task_user_list
 @api.response(404, 'User with given id could not be found!')
 class TaskListForUser(Resource):
     @api.doc('Get list of computation tasks for user')
-    @api.marshal_with(_task_user_list, as_list=True)
+    @api.marshal_with(_task, as_list=True)
     def get(self, user_id):
         """get computation tasks list for user"""
         return get_tasks_for_user(user_id)
