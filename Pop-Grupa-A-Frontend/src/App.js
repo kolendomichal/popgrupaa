@@ -1,5 +1,5 @@
 import React from 'react';
-import ComputationCockpit from './components/computationCockpit/ComputationCockpit.js';
+import ComputationCockpit from './components/computationCockpit/ComputationCockpit.jsx';
 import './App.css';
 import {Provider} from 'react-redux';
 import store from './app/store';
