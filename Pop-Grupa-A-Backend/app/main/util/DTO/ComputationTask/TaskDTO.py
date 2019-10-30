@@ -12,8 +12,6 @@ class ComputationTaskDto:
         'user_id': fields.Integer(required=True, description='user Identifier')
     })
 
-
-
     createModel = api.model('createModel', {
         'app_id': fields.Integer(required=True, description='app Identifier'),
         'user_id': fields.Integer(required=True, description='user Identifier')

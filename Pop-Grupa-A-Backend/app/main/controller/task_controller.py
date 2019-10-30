@@ -4,7 +4,6 @@ from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto
 from flask_restplus import Resource
 from ..util.DTO.ComputationTask.TaskDTO import StatusDto
 from ..services.task_service import *
-from flask_restplus import cors
 
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
@@ -44,3 +43,4 @@ class TaskActivate(Resource):
             return 200, task
         except:
             return 404
+

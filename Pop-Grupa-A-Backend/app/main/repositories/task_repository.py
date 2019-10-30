@@ -1,7 +1,6 @@
 from app.main import db
 from app.main.model.ComputationTask import ComputationTask
 from app.main.model.ComputationStatus import ComputationStatus
-from datetime import datetime
 from app.main.model.ComputationAccount import ComputationAccount
 from app.main.model.ComputationApplication import ComputationApplication
 
