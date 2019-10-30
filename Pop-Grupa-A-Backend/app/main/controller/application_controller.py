@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.DTO.ComputationApplicationDTO import ComputationApplicationDto
-from ..repositories.application_repository import get_all_applications
+from ..services.application_service import get_all_applications
 
 api = ComputationApplicationDto.api
 _application = ComputationApplicationDto.application
@@ -16,6 +16,4 @@ class ApplicationList(Resource):
     @api.marshal_with(_application, as_list=True)
     def get(self):
         """get application list"""
-        applications_list = get_all_applications()
-        status_code = 204 if len(applications_list) == 0 else 200
-        return applications_list , status_code
+        return get_all_applications()
