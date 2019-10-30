@@ -1,14 +1,26 @@
 import os
+import datetime
 import unittest
-
+from app.main import db
 from flask import current_app
 from flask_testing import TestCase
-
-from app.manage import app
+from manage import app
 from app.main.config import basedir
 
 
+class TestConfiguration(unittest.TestCase):
+
+    def setUpModule(self):
+        pass
+        #db.drop_all()
+        #db.create_all()
+
+    def tearDownModule(self):
+        pass
+
+
 class TestDevelopmentConfig(TestCase):
+
     def create_app(self):
         app.config.from_object('app.main.config.DevelopmentConfig')
         return app
@@ -18,7 +30,7 @@ class TestDevelopmentConfig(TestCase):
         self.assertTrue(app.config['DEBUG'] is True)
         self.assertFalse(current_app is None)
         self.assertTrue(
-            app.config['SQLALCHEMY_DATABASE_URI'] == "postgresql://admin:123456@localhost:5432/balticlsc"
+            app.config['SQLALCHEMY_DATABASE_URI'] == "postgresql://admin:123456@postgres:5432/balticlsc"
         )
 
 
@@ -31,7 +43,7 @@ class TestTestingConfig(TestCase):
         self.assertFalse(app.config['SECRET_KEY'] is 'my_precious')
         self.assertTrue(app.config['DEBUG'])
         self.assertTrue(
-            app.config['SQLALCHEMY_DATABASE_URI'] == "postgresql://admin:123456@localhost:5432/balticlsc"
+            app.config['SQLALCHEMY_DATABASE_URI'] == "postgresql://admin:123456@postgres:5432/balticlsc"
         )
 
 
