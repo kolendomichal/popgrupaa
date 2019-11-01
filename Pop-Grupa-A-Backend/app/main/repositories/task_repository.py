@@ -1,9 +1,17 @@
+from sqlalchemy.sql import text
+
 from app.main import db
 from app.main.model.ComputationTask import ComputationTask
 
 
-def get_tasks_for_user(userId):
-    return ComputationTask.query.filter_by(user_id=userId).all()
+def get_tasks_for_user(user_id):
+    sql = text('SELECT task.id AS id, task.status AS status, \
+                task.start_date AS start_date, task.end_date AS end_date, \
+                app.name AS app_name \
+                FROM "ComputationTask" AS task, "ComputationApplication" AS app \
+                WHERE task.app_id = app.id AND task.user_id = :user_id')
+    return db.engine.execute(sql, user_id=user_id).fetchall()
+
 
 def update_task(task):
     try:
