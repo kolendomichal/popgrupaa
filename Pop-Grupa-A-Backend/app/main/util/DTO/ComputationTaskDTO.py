@@ -13,7 +13,7 @@ class ComputationTaskDto:
     })
     task_user_list = api.model('task', {
         'id': fields.Integer(description='task Identifier'),
-        'status': fields.Integer(description='task status'),
+        'status': fields.String(description='task status'),
         'start_date': fields.Date(description='task start time date'),
         'end_date': fields.Date(description='task end time date'),
         'app_name': fields.String(description='app name for this task'),

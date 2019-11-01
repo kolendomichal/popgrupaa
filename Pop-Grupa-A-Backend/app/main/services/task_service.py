@@ -41,5 +41,17 @@ def get_tasks_for_user(user_id):
         if not user:
             return abort(404, 'User with given id could not be found!')
         tasks_list = task_repository.get_tasks_for_user(user_id)
-        status_code = 204 if len(tasks_list) == 0 else 200
-        return tasks_list, status_code
+        if len(tasks_list) == 0:
+            return tasks_list, 204
+    
+        return _map_status_for_task_list(tasks_list), 200
+
+
+def _map_status_for_task_list(tasks_list):
+    mapped_list = []
+    for task in tasks_list:
+        task_dict = dict(task.items())
+        if 'status' in task_dict:
+            task_dict['status'] = ComputationStatus.get_name(task_dict['status']) 
+        mapped_list.append(task_dict)
+    return mapped_list
