@@ -2,6 +2,7 @@ from flask import request
 from flask_restplus import Resource
 from ..util.DTO.ComputationTask.TaskDTO import ComputationTaskDto, StatusDto
 from ..services.task_service import *
+from ..repositories.task_repository import get_task_for_task_id, change_status_for_task, update_task
 
 api = ComputationTaskDto.api
 _createModel = ComputationTaskDto.createModel
@@ -25,6 +26,7 @@ class TaskGet(Resource):
     @api.doc('get user tasks')
     @api.marshal_with(_taskDTO)
     def get(self, user_id):
+        """Finds user"""
         return get_tasks_for_user(user_id)
 
 @api.route('/<task_id>')
@@ -35,10 +37,11 @@ class TaskActivate(Resource):
     @api.doc('activates task')
     #@api.marshal_with(_task)
     def post(self, task_id):
+        """Activates task"""
+
         try:
-            task = get_task_for_task_id(id=task_id).all()
-            task = change_status_for_task(task, ComputationStatus.WORKING.value)
-            return 200, update_task(task)
+            update_task(task_id, 4)
+            return 200 #update_task(task)
         except:
             return 404
 
