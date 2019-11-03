@@ -14,22 +14,8 @@ function getTasksForUser(userId){
     return tasklist;
 }
 
-activateTask = () => {
-    fetch(taskUrl, {
-      crossDomain:  true,
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        task_id: this.state.chosenTaskId,
-      })
-    })
-    .then(response => response.json())
-    .then(response => {
-      alert(response.message);
-    }).then(() => this.props.tasksShouldRefresh(true))
-  }
 
 
 export {
-    getTasksForUser, activateTask
+    getTasksForUser
 }

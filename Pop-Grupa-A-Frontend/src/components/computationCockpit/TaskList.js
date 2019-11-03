@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
-import { getTasksForUser, activateTask } from '../../services/taskService';
+import { getTasksForUser } from '../../services/taskService';
 import { taskUrl } from '../../commons/ApiLinks';
 
 class TaskList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+          chosenTaskId: -1,
+          userId: 1,
+          listitems: []
+        };
+      }
 
     onTaskClick = (chosenTaskId) => {
     this.setState({ chosenTaskId });
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            listitems: [],
-            userId: 1
-        };
-    }
+    activateTask = () => {
+        fetch(taskUrl, {
+          crossDomain:  true,
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            task_id: this.state.chosenTaskId,
+          })
+        })
+        .then(response => response.json())
+        .then(response => {
+          this.setState({
+            chosenTaskId: -1
+          })
+          alert(response.message);
+        }).then(() => this.props.tasksShouldRefresh(true))
+      }
 
     getTasks() {
         getTasksForUser(this.state.userId)
@@ -22,9 +41,7 @@ class TaskList extends Component {
                 this.setState({
                     listitems: response
                 })
-            );
-        
-        
+            ); 
     }
 
     componentDidMount() {
