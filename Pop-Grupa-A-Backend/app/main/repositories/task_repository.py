@@ -8,9 +8,6 @@ from app.main.model.ComputationApplication import ComputationApplication
 def get_tasks_for_user(userId):
     return ComputationTask.query.filter_by(user_id=userId).all()
 
-<<<<<<< HEAD
-    
-=======
 def update_task(task):
     try:
         save_changes(task)
@@ -23,7 +20,6 @@ def update_task(task):
         return response_object, 400
     
 
->>>>>>> 6cc5219dd3dbd5e8083829055b153a0958ad5fb5
 def save_changes(data):
     db.session.add(data)
     db.session.commit()
