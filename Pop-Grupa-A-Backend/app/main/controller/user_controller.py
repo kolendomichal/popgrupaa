@@ -1,10 +1,11 @@
 from flask import request
 from flask_restplus import Resource
-from ..util.DTO.ComputationAccount.UserDTO import UserDto
+
+from ..util.DTO.ComputationAccountDTO import ComputationAccountDto
 from ..repositories.user_repository import add_user, get_user
 
-api = UserDto.api
-_user = UserDto.user
+api = ComputationAccountDto.api
+_user = ComputationAccountDto.user
 
 
 @api.route('/')

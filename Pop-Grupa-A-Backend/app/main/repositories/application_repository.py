@@ -3,7 +3,7 @@ from app.main.model.ComputationApplication import ComputationApplication
 
 
 def get_all_applications():
-    return ComputationApplication.query.query.all()
+    return ComputationApplication.query.all()
 
 
 def save_changes(data):

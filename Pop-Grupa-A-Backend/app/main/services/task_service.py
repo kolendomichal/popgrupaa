@@ -1,8 +1,12 @@
+from flask import request, abort
+
 from app.main.model.ComputationTask import ComputationTask
 from app.main.model.ComputationStatus import ComputationStatus
 from app.main.model.ComputationAccount import ComputationAccount
 from app.main.model.ComputationApplication import ComputationApplication
+
 import app.main.repositories.task_repository as task_repository
+from ..repositories.user_repository import get_user 
 
 def add_task(task):
     db_user = ComputationAccount.query.filter_by(id=task['user_id']).first()
@@ -32,6 +36,7 @@ def add_task(task):
             'message': f"User with id = {task['user_id']} does not exist",
             }, 400
 
+<<<<<<< HEAD
 
 def get_tasks_for_user(userId):
     return task_repository.get_tasks_for_user(userId=userId)
@@ -59,3 +64,12 @@ def change_status_for_task(task, status):
 
 def get_status(task_id):
     return ComputationTask.query.filter_by(task_id=task_id).all()['status']
+=======
+def get_tasks_for_user(user_id):
+        user = get_user(user_id)
+        if not user:
+            return abort(404, 'User with given id could not be found!')
+        tasks_list = task_repository.get_tasks_for_user(user_id)
+        status_code = 204 if len(tasks_list) == 0 else 200
+        return tasks_list, status_code
+>>>>>>> 6cc5219dd3dbd5e8083829055b153a0958ad5fb5
