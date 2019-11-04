@@ -37,9 +37,6 @@ def add_task(task):
             }, 400
 
 
-def get_tasks_for_user(userId):
-    return task_repository.get_tasks_for_user(userId=userId)
-
 def update_task(task):
     try:
         task_repository.save_changes(task)
@@ -47,7 +44,7 @@ def update_task(task):
     except:
         response_object = {
             'status': 'failure',
-            'message': 'Coundn\'t update task'
+            'message': 'Couldn\'t update task'
         }
         return response_object, 404
     
@@ -63,6 +60,7 @@ def change_status_for_task(task, status):
 
 def get_status(task_id):
     return ComputationTask.query.filter_by(task_id=task_id).all()['status']
+
 def get_tasks_for_user(user_id):
         user = get_user(user_id)
         if not user:

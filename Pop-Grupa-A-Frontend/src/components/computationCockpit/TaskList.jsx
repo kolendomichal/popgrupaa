@@ -21,23 +21,23 @@ class TaskList extends Component {
         this.setState({ chosenTaskId });
         }
     
-        activateTask = () => {
-            fetch(taskUrl, {
-              crossDomain:  true,
-              method: 'post',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                task_id: this.state.chosenTaskId,
-              })
+    activateTask = () => {
+        fetch(taskUrl, {
+            crossDomain:  true,
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            task_id: this.state.chosenTaskId,
             })
-            .then(response => response.json())
-            .then(response => {
-              this.setState({
-                chosenTaskId: -1
-              })
-              alert(response.message);
-            }).then(() => this.props.tasksShouldRefresh(true))
-          }
+        })
+        .then(response => response.json())
+        .then(response => {
+            this.setState({
+            chosenTaskId: -1
+            })
+            alert(response.message);
+        }).then(() => this.props.tasksShouldRefresh(true))
+        }
 
     getTasks() {
         getTasksForUser(this.state.userId)
@@ -105,7 +105,7 @@ class TaskList extends Component {
                         <Button variant="secondary" block>Show details</Button>
                     </Col>
                     <Col sm>
-                        {<Button variant="secondary" block onClick={() => this.activateTask()}>Activate</Button> }
+                        {<Button variant="secondary" block onClick={() => chosenAppId!== -1 && this.activateTask()}>Activate</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Pause</Button>
