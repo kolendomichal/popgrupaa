@@ -42,15 +42,15 @@ class TaskCreate(Resource):
 
 @api.route('/<task_id>')
 @api.response(200, 'Task successfully activated')
-@api.response(400, 'Task not found')
-@api.param('task_id', 'The task identifier')
+@api.response(404, 'Task not found')
+@api.param('task_id', 'The Task identifier')
 class TaskActivate(Resource):
     @api.doc('activates task')
-    @api.marshal_with(_task)
+    # @api.marshal_with(_task)
     def post(self, task_id):
+        """Activates task"""
         try:
-            task = ComputationTask.query.filter_by(task_id=task_id).all()
-            task['status'] = ComputationStatus.WORKING.value
-            return 200, update_task(task)
+            update_task(task_id, 4)
+            return 200  # update_task(task)
         except:
-            return 404, "task not found"
+            return 404
