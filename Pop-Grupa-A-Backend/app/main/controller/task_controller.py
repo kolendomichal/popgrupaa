@@ -51,7 +51,7 @@ class TaskActivate(Resource):
     def post(self, task_id):
         try:
             task = ComputationTask.query.filter_by(task_id=task_id).all()
-            task['status'] = ComputationStatus.WORKING.value
+            task['status'] = ComputationStatus.WORKING
             return 200, update_task(task)
         except:
             return 404, "task not found"

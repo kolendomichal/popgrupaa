@@ -14,7 +14,7 @@ def add_task(task):
 
     if db_user and db_app:
         new_task = ComputationTask(
-            status = ComputationStatus.SUBMITTED.value,
+            status = ComputationStatus.SUBMITTED,
             user_id = task['user_id'],
             app_id = task['app_id']
         )
@@ -43,18 +43,4 @@ def get_tasks_for_user(user_id):
         tasks_list = task_repository.get_tasks_for_user(user_id)
         if len(tasks_list) == 0:
             return tasks_list, 204
-    
-        return _map_status_for_task_list(tasks_list), 200
-
-
-def _map_status_for_task_list(tasks_list):
-    mapped_list = []
-    for task in tasks_list:
-        task_dict = dict(task.items())
-        if 'status' in task_dict:
-            try:
-                task_dict['status'] = ComputationStatus(task_dict['status']).name
-            except ValueError:
-                task_dict['status'] = ''
-        mapped_list.append(task_dict)
-    return mapped_list
+        return tasks_list, 200
