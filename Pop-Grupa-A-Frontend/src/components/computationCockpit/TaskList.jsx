@@ -4,16 +4,40 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getTasksForUser } from '../../services/taskService';
+import { taskUrl } from '../../commons/ApiLinks';
 
 class TaskList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            chosenTaskId: -1,
             listitems: [],
             userId: 1
         };
     }
+
+    onTaskClick = (chosenTaskId) => {
+        this.setState({ chosenTaskId });
+        }
+    
+    activateTask = () => {
+        fetch(taskUrl, {
+            crossDomain:  true,
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            task_id: this.state.chosenTaskId,
+            })
+        })
+        .then(response => response.json())
+        .then(response => {
+            this.setState({
+            chosenTaskId: -1
+            })
+            alert(response.message);
+        }).then(() => this.props.tasksShouldRefresh(true))
+        }
 
     getTasks() {
         getTasksForUser(this.state.userId)
@@ -35,7 +59,14 @@ class TaskList extends Component {
         }
     }
 
+
     render() {
+        const { chosenTaskId} = this.state;
+
+        const chosenTaskStyle = {
+            backgroundColor: "DodgerBlue"
+          };
+
         return (
             <div>
                 <Row className="p-1 mb-3">
@@ -53,7 +84,7 @@ class TaskList extends Component {
                             </thead>
                             <tbody>
                                 {this.state.listitems.map(listitem => (
-                                    <tr key={listitem.id}>
+                                    <tr key={listitem.id} onClick={() => this.onTaskClick(listitem.id)} style={listitem.id === this.state.chosenTaskId ? chosenTaskStyle : null}>
                                         <td className="text-left">{listitem.id}</td>
                                         <td className="text-left">{listitem.status}</td>
                                         <td className="text-left">$</td>
@@ -74,7 +105,7 @@ class TaskList extends Component {
                         <Button variant="secondary" block>Show details</Button>
                     </Col>
                     <Col sm>
-                        <Button variant="secondary" block>Activate</Button>
+                        {<Button variant="secondary" block onClick={() => chosenAppId!== -1 && this.activateTask()}>Activate</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Pause</Button>
