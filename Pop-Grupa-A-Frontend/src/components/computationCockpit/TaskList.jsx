@@ -105,7 +105,7 @@ class TaskList extends Component {
                         <Button variant="secondary" block>Show details</Button>
                     </Col>
                     <Col sm>
-                        {<Button variant="secondary" block onClick={() => chosenAppId!== -1 && this.activateTask()}>Activate</Button> }
+                        {<Button variant="secondary" block onClick={() => chosenTaskId!== -1 && this.activateTask()}>Activate</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Pause</Button>
