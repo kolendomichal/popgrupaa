@@ -52,6 +52,9 @@ def _map_status_for_task_list(tasks_list):
     for task in tasks_list:
         task_dict = dict(task.items())
         if 'status' in task_dict:
-            task_dict['status'] = ComputationStatus.get_name(task_dict['status']) 
+            try:
+                task_dict['status'] = ComputationStatus(task_dict['status']).name
+            except ValueError:
+                task_dict['status'] = ''
         mapped_list.append(task_dict)
     return mapped_list

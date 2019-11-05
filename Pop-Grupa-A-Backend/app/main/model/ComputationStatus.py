@@ -11,10 +11,3 @@ class ComputationStatus(Enum):
     ABORTED = 7
     PAUSED = 8
     INTERACTION_REQUIRED = 9
-
-    @classmethod
-    def get_name(self, value):
-        for name, obj in self.__members__.items():
-            if obj.value == value:
-                return name 
-        return None
