@@ -40,6 +40,7 @@ class TaskCreate(Resource):
 
         return add_task(task=data)
 
+
 @api.route('/<task_id>')
 @api.response(200, 'Task successfully activated')
 @api.response(404, 'Task not found')
@@ -50,7 +51,8 @@ class TaskActivate(Resource):
     def post(self, task_id):
         """Activates task"""
         try:
-            update_task(task_id, 4)
-            return 200  # update_task(task)
+            task = get_task_for_task_id(task_id=task_id)
+            task = change_status_for_task(task, ComputationStatus.WORKING.value)
+            return 200, task
         except:
             return 404
