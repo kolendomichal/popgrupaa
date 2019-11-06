@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/popgrupaa.iml" filepath="$PROJECT_DIR$/popgrupaa.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/.idea/popgrupaa.iml" filepath="$PROJECT_DIR$/.idea/popgrupaa.iml" />
->>>>>>> fix
     </modules>
   </component>
 </project>
