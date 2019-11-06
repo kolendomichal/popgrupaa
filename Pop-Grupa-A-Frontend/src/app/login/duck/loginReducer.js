@@ -6,8 +6,8 @@ const INITIAL_STATE = {
 
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case types.SUCCESSFUL_LOGIN:
-      return {...state, loginInfo: action.payload};
+    case types.FETCH_LOGIN_INFO.FULFILLED:
+      return {...state, loginInfo: action.payload}; //fixme
     default : return state;
   }
 };

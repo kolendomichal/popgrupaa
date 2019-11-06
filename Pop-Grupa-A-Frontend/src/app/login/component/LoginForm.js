@@ -14,7 +14,10 @@ const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
             <Card.Body>
                 <Container>
                     <Row className="justify-content-md-center">
-                        <Field name="userName" component={Input} type="text" label="Login"/>
+                        <Field name="username" component={Input} type="text" label="Login"/>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Field name="email" component={Input} type="text" label="E-mail"/>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Field name="password" component={Input} type="password" label="Password"/>
@@ -39,8 +42,9 @@ const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
 const validate = values => {
     const errors = {};
     const requiredFields = [
-        'userName',
-        'password'
+        'username',
+        'password',
+        'email'
     ];
     requiredFields.forEach(field => {
         if (!values[field]) {
