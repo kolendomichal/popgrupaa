@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16a5bfa6-0475-4c2a-951e-173101d4d508" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/middlewares.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/controller/user_controller.py" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/controller/user_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/model/ComputationAccount.py" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/model/ComputationAccount.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/repositories/user_repository.py" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Backend/app/main/repositories/user_repository.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/package-lock.json" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/component/LoginForm.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/component/LoginForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginActions.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginActions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginOperations.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginOperations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginReducer.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginReducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginTypes.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/login/duck/loginTypes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/registration/duck/registrationOperations.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/registration/duck/registrationOperations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/store.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/store.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/utils.js" afterPath="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/popgrupaa.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/middlewares.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="308">
-              <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+              <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -101,7 +88,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="110">
               <caret line="5" column="143" lean-forward="false" selection-start-line="5" selection-start-column="143" selection-end-line="5" selection-end-column="143" />
-              <folding />
+              <folding>
+                <marker date="1574190548211" expanded="true" signature="59:317" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,7 +110,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="308">
               <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-              <folding />
+              <folding>
+                <marker date="1574190565992" expanded="true" signature="679:931" ph="..." />
+                <marker date="1574190565992" expanded="true" signature="860:931" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -201,8 +193,8 @@
         <option value="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/registration/duck/registrationOperations.js" />
         <option value="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/registration/container/RegistrationContainer.js" />
         <option value="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/constants.js" />
-        <option value="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/middlewares.js" />
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/middlewares.js" />
       </list>
     </option>
   </component>
@@ -1065,7 +1057,7 @@
       <workItem from="1574108659905" duration="13589000" />
       <workItem from="1574190163499" duration="253000" />
       <workItem from="1574190423868" duration="79000" />
-      <workItem from="1574190505141" duration="44000" />
+      <workItem from="1574190505141" duration="130000" />
     </task>
     <task id="LOCAL-00001" summary="xx">
       <created>1574019515351</created>
@@ -1078,7 +1070,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15169000" />
+    <option name="totallyTimeSpent" value="15255000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1117,6 +1109,24 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -1141,8 +1151,8 @@
         <state relative-caret-position="88">
           <caret line="4" column="11" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding>
-            <marker date="1574190525117" expanded="true" signature="7:82" ph="..." />
-            <marker date="1574190525117" expanded="true" signature="139:387" ph="{...}" />
+            <marker date="1574190565995" expanded="true" signature="7:82" ph="..." />
+            <marker date="1574190565995" expanded="true" signature="139:399" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1203,7 +1213,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="18" column="27" lean-forward="true" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding />
+          <folding>
+            <marker date="1574190565992" expanded="true" signature="679:931" ph="..." />
+            <marker date="1574190565992" expanded="true" signature="860:931" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1238,7 +1251,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1574190565992" expanded="true" signature="679:931" ph="..." />
+            <marker date="1574190565992" expanded="true" signature="860:931" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1436,8 +1452,8 @@
         <state relative-caret-position="66">
           <caret line="4" column="11" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding>
-            <marker date="1574190525117" expanded="true" signature="7:82" ph="..." />
-            <marker date="1574190525117" expanded="true" signature="139:387" ph="{...}" />
+            <marker date="1574190565995" expanded="true" signature="7:82" ph="..." />
+            <marker date="1574190565995" expanded="true" signature="139:399" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1511,7 +1527,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding />
+          <folding>
+            <marker date="1574190565992" expanded="true" signature="679:931" ph="..." />
+            <marker date="1574190565992" expanded="true" signature="860:931" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1527,14 +1546,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="143" lean-forward="false" selection-start-line="5" selection-start-column="143" selection-end-line="5" selection-end-column="143" />
-          <folding />
+          <folding>
+            <marker date="1574190548211" expanded="true" signature="59:317" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pop-Grupa-A-Frontend/src/app/middlewares.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
-          <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
           <folding />
         </state>
       </provider>

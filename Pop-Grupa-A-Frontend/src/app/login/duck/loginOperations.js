@@ -7,7 +7,7 @@ const sendLoginRequest = (formValues) => (dispatch) => {
         url: `/user/login`,
         method: 'POST',
         body: {...formValues},
-        successHandler: null // fixme
+        successHandler: data => console.log(data)
     };
     dispatch(createRequestAction(requestObject));
 };

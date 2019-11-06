@@ -17,3 +17,5 @@ def create_app(config_name):
     flask_bcrypt.init_app(app)
 
     return app
+
+
