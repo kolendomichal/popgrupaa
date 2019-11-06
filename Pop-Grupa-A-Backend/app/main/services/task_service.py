@@ -36,6 +36,31 @@ def add_task(task):
             'message': f"User with id = {task['user_id']} does not exist",
             }, 400
 
+
+def update_task(task):
+    try:
+        task_repository.save_changes(task)
+        return task, 200
+    except:
+        response_object = {
+            'status': 'failure',
+            'message': 'Couldn\'t update task'
+        }
+        return response_object, 404
+    
+def get_task_for_task_id(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()
+
+
+def change_status_for_task(task, status):
+    task['status']=status 
+    update_task(task)
+    return task
+
+
+def get_status(task_id):
+    return ComputationTask.query.filter_by(task_id=task_id).all()['status']
+
 def get_tasks_for_user(user_id):
         user = get_user(user_id)
         if not user:

@@ -1,7 +1,5 @@
 from app.main import db
 from app.main.model.ComputationTask import ComputationTask
-from app.main.model.ComputationApplication import ComputationApplication
-from sqlalchemy.orm import contains_eager
 
 
 def get_tasks_for_user(user_id):

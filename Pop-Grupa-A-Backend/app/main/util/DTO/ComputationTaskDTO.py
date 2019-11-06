@@ -22,3 +22,10 @@ class ComputationTaskDto:
         'app_id': fields.Integer(required=True, description='app Identifier'),
         'user_id': fields.Integer(required=True, description='user Identifier')
     })
+
+class StatusDto:
+    api = Namespace('task', description='status related operations')
+    status = api.model('task', {
+        'status': fields.Integer(description='task status'),
+        'message': fields.Integer(description='task message')
+    })
