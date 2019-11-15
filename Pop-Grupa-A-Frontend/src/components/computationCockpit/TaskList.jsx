@@ -22,7 +22,7 @@ class TaskList extends Component {
         }
     
     activateTask = () => {
-        fetch(taskUrl, {
+        fetch(thi.state.chosenTaskId, {
             crossDomain:  true,
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
