@@ -22,13 +22,10 @@ class TaskList extends Component {
         }
     
     activateTask = () => {
-        fetch(thi.state.chosenTaskId, {
+        fetch(`${taskUrl}/${this.state.chosenTaskId}`, {
             crossDomain:  true,
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            task_id: this.state.chosenTaskId,
-            })
         })
         .then(response => response.json())
         .then(response => {
