@@ -3,8 +3,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
-import { getTasksForUser } from '../../services/taskService';
-import { taskUrl } from '../../commons/ApiLinks';
+import { getTasksForUser, activateTask } from '../../services/taskService';
 
 class TaskList extends Component {
 
@@ -19,25 +18,17 @@ class TaskList extends Component {
 
     onTaskClick = (chosenTaskId) => {
         this.setState({ chosenTaskId });
-        }
+    }
     
-    activateTask = () => {
-        fetch(taskUrl, {
-            crossDomain:  true,
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            task_id: this.state.chosenTaskId,
-            })
-        })
-        .then(response => response.json())
+    useActivateTask = () => {
+        activateTask(this.state.chosenTaskId)
         .then(response => {
             this.setState({
-            chosenTaskId: -1
+                chosenTaskId: -1
             })
             alert(response.message);
         }).then(() => this.props.tasksShouldRefresh(true))
-        }
+    }
 
     getTasks() {
         getTasksForUser(this.state.userId)
@@ -105,7 +96,7 @@ class TaskList extends Component {
                         <Button variant="secondary" block>Show details</Button>
                     </Col>
                     <Col sm>
-                        {<Button variant="secondary" block onClick={() => chosenTaskId!== -1 && this.activateTask()}>Activate</Button> }
+                        {<Button variant="secondary" block onClick={() => chosenTaskId!== -1 && this.useActivateTask()}>Activate</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Pause</Button>

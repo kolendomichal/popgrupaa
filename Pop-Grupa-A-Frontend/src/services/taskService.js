@@ -14,8 +14,44 @@ function getTasksForUser(userId){
     return tasklist;
 }
 
+function createTask(appId, userId){
+
+    var createResponse = fetch(taskUrl, {
+        crossDomain: true,
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          app_id: appId,
+          user_id: userId
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+            return response;
+        });
+    
+        return createResponse;
+}
+
+function activateTask(taskId){
+    
+    var activateResponse = fetch(`${taskUrl+taskId}`, {
+        crossDomain:  true,
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(response => {
+        return response;
+    });
+
+    return activateResponse;
+}
+
 
 
 export {
-    getTasksForUser
+    getTasksForUser,
+    createTask,
+    activateTask
 }
