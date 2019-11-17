@@ -70,7 +70,7 @@ class TaskList extends Component {
                                     <th className="text-left" scope="col">Consumed credits</th>
                                     <th className="text-left" scope="col">Start date</th>
                                     <th className="text-left" scope="col">End date</th>
-                                    <th className="text-left" scope="col">AppId</th>
+                                    <th className="text-left" scope="col">App</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,7 +81,7 @@ class TaskList extends Component {
                                         <td className="text-left">$</td>
                                         <td className="text-left">{listitem.start_date}</td>
                                         <td className="text-left">{listitem.end_date}</td>
-                                        <td className="text-left">{listitem.app_id}</td>
+                                        <td className="text-left">{listitem.app_name}</td>
                                     </tr>
                                 ))}
                             </tbody>
