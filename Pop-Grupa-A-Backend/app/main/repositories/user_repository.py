@@ -65,7 +65,7 @@ def check_user(user):
             id=db_user.id,
             exp=token_elems['exp']
         )
-        save_changes(new_session)
+        save_changes(new_session) # fixme
         return response_object, 200
 
 

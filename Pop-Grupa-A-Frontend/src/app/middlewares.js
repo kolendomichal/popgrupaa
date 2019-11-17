@@ -5,7 +5,7 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
 
     dispatch({type: action.types.PENDING});
 
-    return action.payload.then(response => response.json()).then(data => {
+    return action.payload.then(response =>  response.json()).then(data => {
         dispatch({
             type: action.types.FULFILLED,
             payload: action.successHandler(data)
