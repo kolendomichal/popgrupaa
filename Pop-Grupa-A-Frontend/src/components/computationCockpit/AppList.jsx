@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { taskUrl } from '../../commons/ApiLinks';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getAppsForUser } from '../../services/appService';
-import { createTask } from '../../services/taskService';
 
 class AppList extends Component {
 
@@ -31,8 +31,17 @@ class AppList extends Component {
     this.setState({ chosenAppId });
   }
 
-  useCreateTask = () => {
-      createTask(this.state.chosenAppId, this.state.userId)
+  createTask = () => {
+    fetch(taskUrl, {
+      crossDomain: true,
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_id: this.state.chosenAppId,
+        user_id: this.state.userId
+      })
+    })
+      .then(response => response.json())
       .then(response => {
         this.setState({
           chosenAppId: -1
@@ -80,7 +89,7 @@ class AppList extends Component {
             </span>
           </Row>
           <Row>
-            {chosenAppId!== -1 && <Button variant="secondary" block onClick={() => this.useCreateTask()} >Create new computation task</Button>}
+            {chosenAppId!== -1 && <Button variant="secondary" block onClick={() => this.createTask()} >Create new computation task</Button>}
           </Row>
         </Col>
       </Row>

@@ -6,13 +6,13 @@ function getAppsForUser(){
         crossDomain: true,
         method: 'get',
     })
+        .then(response => response.json())
         .then(response => {
-            return response.status === 200 ? response.json() : [];
+            return response;
         });
 
     return applist;
 }
-
 
 
 export {

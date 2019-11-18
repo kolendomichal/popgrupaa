@@ -49,4 +49,3 @@ class TaskActivate(Resource):
     def post(self, task_id):
         """Activates task"""
         return activate_task(task_id)
-        

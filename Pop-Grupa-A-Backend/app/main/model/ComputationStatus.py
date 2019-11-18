@@ -11,6 +11,3 @@ class ComputationStatus(Enum):
     ABORTED = 7
     PAUSED = 8
     INTERACTION_REQUIRED = 9
-
-    def __str__(self):
-        return self.name

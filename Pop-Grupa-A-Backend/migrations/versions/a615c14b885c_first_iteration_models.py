@@ -27,11 +27,7 @@ def upgrade():
     )
     op.create_table('ComputationTask',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('status',
-                sa.Enum('SUBMITTED', 'ASSIGNED', 'WORKING', 'COMPLETED',
-                       'FAILED', 'REJECTED', 'ABORTED', 'PAUSED',
-                       'INTERACTION_REQUIRED',
-                       name='computationstatus'), nullable=False),
+    sa.Column('status', sa.Integer(), nullable=False),
     sa.Column('start_time', sa.Date(), nullable=False),
     sa.Column('end_time', sa.Date(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
