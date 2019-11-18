@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
@@ -17,5 +17,3 @@ def create_app(config_name):
     flask_bcrypt.init_app(app)
 
     return app
-
-

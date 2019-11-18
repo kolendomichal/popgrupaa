@@ -19,7 +19,7 @@ class UserCreate(Resource):
         data = request.json
         return add_user(user=data)
 
-@api.route('/login', methods=['POST'])
+@api.route('/login')
 class UserLogin(Resource):
     @api.response(200, 'User successfully logged')
     @api.response(403, 'User login failure')

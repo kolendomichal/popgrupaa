@@ -8,6 +8,7 @@ const createRequest = ({types, url, method, body, successHandler}, server) => {
         method,
         headers,
         body: JSON.stringify(body),
+        //mode: 'no-cors',
     };
 
     return {
@@ -16,8 +17,6 @@ const createRequest = ({types, url, method, body, successHandler}, server) => {
         fetchAction: true,
         successHandler: successHandler
     };
-    // return (dispatch) => fetch(server + url, param).then(response => response.json())
-    //     .then(json => dispatch(successHandler(json))).catch(err => alert(err));
 };
 
 export const createFetchActionTypes = (type) => {

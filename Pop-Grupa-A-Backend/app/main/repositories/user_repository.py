@@ -5,7 +5,7 @@ import uuid
 from app.main import db
 from app.main.model.ComputationAccount import ComputationAccount
 from app.main.model.Session import Session
-from flask import session
+from flask import Flask, session
 from .. import flask_bcrypt
 from app.main.config import key
 
@@ -20,6 +20,15 @@ def add_user(user):
                                       lastLogin=datetime.datetime.now(),
                                       email=user['email'])
         save_changes(new_user)
+
+        sid = str(uuid.uuid4())
+        session['sid'] = sid
+        session['username'] = user['username']
+        new_session = Session(
+            sid=sid,
+            exp=datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+        )
+        save_changes(new_session)
         response_object = {
             'status': 'success',
             'message': 'User successfuly created.'
@@ -48,24 +57,17 @@ def check_user(user):
         return response_object, 403
     else:
         sid = str(uuid.uuid4())
-        token_elems = {
-            'username': user['username'],
-            'id': db_user.id,
-            'sid': sid,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-        }
         response_object = {
             'status': 'success',
             'messege': 'User successfully logged',
         }
         session['sid'] = sid
-        session['token'] = jwt.encode(token_elems, key)
+        session['username'] = user['username']
         new_session = Session(
             sid=sid,
-            id=db_user.id,
-            exp=token_elems['exp']
+            exp=datetime.datetime.utcnow() + datetime.timedelta(hours=1)
         )
-        save_changes(new_session) # fixme
+        save_changes(new_session)
         return response_object, 200
 
 
