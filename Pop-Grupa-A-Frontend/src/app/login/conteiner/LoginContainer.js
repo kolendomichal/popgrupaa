@@ -2,14 +2,36 @@ import React from 'react';
 import {connect} from 'react-redux';
 import LoginForm from "../component/LoginForm";
 import {bindActionCreators} from "redux";
+import {Redirect} from 'react-router-dom';
 import loginOperations from '../duck/loginOperations';
 
-const LoginContainer = ({loginOperations}) => {
+class LoginContainer extends React.PureComponent {
 
-    return (
-        <LoginForm onSubmit={loginOperations.sendLoginRequest}/>
-    )
-};
+    constructor(props) {
+        super(props);
+        this.state = {
+            loggedIn: false
+        }
+    }
+
+    login = (formValues) => {
+        this.props.loginOperations.sendLoginRequest(formValues).then(data => {
+            if (data.payload) {
+                this.setState(state => ({...state, loggedIn: true}));
+            }
+        });
+    };
+
+    render() {
+        if(this.state.loggedIn) {
+            return <Redirect to='/computation-cockpit' />
+        }
+        return (
+            <LoginForm onSubmit={this.login}/>
+        )
+    }
+
+}
 
 
 const mapDispatchToProps = (dispatch) => ({

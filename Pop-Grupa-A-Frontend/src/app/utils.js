@@ -8,7 +8,7 @@ const createRequest = ({types, url, method, body, successHandler}, server) => {
         method,
         headers,
         body: JSON.stringify(body),
-        //mode: 'no-cors',
+        credentials: 'include'
     };
 
     return {

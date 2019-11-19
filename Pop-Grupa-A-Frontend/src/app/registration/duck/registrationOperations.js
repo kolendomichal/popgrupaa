@@ -7,9 +7,9 @@ const sendRegisterRequest = (formValues) => (dispatch) => {
         url: `/user/register`,
         method: 'POST',
         body: {...formValues},
-        successHandler: data => console.log(data)
+        successHandler: () => ({payload: true})
     };
-    dispatch(createRequestAction(requestObject));
+    return dispatch(createRequestAction(requestObject));
 };
 
 export default {
