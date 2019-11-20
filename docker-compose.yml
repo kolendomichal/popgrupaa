@@ -41,6 +41,12 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-
+  machine:
+    container_name: test-machine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '6000:5000'
 volumes:
   flask-app-db:
