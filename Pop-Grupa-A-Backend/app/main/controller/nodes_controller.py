@@ -13,9 +13,9 @@ node_dto = ClusterNodeDTO.nodeDTO
 @api.response(200, 'Success')
 @api.response(204, 'User does not have any cluser nodes')
 @api.response(404, 'User with given id could not be found!')
-class TaskListForUser(Resource):
+class NodesListForUser(Resource):
     @api.doc('Get list of cluster nodes for supplier')
     @api.marshal_with(node_dto, as_list=True)
     def get(self, user_id):
-        """get computation tasks list for user"""
+        """get cluster node list for user"""
         return node_service.get_nodes_for_user(user_id)
