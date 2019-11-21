@@ -47,6 +47,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '6000:5000'
+      - '5500:5500'
+    environment:
+      FLASK_APP: machine_flask_api.py
+      FLASK_RUN_PORT: 5500
 volumes:
   flask-app-db:

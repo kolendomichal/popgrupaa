@@ -15,7 +15,6 @@ RUN apt-get update && \
 COPY machine_flask_api.py ./
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
-ENV FLASK_APP=machine_flask_api.py
-EXPOSE 5000
+EXPOSE 5500
 
-CMD ["flask","run"]
+CMD ["flask","run", "--host=0.0.0.0"]
