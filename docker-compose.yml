@@ -51,5 +51,7 @@ services:
     environment:
       FLASK_APP: machine_flask_api.py
       FLASK_RUN_PORT: 5500
+      FLASK_APP_IP: 127.0.0.1 #just for decoration, changing that value WILL not affect the real IP where flask app is hosted.
+      FLASK_DEBUG: 1
 volumes:
   flask-app-db:
