@@ -5,6 +5,7 @@ import './App.css';
 import {Provider} from 'react-redux';
 import store from './app/store';
 import LoginContainer from "./app/login/conteiner/LoginContainer";
+import NavBar from "./app/common/navbar/NavBar";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import RegistrationContainer from "./app/registration/container/RegistrationContainer";
 import ComputationResourceManagment from './components/clusterNode/ComputationResourceManagement';
