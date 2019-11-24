@@ -20,5 +20,10 @@ def get_machine_data():
                     
     return jsonify({ "CPU": CPU, "GPU": GPU, "IP_ADDRESS": ip_address + ':' + str(port)})
 
+@app.route("/verify/<number>", methods=['GET'])
+def get_binary_string(number):
+    return bin(int(number))
+
+
 if __name__ == '__main__':
       app.run(host=ip_address, port=int(port))
