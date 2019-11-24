@@ -49,7 +49,7 @@ def check_user(user):
             'status': 'fail',
             'messege': 'User login failure',
         }
-        return  response_object, 403
+        return response_object, 403
     if not flask_bcrypt.check_password_hash(db_user.password, user['password']):
         response_object = {
             'status': 'fail',
@@ -92,31 +92,15 @@ def logout_user():
 def check_session():
     try:
         sid = session['sid']
-        db_session = Session.query.fliyer_by(sid=sid).first()
+        db_session = Session.query.filter_by(sid=sid).first()
         if not db_session:
-            response_object = {
-                'status': 'fail',
-                'messege': 'User is not logged',
-            }
-            return response_object, 403
+            return False
         else:
-            if db_session.exp < datetime.datetime.utcnow():
-                response_object = {
-                    'status': 'success',
-                    'messege': 'User is logged',
-                }
-                return response_object
+            if db_session.exp > datetime.datetime.utcnow():
+                return True
     except:
-        response_object = {
-            'status': 'fail',
-            'messege': 'Session check failure',
-        }
-        return response_object, 406
-    response_object = {
-        'status': 'fail',
-        'messege': 'User is not logged',
-    }
-    return response_object, 403
+        return False
+    return False
 
 
 def get_user(userId):
