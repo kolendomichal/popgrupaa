@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.DTO.ComputationAccountDTO import ComputationAccountDto
-from ..repositories.user_repository import add_user, get_user, check_user, logout_user, check_session
+from ..repositories.user_repository import add_user, get_user, check_user, logout_user
 
 api = ComputationAccountDto.api
 _user = ComputationAccountDto.user
@@ -38,16 +38,6 @@ class UserLogout(Resource):
     @api.doc('logout user')
     def post(self):
         return logout_user()
-
-
-@api.route('/check')
-class SessionCheck(Resource):
-    @api.response(200, 'User is logged')
-    @api.response(403, 'User is not logged')
-    @api.response(406, 'Session check failure')
-    @api.doc('check session')
-    def post(self):
-        return check_session()
 
 
 @api.route('/<public_id>')
