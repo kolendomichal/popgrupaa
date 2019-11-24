@@ -41,6 +41,7 @@ def add_user(user):
         }
         return response_object, 409
 
+
 def check_user(user):
     db_user = ComputationAccount.query.filter_by(username=user['username']).first()
     if not db_user:
@@ -69,6 +70,53 @@ def check_user(user):
         )
         save_changes(new_session)
         return response_object, 200
+
+
+def logout_user():
+    try:
+        session.pop('username', None)
+        session.pop('sid', None)
+    except:
+        response_object = {
+            'status': 'fail',
+            'messege': 'User logout failure',
+        }
+        return response_object, 406
+    response_object = {
+        'status': 'success',
+        'messege': 'User successfully logout',
+    }
+    return response_object, 200
+
+
+def check_session():
+    try:
+        sid = session['sid']
+        db_session = Session.query.fliyer_by(sid=sid).first()
+        if not db_session:
+            response_object = {
+                'status': 'fail',
+                'messege': 'User is not logged',
+            }
+            return response_object, 403
+        else:
+            if db_session.exp < datetime.datetime.utcnow():
+                response_object = {
+                    'status': 'success',
+                    'messege': 'User is logged',
+                }
+                return response_object
+    except:
+        response_object = {
+            'status': 'fail',
+            'messege': 'Session check failure',
+        }
+        return response_object, 406
+    response_object = {
+        'status': 'fail',
+        'messege': 'User is not logged',
+    }
+    return response_object, 403
 
 
 def get_user(userId):
