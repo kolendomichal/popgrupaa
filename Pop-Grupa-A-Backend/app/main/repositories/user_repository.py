@@ -74,6 +74,9 @@ def check_user(user):
 
 def logout_user():
     try:
+        sid = session['sid']
+        Session.query.filter_by(sid=sid).delete()
+
         session.pop('username', None)
         session.pop('sid', None)
     except:
