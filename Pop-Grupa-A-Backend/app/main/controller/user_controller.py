@@ -2,7 +2,8 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.DTO.ComputationAccountDTO import ComputationAccountDto
-from ..repositories.user_repository import add_user, get_user, check_user, logout_user
+from ..repositories.user_repository import get_user
+from ..services.user_service import add_user, check_user, logout_user
 
 api = ComputationAccountDto.api
 _user = ComputationAccountDto.user
