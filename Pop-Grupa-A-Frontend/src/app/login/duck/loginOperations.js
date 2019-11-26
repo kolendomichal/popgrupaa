@@ -11,6 +11,17 @@ const sendLoginRequest = (formValues) => (dispatch) => {
     }));
 };
 
+const sendLogoutRequest = () => (dispatch) => {
+    return dispatch(createRequestAction({
+        types: types.LOGOUT_REQUEST,
+        url: `/user/logout`,
+        method: 'POST',
+        body: {},
+        successHandler: () => ({payload:true})
+    }))
+};
+
 export default {
-    sendLoginRequest
+    sendLoginRequest,
+    sendLogoutRequest
 }

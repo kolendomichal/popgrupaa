@@ -17,7 +17,6 @@ class ComputationCockpit extends Component {
   render() {
     return (
       <div>
-        <ComputationCockpitNavBar />
         <Container>
           <AppList tasksShouldRefresh={this.tasksShouldRefresh} />
           <TaskList newTaskCreated={this.state.newTaskCreated} tasksShouldRefresh={this.tasksShouldRefresh}/>

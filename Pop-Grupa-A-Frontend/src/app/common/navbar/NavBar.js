@@ -1,12 +1,17 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar'
+import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+import loginOperations from '../../login/duck/loginOperations';
+import NavBarComponent from './NavBarComponent';
 
-const NavBar = () => (
-    <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">
-            BatlicLSC
-        </Navbar.Brand>
-    </Navbar>
-);
+const NavBar = ({loginOperations}) => {
+    return (
+        <NavBarComponent sendLogoutRequest={loginOperations.sendLogoutRequest}/>
+    );
+};
 
-export default NavBar;
+const mapDispatchToProps = (dispatch) => ({
+    loginOperations: bindActionCreators(loginOperations, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(NavBar);
