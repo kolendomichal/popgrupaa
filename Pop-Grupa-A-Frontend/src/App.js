@@ -1,4 +1,5 @@
 import React from 'react';
+import createNewClusterNodeForm from './components/clusterNode/createNewClusterNodeForm.jsx';
 import ComputationCockpit from './components/computationCockpit/ComputationCockpit.jsx';
 import './App.css';
 import {Provider} from 'react-redux';
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/login" exact component={LoginContainer}/>
                     <Route path="/sign-up" component={RegistrationContainer}/>
                     <Route path="/computation-cockpit" component={ComputationCockpit}/>
+                    <Route path="/create-new-cluster-node" component={createNewClusterNodeForm}/>
                 </Switch>
             </Router>
         </Provider>
