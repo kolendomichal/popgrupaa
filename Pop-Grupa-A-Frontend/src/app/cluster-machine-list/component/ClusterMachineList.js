@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Button from '../../common/form/Button';
 import ClusterMachineListTable from './ClusterMachineListTable';
 import {TableContainer} from '../../common/table/TableContainer';
-import {withRouter} from 'react-router-dom';
 import renderIf from 'render-if';
+import { withRouter } from 'react-router-dom';
 
 const ButtonContainer = styled.div`
     display: grid;
@@ -12,6 +12,7 @@ const ButtonContainer = styled.div`
     grid-column-gap: 5px;
     margin-bottom: 10px;
 `;
+
 class ClusterMachineList extends React.Component {
 
     constructor(props) {
@@ -51,5 +52,4 @@ class ClusterMachineList extends React.Component {
         )
     }
 }
-
 export default withRouter(ClusterMachineList);
