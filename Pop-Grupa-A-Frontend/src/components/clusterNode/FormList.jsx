@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 class DynamicFormList extends React.Component {
 
     constructor() {
@@ -27,7 +29,7 @@ class DynamicFormList extends React.Component {
 
     handleSubmit = evt => {
         const { isPrivate, IPTable } = this.state;
-        alert(`Incorporated: ${isPrivate} with ${IPTable.length} IPTable`);
+        alert(`Form: ${isPrivate} with ${IPTable.length} IPTable`);
     };
 
     handleAddIP = () => {
@@ -44,45 +46,58 @@ class DynamicFormList extends React.Component {
 
     render() {
         return (
-            <Row>
-                <Form onSubmit={this.handleSubmit}>
+            <div>
+                <h4>Create new Cluster Node</h4>
+                <hr></hr>
+                <Row>
+                    <Col sm>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group controlId="formIP">
+                                <Form.Label>List of machines IP addresses:</Form.Label>
 
-                    <h4>Create new Cluster Node</h4>
+                                {this.state.IPTable.map((IP, idx) => (
+                                    <div>
+                                        <Form.Row>
+                                            <Form.Group as={Col} md="10">
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder={`machine #${idx + 1} IP`}
+                                                    value={IP.machine}
+                                                    onChange={this.handleMachineIPChange(idx)}
+                                                />
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="2">
+                                                <Button variant="danger"
+                                                    type="button"
+                                                    onClick={this.handleRemoveIP(idx)}
+                                                    className="small"
+                                                >
 
-                    <hr></hr>
-
-                    {this.state.IPTable.map((IP, idx) => (
-                        <div className="IP">
-                            <input
-                                type="text"
-                                placeholder={`machine #${idx + 1} IP`}
-                                value={IP.machine}
-                                onChange={this.handleMachineIPChange(idx)}
-                            />
-                            <button
-                                type="button"
-                                onClick={this.handleRemoveIP(idx)}
-                                className="small"
-                            >
-                                -
-              </button>
-                        </div>
-                    ))}
-                    <button
-                        type="button"
-                        onClick={this.handleAddIP}
-                        className="small"
-                    >
-                        Add Next IP
-          </button>
-                    <br />
-                    Is Cluster Private:
-          <input type="checkbox" name="private" value={this.state.isPrivate} onChange={this.handlePrivateChange} />
-                    <br></br>
-
-                    <button>Create</button>
-                </Form>
-            </Row>
+                                                    REMOVE
+                                            </Button>
+                                            </Form.Group>
+                                        </Form.Row>
+                                    </div>
+                                ))}
+                                <Button variant="info"
+                                    type="button"
+                                    onClick={this.handleAddIP}
+                                    className="small"
+                                >
+                                    Add Next IP
+                                  </Button>
+                            </Form.Group>
+                            <Form.Group controlId="formPrivate">
+                                <Form.Row>
+                                    <Form.Label className="mr-2">Is Cluster Private:</Form.Label>
+                                    <Form.Check name="private" value={this.state.isPrivate} onChange={this.handlePrivateChange} />
+                                </Form.Row>
+                            </Form.Group>
+                            <Button variant="primary" style={{ width: '92%' }} size="lg" onClick={this.handleSubmit}>Create -></Button>
+                        </Form>
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }
