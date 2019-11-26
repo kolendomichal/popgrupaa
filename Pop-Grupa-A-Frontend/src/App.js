@@ -11,9 +11,9 @@ import RegistrationContainer from "./app/registration/container/RegistrationCont
 function App() {
     return (
         <Provider store={store}>
-            <NavBar/>
             <div>
                 <Router>
+                    <NavBar/>
                     <Switch>
                         <Route path="/login" exact component={LoginContainer}/>
                         <Route path="/sign-up" component={RegistrationContainer}/>
