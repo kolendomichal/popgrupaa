@@ -6,6 +6,7 @@ import app.main.services.cluster_nodes_service as node_service
 
 api = ClusterNodeDTO.api
 node_dto = ClusterNodeDTO.nodeDTO
+_createNodeModel = ClusterNodeDTO.createNodeDTO
 
 
 #TODO This method should have route user/<id_user>/nodes according to convention,
@@ -31,3 +32,12 @@ class NodeSubmit(Resource):
     def post(self, node_id):
         """Submits a cluster node"""
         return node_service.submit_node(node_id)
+
+@api.route('/create')
+@api.response(201, 'Node successfully created.')
+class CreateNode(Resource):
+    @api.doc('Create a new cluster node')
+    @api.expect(_createNodeModel, validate=True)
+    def post(self):
+        """Creates a cluster node"""
+        return node_service.create_node(request.json)

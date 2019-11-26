@@ -9,5 +9,5 @@ class ClusterNodeDTO:
 
     createNodeDTO = api.model('nodes', {
         'is_private': fields.Boolean(description='Is node private determiner'),
-        'ip_list': fields.String(required=False, description='Joined string of requested ip adresses')
+        'ip_list': fields.List(fields.String(required=False, description='List of ip addresses as string'))
     })
