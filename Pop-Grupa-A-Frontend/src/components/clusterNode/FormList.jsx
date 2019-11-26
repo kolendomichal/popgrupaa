@@ -53,7 +53,7 @@ class DynamicFormList extends React.Component {
                     <Col sm>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Group controlId="formIP">
-                                <Form.Label>List of machines IP addresses:</Form.Label>
+                                <Form.Label className="mr-2">List of machines IP addresses:</Form.Label>
 
                                 {this.state.IPTable.map((IP, idx) => (
                                     <div>
@@ -87,6 +87,7 @@ class DynamicFormList extends React.Component {
                                     Add Next IP
                                   </Button>
                             </Form.Group>
+                            <hr></hr>
                             <Form.Group controlId="formPrivate">
                                 <Form.Row>
                                     <Form.Label className="mr-2">Is Cluster Private:</Form.Label>
