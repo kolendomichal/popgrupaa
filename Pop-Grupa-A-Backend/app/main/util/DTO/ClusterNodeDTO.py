@@ -4,8 +4,7 @@ class ClusterNodeDTO:
     api = Namespace('nodes', description='Cluster nodes releted operations')
     nodeDTO = api.model('nodes', {
         'id': fields.Integer(description='node Identifier'),
-        'status' : fields.String(description='node ststus'),
-        'user_id': fields.String(description='user Identifier')
+        'status' : fields.String(description='node ststus')
         # TODO fill the rest
     })
 
