@@ -13,6 +13,20 @@ function submitClusterNode(nodeId){
     return submitResponse;
 }
 
+function getClustersForUser(userId){
+
+    var clusterlist = fetch(NODE_URL +"user/"+ + userId, {
+        crossDomain: true,
+        method: 'get',
+    })
+        .then(response => {
+            return response.status === 200 ? response.json() : [];
+        });
+
+    return clusterlist;
+}
+
 export {
+    getClustersForUser,
     submitClusterNode
 }
