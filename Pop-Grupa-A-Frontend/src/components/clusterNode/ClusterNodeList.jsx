@@ -41,7 +41,7 @@ class ClusterNodeList extends Component {
             <div>
                 <Row>
                     <Col sm>
-                        {<Button variant="secondary" block onClick={() => chosenClusterNodeId!== -1 && this.getClusters()}>Show owned cluster nodes</Button> }
+                        {<Button variant="secondary" block onClick={() =>  this.getClusters()}>Show owned cluster nodes</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Create new cluster node</Button>
