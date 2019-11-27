@@ -10,8 +10,11 @@ _machine = MachineDTO.machine
 
 @api.route('/<cluster_node_id>')
 @api.param('cluster_node_id', 'Cluster node id (string)')
-@api.response(200, 'Machine list successfully selected')
+@api.response(200, 'Succes')
+@api.response(406, 'Cannot parse string into int')
+@api.response(204, 'No machines found')
 class ClusterMachineList(Resource):
     @api.doc('get machine list for node')
+    @api.marshal_with(_machine, as_list=True)
     def get(self, cluster_node_id):
         return get_cluster_node_machine_list(cluster_node_id)

@@ -3,7 +3,16 @@ from app.main.model.Machine import Machine
 
 
 def get_cluster_node_machine_list(cluster_node_id):
-    machine_list = Machine.query.filter_by(cluster_node_id=int(cluster_node_id)).all()
+    try:
+        id = int(cluster_node_id)
+    except:
+        response_object = {
+            'message': 'Cannot parse string into int'
+        }
+        return response_object, 406
+    machine_list = Machine.query.filter_by(cluster_node_id=id).all()
+    if not machine_list:
+        return '', 204
     list = []
     for row in machine_list:
         list.append({"id": row.id,
