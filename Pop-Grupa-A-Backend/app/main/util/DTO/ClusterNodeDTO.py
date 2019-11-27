@@ -3,7 +3,8 @@ from flask_restplus import Namespace, fields
 class ClusterNodeDTO:
     api = Namespace('nodes', description='Cluster nodes releted operations')
     nodeDTO = api.model('nodes', {
-        'id': fields.Integer(description='node Identifier')
+        'id': fields.Integer(description='node Identifier'),
+        'status' : fields.String(description='node ststus')
         # TODO fill the rest
     })
 
