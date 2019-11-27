@@ -61,6 +61,7 @@ def check_user(user):
         response_object = {
             'status': 'success',
             'messege': 'User successfully logged',
+            'user_id': db_user.id
         }
         session['sid'] = sid
         session['username'] = user['username']
