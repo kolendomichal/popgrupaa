@@ -6,16 +6,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 class ComputationResourceManagment extends Component {
 
-  constructor(props) {
-    super(props);
-}
-
   render() {
     return (
       <div>
         <NavBar/>
         <Container>
-          <ClusterNodeList tasksShouldRefresh={this.tasksShouldRefresh} />
+          <ClusterNodeList/>
         </Container>
       </div>
 
