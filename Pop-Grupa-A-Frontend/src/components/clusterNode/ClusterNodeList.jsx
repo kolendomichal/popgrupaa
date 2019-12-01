@@ -16,7 +16,7 @@ class ClusterNodeList extends Component {
         };
     }
 
-    onClusterClick = (chosenClusterNodeId) => {
+    onClusterNodeClick = (chosenClusterNodeId) => {
         this.setState({ chosenClusterNodeId });
     }
 
@@ -31,11 +31,9 @@ class ClusterNodeList extends Component {
 
 
     render() {
-        const { chosenClusterNodeId} = this.state;
-
         const chosenClusterNodeStyle = {
             backgroundColor: "DodgerBlue"
-          };
+        };
 
         return (
             <div>
@@ -51,6 +49,7 @@ class ClusterNodeList extends Component {
                     </Col>
                 </Row>
                 <Row className="p-1 mb-3">
+                { this.state.listitems.length !== 0 ?
                     <Col sm style={{ maxHeight: '30vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
                         <Table striped bordered hover>
                             <thead>
@@ -69,6 +68,11 @@ class ClusterNodeList extends Component {
                             </tbody>
                         </Table>
                     </Col>
+                    :
+                    <Col sm className="text-center h3 mt-5">
+                        There are no cluster nodes assigned to your account.
+                    </Col>
+                }
                 </Row>
             </div>
         );

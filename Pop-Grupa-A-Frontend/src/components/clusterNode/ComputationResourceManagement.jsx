@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ClusterNodeList from './ClusterNodeList.jsx';
-import NavBar from '../navigationBar/ComputationResourceManagmentNavBar.jsx';
+import NavBar from '../navigationBar/ComputationResourceManagmentNavBar';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
-class ComputationResourceManagment extends Component {
+class ComputationResourceManagement extends Component {
 
   render() {
     return (
@@ -19,4 +19,4 @@ class ComputationResourceManagment extends Component {
   }
 }
 
-export default ComputationResourceManagment;
+export default ComputationResourceManagement;

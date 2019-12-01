@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 function NavBar() {
     return (
         <Navbar bg="light" variant="light" className="mb-4">
-            <Navbar.Brand href="#home">BalticLSC</Navbar.Brand>
+            <Navbar.Brand >BalticLSC</Navbar.Brand>
             <Nav className="mr-auto">
-                <Nav.Link href="#cockpit">Computation Cockpit</Nav.Link>
+                <Nav.Link >Computation Cockpit</Nav.Link>
             </Nav>
             <Nav>
                 <Nav.Link eventKey={2} href="#logout">
