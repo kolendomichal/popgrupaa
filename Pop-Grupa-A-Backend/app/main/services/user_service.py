@@ -67,7 +67,7 @@ def check_user(user):
         session['username'] = user['username']
         new_session = Session(
             sid=sid,
-            exp=datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            exp=datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
         )
         save_changes(new_session)
         return response_object, 200
