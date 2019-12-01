@@ -1,5 +1,6 @@
 import {createRequestAction} from "../../utils";
 import types from './loginTypes';
+import {UserIdPath} from "../../constants";
 
 const sendLoginRequest = (formValues) => (dispatch) => {
     return dispatch(createRequestAction({
@@ -7,7 +8,10 @@ const sendLoginRequest = (formValues) => (dispatch) => {
         url: `/user/login`,
         method: 'POST',
         body: {...formValues},
-        successHandler: () => ({payload:true})
+        successHandler: data => {
+            localStorage.setItem(UserIdPath, data.user_id);
+            return {payload: true};
+        }
     }));
 };
 
@@ -17,7 +21,10 @@ const sendLogoutRequest = () => (dispatch) => {
         url: `/user/logout`,
         method: 'POST',
         body: {},
-        successHandler: () => ({payload:true})
+        successHandler: () => {
+            localStorage.removeItem(UserIdPath);
+            return ({payload: true});
+        }
     }))
 };
 

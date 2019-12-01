@@ -7,3 +7,5 @@ export const Status = {
     Fail: 'fail',
     Success: 'success'
 };
+
+export const UserIdPath = "userId";
