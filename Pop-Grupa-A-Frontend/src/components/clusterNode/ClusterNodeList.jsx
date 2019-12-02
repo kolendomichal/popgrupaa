@@ -4,14 +4,23 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getClustersForUser } from '../../services/clusterService';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+const ButtonContainer = styled.div`
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-column-gap: 5px;
+    margin-bottom: 10px;
+`;
 
 class ClusterNodeList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            chosenClusterNodeId: -1,
-            listitems: [],
+            chosenClusterNodeId: false,
+            clusterNodeList: [],
             userId: 1
         };
     }
@@ -24,11 +33,10 @@ class ClusterNodeList extends Component {
         getClustersForUser(this.state.userId)
             .then(response =>
                 this.setState({
-                    listitems: response
+                    clusterNodeList: response
                 })
             );
     }
-
 
     render() {
         const chosenClusterNodeStyle = {
@@ -49,7 +57,7 @@ class ClusterNodeList extends Component {
                     </Col>
                 </Row>
                 <Row className="p-1 mb-3">
-                { this.state.listitems.length !== 0 ?
+                { this.state.clusterNodeList.length !== 0 ?
                     <Col sm style={{ maxHeight: '30vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
                         <Table striped bordered hover>
                             <thead>
@@ -59,7 +67,7 @@ class ClusterNodeList extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.listitems.map(listitem => (
+                                {this.state.clusterNodeList.map(listitem => (
                                     <tr key={listitem.id} onClick={() => this.onClusterNodeClick(listitem.id)} style={listitem.id === this.state.chosenClusterNodeId ? chosenClusterNodeStyle : null}>
                                         <td className="text-left">{listitem.id}</td>
                                         <td className="text-left">{listitem.status}</td>
@@ -73,7 +81,19 @@ class ClusterNodeList extends Component {
                         There are no cluster nodes assigned to your account.
                     </Col>
                 }
+                
                 </Row>
+                <ButtonContainer>
+                    <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Submit </Button>
+                    <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Safely deactivate </Button>
+                    <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Details </Button>
+                    <Link to={`/computation-resource-management/${this.state.chosenClusterNodeId}/machine-list`} style={{textDecoration: 'none'}} className="d-flex">
+                        <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} className="flex-fill"> 
+                            Machine List 
+                        </Button>
+                    </Link>
+                    
+                </ButtonContainer>
             </div>
         );
     }

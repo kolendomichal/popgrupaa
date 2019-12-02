@@ -1,4 +1,4 @@
-import { clusterUrl } from '../commons/ApiLinks';
+import { clusterUrl, machinesUrl } from '../commons/ApiLinks';
 
 function getClustersForUser(userId){
     
@@ -13,6 +13,20 @@ function getClustersForUser(userId){
     return clusterlist;
 }
 
+
+function getMachinesForClusterNode(clusterNodeId){
+    var machinesList = fetch(machinesUrl + clusterNodeId, {
+        crossDomain: true,
+        method: 'get',
+    })
+        .then(response => {
+            return response.status === 200 ? response.json() : [];
+        });
+
+    return machinesList;
+}
+
 export {
-    getClustersForUser
+    getClustersForUser,
+    getMachinesForClusterNode
 }
