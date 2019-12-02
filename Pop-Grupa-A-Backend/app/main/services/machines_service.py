@@ -1,27 +1,17 @@
 from app.main import db
 from app.main.model.Machine import Machine
+import app.main.repositories.machines_repository as machine_repository
 
 
 def get_cluster_node_machine_list(cluster_node_id):
-    try:
-        id = int(cluster_node_id)
-    except:
-        response_object = {
-            'message': 'Cannot parse string into int'
-        }
-        return response_object, 406
-    machine_list = Machine.query.filter_by(cluster_node_id=id).all()
+    machine_list = machine_repository.get_machines_for_cluster_node(cluster_node_id)
     if not machine_list:
-        return '', 204
-    list = []
-    for row in machine_list:
-        list.append({"id": row.id,
-                     "cluster_node_id": row.cluster_node_id,
-                     "cpus": row.cpus,
-                     "gpus": row.gpus,
-                     "ip_address": row.ip_address
-                     })
-    return list, 200
+        return {
+                'status': 'failure',
+                'message': 'Cluster node with id = {cluster_node_id} has no machines assigned'
+                }, 204
+
+    return machine_list, 200
 
 
 def save_changes(data):
