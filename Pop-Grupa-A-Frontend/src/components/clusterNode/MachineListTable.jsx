@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-class BalticLSCTable extends React.Component {
+class MachineListTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {selectedRowId: undefined};
@@ -24,7 +24,7 @@ class BalticLSCTable extends React.Component {
                     ))}
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style={{overflowY: 'auto'}}>
                 {data.map((d, idx) => (
                     <tr key={idx}>
                         {headers.map(h => (
@@ -38,4 +38,4 @@ class BalticLSCTable extends React.Component {
     }
 }
 
-export default BalticLSCTable;
+export default MachineListTable;
