@@ -8,13 +8,12 @@ class ComputationResourceManagement extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NavBar/>
         <Container>
           <ClusterNodeList/>
         </Container>
-      </div>
-
+      </React.Fragment>
     );
   }
 }

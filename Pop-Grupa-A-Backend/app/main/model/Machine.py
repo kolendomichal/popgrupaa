@@ -1,5 +1,6 @@
 from .. import db
 
+
 class Machine(db.Model):
     __tablename__ = "Machines"
 
