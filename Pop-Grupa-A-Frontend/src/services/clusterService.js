@@ -2,7 +2,7 @@ import { clusterUrl, machinesUrl } from '../commons/ApiLinks';
 
 function getClustersForUser(userId){
     
-    var clusterlist = fetch(clusterUrl + userId, {
+    var clusterlist = fetch(clusterUrl+"user/" + userId, {
         crossDomain: true,
         method: 'get',
     })

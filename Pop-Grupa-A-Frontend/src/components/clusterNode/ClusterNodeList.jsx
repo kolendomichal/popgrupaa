@@ -41,7 +41,6 @@ class ClusterNodeList extends Component {
     submitCluster() {
         submitClusterNode(this.state.chosenClusterNodeId)
             .then(response =>{
-                alert(response)
                 this.setState({
                     listitems : this.getClusters()
                 })
@@ -57,13 +56,6 @@ class ClusterNodeList extends Component {
                 <Row>
                     <Col sm>
                         {<Button variant="secondary" block onClick={() =>  this.getClusters()}>Show owned cluster nodes</Button> }
-                    </Col>
-                    <Col sm>
-                        {<Button variant="secondary" 
-                        block 
-                        disabled = {this.state.chosenClusterNodeId === false}
-                        onClick={() => this.submitCluster(this.state.chosenClusterNodeId)}
-                        >Submit cluster node</Button> }
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Create new cluster node</Button>
@@ -100,7 +92,11 @@ class ClusterNodeList extends Component {
                 
                 </Row>
                 <ButtonContainer>
-                    <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Submit </Button>
+                    <Button variant="secondary" 
+                        block 
+                        disabled = {this.state.chosenClusterNodeId === false}
+                        onClick={() => this.submitCluster(this.state.chosenClusterNodeId)}
+                        >Submit cluster node</Button> 
                     <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Safely deactivate </Button>
                     <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Details </Button>
                     <Link to={`/computation-resource-management/${this.state.chosenClusterNodeId}/machine-list`} style={{textDecoration: 'none'}} className="d-flex">
