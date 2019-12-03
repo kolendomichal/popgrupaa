@@ -3,10 +3,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import {withRouter} from "react-router-dom";
+import { createClusterNode } from '../../services/nodeService';
+
+
 class DynamicFormList extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isPrivate: false,
             IPTable: [{ machine: "" }]
@@ -14,7 +18,6 @@ class DynamicFormList extends React.Component {
     }
 
     handlePrivateChange = evt => {
-        console.log(evt.target.checked)
         this.setState({ isPrivate: evt.target.checked });
     };
 
@@ -27,9 +30,17 @@ class DynamicFormList extends React.Component {
         this.setState({ IPTable: newIPTable });
     };
 
-    handleSubmit = evt => {
+    handleSubmit = (e) => {
+        e.preventDefault();
         const { isPrivate, IPTable } = this.state;
-        alert(`Form: ${isPrivate} with ${IPTable.length} IPTable`);
+        let ip_list = IPTable.map( (IP) => {return IP.machine;});
+        createClusterNode(isPrivate,'4',ip_list).then(response => {
+            if (response.status == 201){
+                this.props.history.push('/computation-resource-management');
+            } else {
+                alert('Something went wrong!');
+            }
+        });
     };
 
     handleAddIP = () => {
@@ -94,7 +105,7 @@ class DynamicFormList extends React.Component {
                                     <Form.Check name="private" value={this.state.isPrivate} onChange={this.handlePrivateChange} />
                                 </Form.Row>
                             </Form.Group>
-                            <Button variant="primary" style={{ width: '92%' }} size="lg" onClick={this.handleSubmit}>Create -></Button>
+                            <Button type="submit" variant="primary" style={{ width: '92%' }} size="lg" >Create -></Button>
                         </Form>
                     </Col>
                 </Row>
@@ -103,4 +114,4 @@ class DynamicFormList extends React.Component {
     }
 }
 
-export default DynamicFormList;
+export default withRouter(DynamicFormList);

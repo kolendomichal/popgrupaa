@@ -12,6 +12,9 @@ def save_and_return(data):
     db.session.flush()
     return data
 
+def commit_changes():
+    db.session.commit()
+
 def save_changes(data):
     db.session.add(data)
     db.session.commit()

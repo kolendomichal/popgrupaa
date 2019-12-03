@@ -42,14 +42,15 @@ def submit_node(node_id):
 def create_node(createNodeDto):
     new_node = ClusterNode(
         is_private = createNodeDto.get('is_private', False),
+        user_id = createNodeDto.get('user_id'),
         status = NodeStatus.CREATED
     )
     inserted_node = nodes_repository.save_and_return(new_node)
     machines_list = []
     for ip in createNodeDto.get('ip_list', []):
-        if ip == '':
+        if ip == '' or ' ' in ip:
             return 'Cluster node could not be created. ' \
-                    + 'Ip list element cannot be empty string', 400
+                    + 'Ip list element cannot be empty string or contain a white space', 400
         if machines_repository.get_machine_by_ip(ip):
             return 'Cluster node could not be created. ' \
                     + f'There already is a machine with ip address: {ip}', 400
@@ -61,7 +62,10 @@ def create_node(createNodeDto):
         ))
     if len(machines_list) > 0:
         machines_repository.save_machines_list(machines_list)
-    return 'Succesfully created node and machines with given IPs', 201
+    else: 
+        nodes_repository.commit_changes()
+
+    return 'Succesfully created node and machines with given IPss', 201
 
 def verify_machine(machine):
     threshold = 10000
