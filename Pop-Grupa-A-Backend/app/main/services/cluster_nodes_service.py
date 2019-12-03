@@ -6,7 +6,6 @@ import json
 
 
 def get_nodes_for_user(userId):
-    #TODO below is to be fixed 
     return nodes_repository.get_cluster_nodes_for_user(userId)
 
 def submit_node(node_id):
@@ -60,9 +59,11 @@ def verify_cpu_gpu(machine):
         machine_data = json.loads(urlopen(url).read())
     except Exception:
         raise Exception("Machine didn't answer for hardware verification! Please check if machine's IP is correct.")
-    if machine_data['CPU'] != machine.cpus:
-        raise Exception(f"CPU in database '{machine.cpus}' does not match machine's CPU '{machine_data['CPU']}'!")
-    if machine_data['GPU'] != machine.gpus:
-        raise Exception(f"GPU in database '{machine.gpus}' does not match machine's GPU '{machine_data['GPU']}'!")
+    if machine_data['CPU']:
+        machine.cpus = machine_data['CPU']
+    if machine_data['GPU']:
+        machine.gpus = machine_data['GPU']
+      
+   
 
 
