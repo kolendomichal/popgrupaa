@@ -14,7 +14,7 @@ def add_task(task):
 
     if db_user and db_app:
         new_task = ComputationTask(
-            status = ComputationStatus.SUBMITTED.value,
+            status = ComputationStatus.SUBMITTED,
             user_id = task['user_id'],
             app_id = task['app_id']
         )
@@ -37,34 +37,33 @@ def add_task(task):
             }, 400
 
 
-def update_task(task):
+def activate_task(task_id):
     try:
+        task = task_repository.get_task_for_task_id(task_id)
+        task.status=ComputationStatus.WORKING
         task_repository.save_changes(task)
-        return task, 200
+        response_object = {
+            'status': 'success',
+            'message': 'Task successfuly activated.'
+        }
+
+        return response_object, 200
     except:
         response_object = {
             'status': 'failure',
-            'message': 'Couldn\'t update task'
+            'message': 'Error occur while activating task'
         }
         return response_object, 404
     
-def get_task_for_task_id(task_id):
-    return ComputationTask.query.filter_by(task_id=task_id).all()
 
 
-def change_status_for_task(task, status):
-    task['status']=status 
-    update_task(task)
-    return task
-
-
-def get_status(task_id):
-    return ComputationTask.query.filter_by(task_id=task_id).all()['status']
 
 def get_tasks_for_user(user_id):
         user = get_user(user_id)
         if not user:
             return abort(404, 'User with given id could not be found!')
         tasks_list = task_repository.get_tasks_for_user(user_id)
-        status_code = 204 if len(tasks_list) == 0 else 200
-        return tasks_list, status_code
+        if len(tasks_list) == 0:
+            return tasks_list, 204
+        return tasks_list, 200
+
