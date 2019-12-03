@@ -41,6 +41,7 @@ class ClusterNodeList extends Component {
     submitCluster() {
         submitClusterNode(this.state.chosenClusterNodeId)
             .then(response =>{
+                alert(response.message);
                 this.setState({
                     listitems : this.getClusters()
                 })
