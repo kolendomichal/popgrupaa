@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import ClusterNodeList from './ClusterNodeList.jsx';
-import NavBar from '../navigationBar/NavBar.jsx';
+import NavBar from '../navigationBar/ComputationResourceManagmentNavBar';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
-class ComputationResourceManagment extends Component {
+class ComputationResourceManagement extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NavBar/>
         <Container>
-          <ClusterNodeList tasksShouldRefresh={this.tasksShouldRefresh} />
+          <ClusterNodeList/>
         </Container>
-      </div>
-
+      </React.Fragment>
     );
   }
 }
 
-export default ComputationResourceManagment; 
+export default ComputationResourceManagement;

@@ -5,7 +5,7 @@ from urllib.request import urlopen
 
 def get_nodes_for_user(userId):
     #TODO below is to be fixed 
-    return nodes_repository.get_all_cluster_nodes()
+    return nodes_repository.get_cluster_nodes_for_user(userId)
 
 def submit_node(node_id):
     node = nodes_repository.get_node_for_id(node_id)
@@ -41,3 +41,4 @@ def verify_machine(machine):
     url = 'http://' + machine.ip_address + '/verify/' + str(number)
     response = urlopen(url).read()
     return bin(number) == bin(int(response,2))
+
