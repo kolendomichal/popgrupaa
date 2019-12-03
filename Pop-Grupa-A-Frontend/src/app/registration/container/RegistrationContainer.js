@@ -4,6 +4,7 @@ import RegistrationForm from "../component/RegistrationForm";
 import registrationOperations from "../duck/registrationOperations";
 import {bindActionCreators} from "redux";
 import {Redirect} from 'react-router-dom';
+import { LoginRegistrationNavBar } from '../../../components/navigationBar/NavBars';
 
 class RegistrationContainer extends React.PureComponent {
 
@@ -15,7 +16,8 @@ class RegistrationContainer extends React.PureComponent {
     register = (formValues) => {
         this.props.registrationOperations.sendRegisterRequest(formValues).then(data => {
             if (data.payload) {
-                this.setState(state => ({...state, registered: true}))
+                this.setState(state => ({...state, registered: true}));
+                alert("Registration successful");
             }
         })
     };
@@ -25,7 +27,10 @@ class RegistrationContainer extends React.PureComponent {
             return <Redirect to='/login'/>
         }
         return (
-            <RegistrationForm onSubmit={this.register}/>
+            <React.Fragment>
+                <LoginRegistrationNavBar />
+                <RegistrationForm onSubmit={this.register}/>
+            </React.Fragment>
         );
     }
 }

@@ -3,7 +3,6 @@ import MachineListHeader from './MachineListHeader';
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../navigationBar/ComputationResourceManagmentNavBar';
 import { getMachinesForClusterNode } from '../../services/clusterService';
 
 const TableContainer = styled.div`
@@ -49,7 +48,6 @@ class MachineList extends Component{
     render() {
         return (
             <React.Fragment>
-                <NavBar/>
                 <TableContainer>
                     { this.state.clusterMachinesList.length > 0 ?
                         <React.Fragment>
