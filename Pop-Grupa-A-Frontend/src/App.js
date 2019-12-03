@@ -10,6 +10,7 @@ import RegistrationContainer from "./app/registration/container/RegistrationCont
 import ComputationResourceManagment from './components/clusterNode/ComputationResourceManagement';
 import MachineList from './components/clusterNode/MachineList';
 
+// test test
 function App() {
     return (
         <Provider store={store}>
