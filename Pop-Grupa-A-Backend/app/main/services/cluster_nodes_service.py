@@ -9,8 +9,7 @@ import random
 from urllib.request import urlopen
 
 def get_nodes_for_user(userId):
-    #TODO below is to be fixed 
-    return nodes_repository.get_all_cluster_nodes()
+    return nodes_repository.get_cluster_nodes_for_user(userId)
 
 def submit_node(node_id):
     node = nodes_repository.get_node_for_id(node_id)

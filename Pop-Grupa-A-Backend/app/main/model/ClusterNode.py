@@ -9,3 +9,4 @@ class ClusterNode(db.Model):
     status = db.Column(db.Enum(NodeStatus), unique=False, nullable=False)
     is_private = db.Column(db.Boolean, nullable=False)
     machines = db.relationship('Machine', backref='cluster_node', lazy=True)
+    user_id = db.Column(db.Integer, unique=False, nullable=False)
