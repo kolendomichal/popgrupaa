@@ -4,7 +4,7 @@ import DynamicFormList from './FormList.jsx';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
-class createNewClusterNodeForm extends Component {
+class CreateNewClusterNodeForm extends Component {
 
     render() {
         return (
@@ -19,4 +19,4 @@ class createNewClusterNodeForm extends Component {
     }
 }
 
-export default createNewClusterNodeForm;
+export default CreateNewClusterNodeForm;
