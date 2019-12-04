@@ -1,8 +1,8 @@
-import { taskUrl } from '../commons/ApiLinks';
+import { TASK_URL } from '../commons/ApiLinks';
 
 function getTasksForUser(userId){
     
-    var tasklist = fetch(taskUrl + userId, {
+    var tasklist = fetch(TASK_URL + userId, {
         crossDomain: true,
         method: 'get',
     })
@@ -15,7 +15,7 @@ function getTasksForUser(userId){
 
 function createTask(appId, userId){
 
-    var createResponse = fetch(taskUrl, {
+    var createResponse = fetch(TASK_URL, {
         crossDomain: true,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -34,7 +34,7 @@ function createTask(appId, userId){
 
 function activateTask(taskId){
     
-    var activateResponse = fetch(`${taskUrl+taskId}`, {
+    var activateResponse = fetch(`${TASK_URL+taskId}`, {
         crossDomain:  true,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

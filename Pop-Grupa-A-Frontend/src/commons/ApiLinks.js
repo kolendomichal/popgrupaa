@@ -1,13 +1,13 @@
-const baseUrl = "http://localhost:5000/"
+const BASE_URL = "http://localhost:5000/"
 
-const taskUrl = `${baseUrl}task/` // plus app
-const APP_URL = `${baseUrl}application/`
-const clusterUrl = `${baseUrl}nodes/`
-const machinesUrl = `${baseUrl}machines/`
+const TASK_URL = `${BASE_URL}task/` // plus app
+const APP_URL = `${BASE_URL}application/`
+const CLUSTER_URL = `${BASE_URL}nodes/`
+const MACHINES_URL = `${BASE_URL}machines/`
 
 export{
-    taskUrl,
+    TASK_URL,
     APP_URL,
-    clusterUrl,
-    machinesUrl
+    CLUSTER_URL,
+    MACHINES_URL
 }

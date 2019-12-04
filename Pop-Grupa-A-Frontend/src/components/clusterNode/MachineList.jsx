@@ -3,8 +3,8 @@ import MachineListHeader from './MachineListHeader';
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import NavBar from '../navigationBar/ComputationResourceManagmentNavBar';
 import { getMachinesForClusterNode } from '../../services/clusterService';
+import { ComputationResourceNavBar } from '../navigationBar/NavBars';
 
 const TableContainer = styled.div`
     display: flex;
@@ -49,7 +49,7 @@ class MachineList extends Component{
     render() {
         return (
             <React.Fragment>
-                <NavBar/>
+                <ComputationResourceNavBar />
                 <TableContainer>
                     { this.state.clusterMachinesList.length > 0 ?
                         <React.Fragment>
