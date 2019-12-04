@@ -45,6 +45,7 @@ class ClusterNodeList extends Component {
                     this.setState({
                         listitems: this.getClusters()
                     })
+                    alert(response)
                 },
                 (error) => {
                     alert(error)

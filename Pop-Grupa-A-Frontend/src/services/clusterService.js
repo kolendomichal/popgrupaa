@@ -22,7 +22,7 @@ function submitClusterNode(nodeId){
     .then(response => response.json())
     .then(response => {
         if (response.status === "success") {
-            return response;
+            return response.message;
         } else {
             throw new Error(response.message);
         }
