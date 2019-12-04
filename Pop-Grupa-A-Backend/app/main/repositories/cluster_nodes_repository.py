@@ -7,6 +7,17 @@ def get_all_cluster_nodes():
 def get_node_for_id(node_id):
     return ClusterNode.query.filter_by(id=node_id).first()
 
+def get_node_for_id(node_id):
+    return ClusterNode.query.filter_by(id=node_id).first()
+
+def save_and_return(data):
+    db.session.add(data)
+    db.session.flush()
+    return data
+
+def commit_changes():
+    db.session.commit()
+
 def save_changes(data):
     db.session.add(data)
     db.session.commit()

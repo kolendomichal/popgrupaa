@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppList from './AppList.jsx';
 import TaskList from './TaskList.jsx';
-import NavBar from '../navigationBar/NavBar.jsx';
+import { ComputationCockpitNavBar } from '../navigationBar/NavBars';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -17,7 +17,7 @@ class ComputationCockpit extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <ComputationCockpitNavBar />
         <Container>
           <AppList tasksShouldRefresh={this.tasksShouldRefresh} />
           <TaskList newTaskCreated={this.state.newTaskCreated} tasksShouldRefresh={this.tasksShouldRefresh}/>

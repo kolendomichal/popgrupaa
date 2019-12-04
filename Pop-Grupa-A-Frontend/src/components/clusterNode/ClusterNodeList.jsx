@@ -64,7 +64,7 @@ class ClusterNodeList extends Component {
                         {<Button variant="secondary" block onClick={() => this.getClusters()}>Show owned cluster nodes</Button>}
                     </Col>
                     <Col sm>
-                        <Button variant="secondary" block>Create new cluster node</Button>
+                        <Button variant="secondary" block><Link style={{textDecoration: 'none', color: '#ffffff'}} to="/computation-resource-management/create-new-cluster-node">Create new cluster node</Link></Button>
                     </Col>
                     <Col sm>
                         <Button variant="secondary" block>Show credit statistics</Button>
