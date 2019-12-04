@@ -62,6 +62,7 @@ def check_user(user):
         }
         session['sid'] = sid
         session['username'] = user['username']
+        session['role'] = user['role']
         new_session = Session(
             sid=sid,
             exp=datetime.datetime.utcnow() + datetime.timedelta(hours=1)
@@ -90,11 +91,7 @@ def logout_user():
     return response_object, 200
 
 def get_role_of_current_user():
-    user = session.get('username')
-    db_user = ComputationAccount.query.filter_by(username=user).first()
-    if db_user is None:
-        return None
-    return db_user.role
+    return session.get('role')
 
 def save_changes(data):
     db.session.add(data)
