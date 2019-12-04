@@ -8,4 +8,4 @@ class Machine(db.Model):
     cluster_node_id = db.Column(db.Integer, db.ForeignKey('ClusterNodes.id'), unique=False, nullable=False)
     cpus = db.Column(db.String(255), unique=False, nullable=False)
     gpus = db.Column(db.String(255), unique=False, nullable=False)
-    ip_address = db.Column(db.String(15), unique=False, nullable=False)
+    ip_address = db.Column(db.String(30), unique=False, nullable=False)
