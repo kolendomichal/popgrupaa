@@ -1,6 +1,6 @@
 from flask import request
 from flask_restplus import Resource
-
+from app.main.model.AccountRole import AccountRole
 from ..util.DTO.ComputationTaskDTO import ComputationTaskDto
 from ..services.task_service import get_tasks_for_user, add_task, activate_task
 from app.main.util.user_validator import roles_required
@@ -19,7 +19,7 @@ _task_user_list = ComputationTaskDto.task_user_list
 class TaskListForUser(Resource):
     @api.doc('Get list of computation tasks for user')
     @api.marshal_with(_task_user_list, as_list=True)
-    @roles_required('APP_USER')
+    @roles_required(AccountRole.APP_USER)
     def get(self, user_id):
         """get computation tasks list for user"""
         return get_tasks_for_user(user_id)
@@ -29,7 +29,7 @@ class TaskCreate(Resource):
     @api.response(201, 'Task successfully created.')
     @api.doc('create a new task')
     @api.expect(_createModel, validate=True)
-    @roles_required('APP_USER')
+    @roles_required(AccountRole.APP_USER)
     def post(self):
         """Creates a new Task"""
         data = request.json
@@ -43,7 +43,7 @@ class TaskCreate(Resource):
 @api.param('task_id', 'The Task identifier')
 class TaskActivate(Resource):
     @api.doc('activates task')
-    @roles_required('APP_USER')
+    @roles_required(AccountRole.APP_USER)
     def post(self, task_id):
         """Activates task"""
         return activate_task(task_id)
