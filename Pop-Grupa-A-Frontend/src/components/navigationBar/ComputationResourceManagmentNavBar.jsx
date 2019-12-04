@@ -8,7 +8,7 @@ function NavBar() {
         <Navbar bg="light" variant="light" className="mb-4">
             <Navbar.Brand >BalticLSC</Navbar.Brand>
             <Nav className="mr-auto">
-                <Nav.Link >Computation Resource Managment</Nav.Link>
+                <Nav.Link href="/computation-resource-management">Computation Resource Managment</Nav.Link>
             </Nav>
             <Nav>
                 <Nav.Link eventKey={2} href="#logout">

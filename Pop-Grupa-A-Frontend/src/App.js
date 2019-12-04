@@ -9,6 +9,7 @@ import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 import RegistrationContainer from "./app/registration/container/RegistrationContainer";
 import ProtectedRoute from "./app/common/router/ProtectedRoute";
 import ComputationResourceManagment from './components/clusterNode/ComputationResourceManagement';
+import MachineList from './components/clusterNode/MachineList';
 
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
                     <Route path="/login" exact component={LoginContainer}/>
                     <Route path="/sign-up" component={RegistrationContainer}/>
                     <ProtectedRoute path="/computation-cockpit" component={ComputationCockpit}/>
-                    <ProtectedRoute path="/computation-resource-management" component={ComputationResourceManagment}/>
+                    <ProtectedRoute exact path="/computation-resource-management" component={ComputationResourceManagment}/>
+                    <ProtectedRoute exact path="/computation-resource-management/:chosenClusterNodeId/machine-list" component={MachineList}/>
                 </Switch>
             </Router>
         </Provider>
