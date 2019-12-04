@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {withRouter} from "react-router-dom";
-import { createClusterNode } from '../../services/nodeService';
+import { createClusterNode } from '../../services/clusterService';
 
 
 class DynamicFormList extends React.Component {
@@ -34,13 +34,16 @@ class DynamicFormList extends React.Component {
         e.preventDefault();
         const { isPrivate, IPTable } = this.state;
         let ip_list = IPTable.map( (IP) => {return IP.machine;});
-        createClusterNode(isPrivate,'4',ip_list).then(response => {
-            if (response.status == 201){
+        createClusterNode(isPrivate,'1',ip_list)
+        .then(
+            () => {
+                alert("Cluster node created successfully");
                 this.props.history.push('/computation-resource-management');
-            } else {
-                alert('Something went wrong!');
+            },
+            (error) => {
+                alert(error)
             }
-        });
+        );
     };
 
     handleAddIP = () => {
@@ -67,7 +70,7 @@ class DynamicFormList extends React.Component {
                                 <Form.Label className="mr-2">List of machines IP addresses:</Form.Label>
 
                                 {this.state.IPTable.map((IP, idx) => (
-                                    <div>
+                                    <div key={idx}>
                                         <Form.Row>
                                             <Form.Group as={Col} md="10">
                                                 <Form.Control
