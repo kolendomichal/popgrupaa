@@ -89,8 +89,11 @@ def logout_user():
     }
     return response_object, 200
 
-def get_role_of_user(user):
-    db_user = ComputationAccount.query.filter_by(username=user['username']).first()
+def get_role_of_current_user():
+    user = session.get('username')
+    db_user = ComputationAccount.query.filter_by(username=user).first()
+    if db_user is None:
+        return None
     return db_user.role
 
 def save_changes(data):
