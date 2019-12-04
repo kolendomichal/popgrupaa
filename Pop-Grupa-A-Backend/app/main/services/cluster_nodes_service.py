@@ -40,7 +40,7 @@ def submit_node(node_id):
 
 def verify_machine(machine):
     verify_ping_pong(machine)
-    verify_cpu_gpu(machine)
+    fill_machine_data(machine)
 
 def verify_ping_pong(machine):
     threshold = 10000
@@ -53,17 +53,16 @@ def verify_ping_pong(machine):
     if bin(number) != bin(int(response, 2)):
         raise Exception("Wrong answer for verification message.")
 
-def verify_cpu_gpu(machine):
+def fill_machine_data(machine):
     url = 'http://' + machine.ip_address + '/machine-data'
     try:
         machine_data = json.loads(urlopen(url).read())
     except Exception:
         raise Exception("Machine didn't answer for hardware verification! Please check if machine's IP is correct.")
-    if machine_data['CPU']:
+    if machine_data.get('CPU'):
         machine.cpus = machine_data['CPU']
-    if machine_data['GPU']:
+    if machine_data.get('GPU'):
         machine.gpus = machine_data['GPU']
       
-   
 
 
