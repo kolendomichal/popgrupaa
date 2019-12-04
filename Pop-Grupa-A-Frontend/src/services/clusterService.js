@@ -21,7 +21,11 @@ function submitClusterNode(nodeId){
     })
     .then(response => response.json())
     .then(response => {
-        return response;
+        if (response.status === "success") {
+            return response.message;
+        } else {
+            throw new Error(response.message);
+        }
     });
     return submitResponse;
 }
