@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
-import NavBar from '../navigationBar/NavBar.jsx';
+import React from 'react';
+import { ComputationResourceNavBar } from '../navigationBar/NavBars';
 import DynamicFormList from './FormList.jsx';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
-class CreateNewClusterNodeForm extends Component {
+const CreateNewClusterNodeForm = () => (
+    <React.Fragment>
+        <ComputationResourceNavBar />
+        <Container>
+            <DynamicFormList />
+        </Container>
+    </React.Fragment>
+);
 
-    render() {
-        return (
-            <div>
-                <NavBar />
-                <Container>
-                    <DynamicFormList />
-                </Container>
-            </div>
-
-        );
-    }
-}
-
-export default CreateNewClusterNodeForm;
+export default CreateNewClusterNodeForm; 
