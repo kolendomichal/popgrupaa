@@ -29,7 +29,7 @@ def upgrade():
     sa.Column('cluster_node_id', sa.Integer(), nullable=False),
     sa.Column('cpus', sa.String(length=255), nullable=False),
     sa.Column('gpus', sa.String(length=255), nullable=False),
-    sa.Column('ip_address', sa.String(length=15), nullable=False),
+    sa.Column('ip_address', sa.String(length=30), nullable=False),
     sa.ForeignKeyConstraint(['cluster_node_id'], ['ClusterNodes.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

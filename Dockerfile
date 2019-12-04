@@ -7,9 +7,11 @@ RUN apt-get update && \
         apt-get update -y  && \
         apt-get install -y build-essential python3.6 python3.6-dev python3-pip && \
         apt-get install -y vim  && \
+        apt-get install -y net-tools   && \
         # update pip
         python3.6 -m pip install pip --upgrade && \
         python3.6 -m pip install wheel && \
+        python3.6 -m pip install netifaces && \
         python3.6 -m pip install flask
 # copy flask project        
 COPY machine_flask_api.py ./
