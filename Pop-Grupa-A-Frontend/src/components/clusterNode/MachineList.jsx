@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { getMachinesForClusterNode } from '../../services/clusterService';
+import { ComputationResourceNavBar } from '../navigationBar/NavBars';
 
 const TableContainer = styled.div`
     display: flex;
@@ -48,6 +49,7 @@ class MachineList extends Component{
     render() {
         return (
             <React.Fragment>
+                <ComputationResourceNavBar />
                 <TableContainer>
                     { this.state.clusterMachinesList.length > 0 ?
                         <React.Fragment>

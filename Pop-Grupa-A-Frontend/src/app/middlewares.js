@@ -15,7 +15,6 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
             dispatch({type: action.types.REJECTED});
             return Promise.reject(message);
         } else if(response.status === 403 || response.status === 406) {
-            localStorage.removeItem(UserIdPath);
             return Promise.reject("Unauthorized");
         }
         return response.json();

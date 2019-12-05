@@ -9,7 +9,7 @@ class ComputationResourceManagement extends Component {
   render() {
     return (
       <React.Fragment>
-        <ComputationResourceNavBar/>
+        <ComputationResourceNavBar />
         <Container>
           <ClusterNodeList/>
         </Container>

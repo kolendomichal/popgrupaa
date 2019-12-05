@@ -3,13 +3,11 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import 'bootstrap/dist/css/bootstrap.css';
 
-
 export const LoginRegistrationNavBar = () => (
     <Navbar bg="light" variant="light" className="mb-4">
         <Navbar.Brand >BalticLSC</Navbar.Brand>
     </Navbar>
 );
-
 
 export const ComputationCockpitNavBar = () => (
     <Navbar bg="light" variant="light" className="mb-4">
@@ -24,7 +22,6 @@ export const ComputationCockpitNavBar = () => (
     </Navbar>
 );
 
-
 export const ComputationResourceNavBar = () => (
     <Navbar bg="light" variant="light" className="mb-4">
         <Navbar.Brand >BalticLSC</Navbar.Brand>
@@ -36,4 +33,4 @@ export const ComputationResourceNavBar = () => (
                 Log Out
             </Nav.Link></Nav>
     </Navbar>
-);
+); 

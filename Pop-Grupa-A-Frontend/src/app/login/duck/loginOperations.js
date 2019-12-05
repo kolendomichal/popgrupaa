@@ -1,6 +1,7 @@
 import {createRequestAction} from "../../utils";
 import types from './loginTypes';
 import {UserIdPath} from "../../constants";
+import * as Cookies from 'js-cookie';
 
 const sendLoginRequest = (formValues) => (dispatch) => {
     return dispatch(createRequestAction({
@@ -9,7 +10,7 @@ const sendLoginRequest = (formValues) => (dispatch) => {
         method: 'POST',
         body: {...formValues},
         successHandler: data => {
-            localStorage.setItem(UserIdPath, data.user_id);
+            Cookies.set(UserIdPath, data.user_id);
             return {payload: true};
         }
     }));
@@ -22,7 +23,7 @@ const sendLogoutRequest = () => (dispatch) => {
         method: 'POST',
         body: {},
         successHandler: () => {
-            localStorage.removeItem(UserIdPath);
+            Cookies.remove(UserIdPath);
             return ({payload: true});
         }
     }))
