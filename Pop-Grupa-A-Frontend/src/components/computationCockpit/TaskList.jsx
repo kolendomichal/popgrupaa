@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getTasksForUser, activateTask } from '../../services/taskService';
+import { ModalMessege } from '../modalMesseges/MessegingModal';
 
 class TaskList extends Component {
 
@@ -12,6 +13,11 @@ class TaskList extends Component {
         this.state = {
             chosenTaskId: -1,
             listitems: [],
+            response: {
+                showModal: false,
+                title: "",
+                message: ""
+            },
             userId: 1
         };
     }
@@ -19,14 +25,22 @@ class TaskList extends Component {
     onTaskClick = (chosenTaskId) => {
         this.setState({ chosenTaskId });
     }
+
+    onModalHide = () => {
+        this.setState({ response: { showModal: false } });
+    }
     
     useActivateTask = () => {
         activateTask(this.state.chosenTaskId)
         .then(response => {
             this.setState({
-                chosenTaskId: -1
+                chosenTaskId: -1,
+                response:{
+                    showModal: true,
+                    title: response.status,
+                    message: response.message
+                }
             })
-            alert(response.message);
         }).then(() => this.props.tasksShouldRefresh(true))
     }
 
@@ -60,6 +74,7 @@ class TaskList extends Component {
 
         return (
             <div>
+                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
                 <Row className="p-1 mb-3">
                     <Col sm style={{ maxHeight: '30vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
                         <Table striped bordered hover>

@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateNewClusterNodeForm from './components/clusterNode/CreateNewClusterNodeForm';
+import CreateNewClusterNodeForm from './components/clusterNode/CreateClusterNodeForm';
 import ComputationCockpit from './components/computationCockpit/ComputationCockpit';
 import './App.css';
 import {Provider} from 'react-redux';
