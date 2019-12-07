@@ -10,21 +10,22 @@ class LoginContainer extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            uri: undefined
         }
     }
 
     login = (formValues) => {
         this.props.loginOperations.sendLoginRequest(formValues).then(data => {
             if (data.payload) {
-                this.setState(state => ({...state, loggedIn: true}));
+                this.setState(state => ({...state, loggedIn: true, uri: data.payload}));
             }
         });
     };
 
     render() {
         if(this.state.loggedIn) {
-            return <Redirect to='/computation-cockpit' />
+            return <Redirect to={this.state.uri} />
         }
         return (
             <LoginForm onSubmit={this.login}/>
