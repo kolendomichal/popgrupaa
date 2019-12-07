@@ -1,5 +1,6 @@
 import {Status, UserIdPath} from "./constants";
 import loginActions from './login/duck/loginActions';
+import alertActions from './common/alert/duck/alertActions';
 
 export const requestActionMiddleware = ({dispatch}) => next => action => {
     if (!action.fetchAction) {
@@ -11,19 +12,19 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
     return action.payload.then(response => {
         if(response.status === 409) {
             const message = "Username or email are already used";
-            alert(message);
+            dispatch(alertActions.showAlert(message));
             dispatch({type: action.types.REJECTED});
             return Promise.reject(message);
-        } else if(response.status === 403 || response.status === 406) {
-            localStorage.removeItem(UserIdPath);
+        } else if(response.status === 406) {
+            dispatch(alertActions.showAlert("Unauthorized"));
             return Promise.reject("Unauthorized");
         }
         return response.json();
     }).then(data => {
         if (data.status === Status.Fail) {
-            alert(data.messege);
+            dispatch(alertActions.showAlert(data.message));
             dispatch({type: action.types.REJECTED});
-            return Promise.reject(data.messege);
+            return Promise.reject(data.message);
         }
         if (data.status === Status.Success) {
             dispatch({
@@ -33,7 +34,7 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
             return Promise.resolve(action.successHandler(data))
         }
     }).catch(error => {
-        alert(error);
+        dispatch(alertActions.showAlert(error));
         dispatch({type: action.types.REJECTED});
         return Promise.reject(error);
     })

@@ -1,12 +1,13 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
-import {FormNames} from "../../constants";
+import {FormNames, Role} from "../../constants";
 import Input from "../../common/form/Input";
 import Button from "../../common/form/Button";
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import {StyledCard} from '../../common/form/StyledCard';
+import Select from "../../common/form/Select";
 
 const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
     return (
@@ -21,6 +22,9 @@ const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
                     </Row>
                     <Row className="justify-content-md-center">
                         <Field name="password" component={Input} type="password" label="Password"/>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Field name="role" component={Select} label="Role" items={Role}/>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Button label="Sign in" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
@@ -44,13 +48,17 @@ const validate = values => {
     const requiredFields = [
         'username',
         'password',
-        'email'
+        'email',
+        'role'
     ];
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required'
         }
     });
+    if(!Object.keys(Role).map(k => Role[k].code).find(v => v === values.role)) {
+        errors.role = 'Choose a role'
+    }
     return errors
 };
 

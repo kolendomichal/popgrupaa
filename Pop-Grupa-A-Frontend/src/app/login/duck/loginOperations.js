@@ -1,6 +1,8 @@
 import {createRequestAction} from "../../utils";
 import types from './loginTypes';
 import {UserIdPath} from "../../constants";
+import {UserIdPath, RolePath, Role} from "../../constants";
+import * as Cookies from 'js-cookie';
 
 const sendLoginRequest = (formValues) => (dispatch) => {
     return dispatch(createRequestAction({
@@ -9,8 +11,10 @@ const sendLoginRequest = (formValues) => (dispatch) => {
         method: 'POST',
         body: {...formValues},
         successHandler: data => {
-            localStorage.setItem(UserIdPath, data.user_id);
-            return {payload: true};
+            Cookies.set(UserIdPath, data.user_id);
+            Cookies.set(RolePath, data.role);
+            const uri = data.role === Role.Supplier.code ? "/computation-resource-management" : "/computation-cockpit";
+            return {payload: uri};
         }
     }));
 };
