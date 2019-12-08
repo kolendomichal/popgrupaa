@@ -21,8 +21,8 @@ function submitClusterNode(nodeId){
     })
     .then(response => response.json())
     .then(response => {
-        if (response.status === "success") {
-            return response.message;
+        if (response.status === "Success") {
+            return response;
         } else {
             throw new Error(response.message);
         }
@@ -55,8 +55,8 @@ function createClusterNode(is_private, user_id, ip_list){
     })
     .then(response => response.json())
     .then(response => {
-        if (response.status === "success") {
-            return response.message;
+        if (response.status === "Success") {
+            return response;
         } else {
             throw new Error(response.message);
         }

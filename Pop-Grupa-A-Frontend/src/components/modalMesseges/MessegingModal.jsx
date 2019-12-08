@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 export const ModalMessege = (props) => {
-    const [show, setShow] = useState(props.show);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     return (
         <Modal {...props}>
-            <Modal.Header closeButton>
+                <Modal.Header closeButton>
                 <Modal.Title>
                     {props.response.title}
                 </Modal.Title>
@@ -21,7 +17,7 @@ export const ModalMessege = (props) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={props.onHide}>Ok</Button>
+                <Button variant="secondary" onClick={props.onHide}>OK</Button>
             </Modal.Footer>
         </Modal>
     );

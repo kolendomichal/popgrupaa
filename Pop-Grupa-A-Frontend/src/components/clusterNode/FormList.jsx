@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {withRouter} from "react-router-dom";
 import { createClusterNode } from '../../services/clusterService';
+import { ModalMessege } from '../modalMesseges/MessegingModal';
 
 
 class DynamicFormList extends React.Component {
@@ -13,7 +14,12 @@ class DynamicFormList extends React.Component {
         super(props);
         this.state = {
             isPrivate: false,
-            IPTable: [{ machine: "" }]
+            IPTable: [{ machine: "" }],
+            response: {
+                showModal: false,
+                title: "",
+                message: ""
+            } 
         };
     }
 
@@ -36,15 +42,34 @@ class DynamicFormList extends React.Component {
         let ip_list = IPTable.map( (IP) => {return IP.machine;});
         createClusterNode(isPrivate,'1',ip_list)
         .then(
-            () => {
-                alert("Cluster node created successfully");
-                this.props.history.push('/computation-resource-management');
+            (response) => {
+                this.setState({
+                    response:{
+                      showModal: true,
+                      title: response.status,
+                      message: response.message
+                    }
+                })
             },
             (error) => {
-                alert(error)
+                this.setState({
+                    chosenAppId: -1,
+                    response:{
+                      showModal: true,
+                      title: "Error",
+                      message: error.message
+                    }
+                  })
             }
         );
     };
+
+    onModalHide = () => {
+        this.setState({ response: { showModal: false } });
+        if(this.state.response.title !== "Error"){
+            this.props.history.push('/computation-resource-management');
+        }
+    }
 
     handleAddIP = () => {
         this.setState({
@@ -61,6 +86,7 @@ class DynamicFormList extends React.Component {
     render() {
         return (
             <div>
+                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
                 <h4>Create new Cluster Node</h4>
                 <hr></hr>
                 <Row>

@@ -39,7 +39,7 @@ def submit_node(node_id):
     node.status = NodeStatus.SUBMITTED
     nodes_repository.save_changes(node)
     return {
-               'status': 'success',
+               'status': 'Success',
                'message': 'Cluster node successfuly submitted.'
            }, 201
 
@@ -62,7 +62,7 @@ def verify_ping_pong(machine):
     try:
         response = urlopen(url).read()
     except Exception:
-        raise Exception("Machine didn't answer for ping pong verification! Please check if machine's IP is correct.")
+        raise Exception("\nMachine didn't answer for ping pong verification! \nPlease check if machine's IP is correct.")
     if bin(number) != bin(int(response, 2)):
         raise Exception("Wrong answer for verification message.")
 
@@ -71,7 +71,7 @@ def fill_machine_data(machine):
     try:
         machine_data = json.loads(urlopen(url).read())
     except Exception:
-        raise Exception("Machine didn't answer for hardware verification! Please check if machine's IP is correct.")
+        raise Exception("\nMachine didn't answer for hardware verification! \nPlease check if machine's IP is correct.")
     if machine_data.get('CPU'):
         machine.cpus = machine_data['CPU']
     if machine_data.get('GPU'):
@@ -89,14 +89,14 @@ def create_node(createNodeDto):
     for ip in createNodeDto.get('ip_list', []):
         if ip == '' or ' ' in ip:
             return { 
-                'status': 'failure',
-                'message':'Cluster node could not be created. ' \
+                'status': 'fail',
+                'message':'\nCluster node could not be created.\n ' \
                     + 'Ip list element cannot be empty string or contain a white space'
                 }, 400
         if machines_repository.get_machine_by_ip(ip):
             return { 
-                'status': 'failure',
-                'message':'Cluster node could not be created. ' \
+                'status': 'fail',
+                'message':'\nCluster node could not be created.\n' \
                     + f'There already is a machine with ip address: {ip}'
                 }, 400
         machines_list.append(Machine(
@@ -111,8 +111,8 @@ def create_node(createNodeDto):
         nodes_repository.commit_changes()
 
     return { 
-        'status': 'success',
-        'message': 'Succesfully created node and machines with given IPs'
+        'status': 'Success',
+        'message': 'Succesfully created node and machines with given IP addresses.'
         }, 201
       
 
