@@ -24,7 +24,7 @@ def submit_node(node_id):
     if node.status is NodeStatus.SUBMITTED:
         return {
                    'status': 'fail',
-                   'message': f"Node is already submitted.",
+                   'message': f"Node with id = {node_id} is already submitted.",
                }, 400
 
     for machine in node.machines:
@@ -113,6 +113,20 @@ def create_node(createNodeDto):
     return { 
         'status': 'Success',
         'message': 'Succesfully created node and machines with given IP addresses.'
+        }, 201
+
+
+def remove_cluster_node_with_machines(node_id):
+    if not nodes_repository.get_node_for_id(node_id):
+        return {
+                   'status': 'fail',
+                   'message': f"Node with id = {node_id} does not exist",
+               }, 400
+    machines_repository.remove_machines_by_node_id(node_id)
+    nodes_repository.remove_cluster_node(node_id)
+    return { 
+        'status': 'Success',
+        'message': f'Succesfully deleted node with id = {node_id} and all of it\'s machines.'
         }, 201
       
 

@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
-import { getClustersForUser, submitClusterNode } from '../../services/clusterService';
+import { getClustersForUser, submitClusterNode, deleteClusterNode } from '../../services/clusterService';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ModalMessege } from '../modalMesseges/MessegingModal';
@@ -48,6 +48,22 @@ class ClusterNodeList extends Component {
                     clusterNodeList: response
                 })
             );
+    }
+
+    deleteCluster(node_id) {
+        deleteClusterNode(node_id)
+            .then(
+                (response) => {
+                    this.setState({
+                        listitems: this.getClusters(),
+                        response:{
+                            showModal: true,
+                            title: response.status,
+                            message: response.message
+                        }
+                    })
+                }
+            )
     }
 
     submitCluster() {
@@ -98,18 +114,26 @@ class ClusterNodeList extends Component {
                 <Row className="p-1 mb-3">
                     {this.state.clusterNodeList.length !== 0 ?
                         <Col sm style={{ maxHeight: '30vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
-                            <Table striped bordered hover>
+                            <Table striped bordered hover >
                                 <thead>
                                     <tr>
                                         <th className="text-left" scope="col">ID</th>
                                         <th className="text-left" scope="col">Status</th>
+                                        <th style={{ width: "10%"}}/>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.clusterNodeList.map(listitem => (
                                         <tr key={listitem.id} onClick={() => this.onClusterNodeClick(listitem.id)} style={listitem.id === this.state.chosenClusterNodeId ? chosenClusterNodeStyle : null}>
-                                            <td className="text-left">{listitem.id}</td>
+                                            <td className="text-left" >{listitem.id}</td>
                                             <td className="text-left">{listitem.status}</td>
+                                            <td>
+                                                <Button variant="danger" 
+                                                        disabled={listitem.status !== "CREATED"} 
+                                                        onClick={() => this.deleteCluster(listitem.id)}>
+                                                            Delete
+                                                </Button> 
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
