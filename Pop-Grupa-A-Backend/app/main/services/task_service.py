@@ -22,17 +22,17 @@ def add_task(task):
         task_repository.save_changes(new_task)
 
         return {
-                'status': 'success',
+                'status': 'Success',
                 'message': 'Task successfuly created.'
                 }, 201
     if not db_app:
         return {
-                'status': 'fail',
+                'status': 'Failure',
                 'message': f"App with id = {task['app_id']} does not exist",
                 }, 400
      
     return {
-            'status': 'fail',
+            'status': 'Failure',
             'message': f"User with id = {task['user_id']} does not exist",
             }, 400
 
@@ -43,14 +43,14 @@ def activate_task(task_id):
         task.status=ComputationStatus.WORKING
         task_repository.save_changes(task)
         response_object = {
-            'status': 'success',
+            'status': 'Success',
             'message': 'Task successfuly activated.'
         }
 
         return response_object, 200
     except:
         response_object = {
-            'status': 'failure',
+            'status': 'Failure',
             'message': 'Error occur while activating task'
         }
         return response_object, 404

@@ -19,16 +19,16 @@ class MachineListTable extends React.Component {
             <Table bordered hover responsive>
                 <thead>
                 <tr>
-                    {headers.map(h => (
-                        <th key={h.name}>{h.name}</th>
+                    {headers.map((h, idx) => (
+                        <th key={idx*5}>{h.name}</th>
                     ))}
                 </tr>
                 </thead>
                 <tbody style={{overflowY: 'auto'}}>
                 {data.map((d, idx) => (
                     <tr key={idx}>
-                        {headers.map(h => (
-                            <td key={d[h.field]} onClick={() => this.onClick(d, h, idx)}>{d[h.field]}</td>
+                        {headers.map((h, idy) => (
+                            <td key={idy} onClick={() => this.onClick(d, h, idx)}>{d[h.field]}</td>
                         ))}
                     </tr>
                 ))}
