@@ -4,7 +4,7 @@ import DynamicFormList from './FormList.jsx';
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.css';
 
-const CreateNewClusterNodeForm = () => (
+const   CreateNewClusterNodeForm = () => (
     <React.Fragment>
         <ComputationResourceNavBar />
         <Container>

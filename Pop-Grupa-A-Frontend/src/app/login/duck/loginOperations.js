@@ -1,6 +1,5 @@
 import {createRequestAction} from "../../utils";
 import types from './loginTypes';
-import {UserIdPath} from "../../constants";
 import {UserIdPath, RolePath, Role} from "../../constants";
 import * as Cookies from 'js-cookie';
 

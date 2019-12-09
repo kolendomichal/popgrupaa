@@ -18,13 +18,7 @@ const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
                         <Field name="username" component={Input} type="text" label="Login"/>
                     </Row>
                     <Row className="justify-content-md-center">
-                        <Field name="email" component={Input} type="text" label="E-mail"/>
-                    </Row>
-                    <Row className="justify-content-md-center">
                         <Field name="password" component={Input} type="password" label="Password"/>
-                    </Row>
-                    <Row className="justify-content-md-center">
-                        <Field name="role" component={Select} label="Role" items={Role}/>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Button label="Sign in" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
@@ -47,9 +41,7 @@ const validate = values => {
     const errors = {};
     const requiredFields = [
         'username',
-        'password',
-        'email',
-        'role'
+        'password'
     ];
     requiredFields.forEach(field => {
         if (!values[field]) {
