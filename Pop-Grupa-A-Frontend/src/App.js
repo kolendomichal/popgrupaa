@@ -4,7 +4,7 @@ import './App.css';
 import {Provider} from 'react-redux';
 import store from './app/store';
 import LoginContainer from "./app/login/conteiner/LoginContainer";
-import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import {Route, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
 import RegistrationContainer from "./app/registration/container/RegistrationContainer";
 import ProtectedRoute from "./app/common/router/ProtectedRoute";
 import ProtectedRoute from "./app/common/router/ProtectedRoutes";
@@ -21,6 +21,7 @@ function App() {
             <AlertComponent/>
             <Router>
                 <Switch>
+                    <Route exact path="/" render={() => <Redirect from="/" to="/login" />} />
                     <Route path="/login" exact component={LoginContainer}/>
                     <Route path="/sign-up" component={RegistrationContainer}/>
                     <Route path="/not-found" component={NotFoundPage}/>

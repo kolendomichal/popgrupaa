@@ -26,7 +26,7 @@ const sendLogoutRequest = () => (dispatch) => {
         method: 'POST',
         body: {},
         successHandler: () => {
-            localStorage.removeItem(UserIdPath);
+            Cookies.remove(UserIdPath);
             return ({payload: true});
         }
     }))

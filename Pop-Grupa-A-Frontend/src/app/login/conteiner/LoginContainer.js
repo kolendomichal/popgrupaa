@@ -4,6 +4,7 @@ import LoginForm from "../component/LoginForm";
 import {bindActionCreators} from "redux";
 import {Redirect} from 'react-router-dom';
 import loginOperations from '../duck/loginOperations';
+import { LoginRegistrationNavBar } from '../../../components/navigationBar/NavBars';
 
 class LoginContainer extends React.PureComponent {
 
@@ -28,7 +29,10 @@ class LoginContainer extends React.PureComponent {
             return <Redirect to={this.state.uri} />
         }
         return (
-            <LoginForm onSubmit={this.login}/>
+            <React.Fragment>
+                <LoginRegistrationNavBar />
+                <LoginForm onSubmit={this.login}/>
+            </React.Fragment>
         )
     }
 
