@@ -6,6 +6,8 @@ import Table from 'react-bootstrap/Table'
 import { getClustersForUser, submitClusterNode } from '../../services/clusterService';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { ModalMessege } from '../modalMesseges/MessegingModal';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ButtonContainer = styled.div`
     display: grid;
@@ -21,8 +23,18 @@ class ClusterNodeList extends Component {
         this.state = {
             chosenClusterNodeId: false,
             clusterNodeList: [],
-            userId: 1
+            userId: 1,
+            loading: false,
+            response: {
+                showModal: false,
+                title: "",
+                message: ""
+            } 
         };
+    }
+
+    onModalHide = () => {
+        this.setState({ response: { showModal: false } });
     }
 
     onClusterNodeClick = (chosenClusterNodeId) => {
@@ -43,12 +55,24 @@ class ClusterNodeList extends Component {
             .then(
                 (response) => {
                     this.setState({
-                        listitems: this.getClusters()
+                        listitems: this.getClusters(),
+                        loading: false,
+                        response:{
+                            showModal: true,
+                            title: response.status,
+                            message: response.message
+                        }
                     })
-                    alert(response)
                 },
                 (error) => {
-                    alert(error)
+                    this.setState({
+                        loading: false,
+                        response:{
+                            showModal: true,
+                            title: "Error",
+                            message: error.message
+                        }
+                    })
                 }
             );
     }
@@ -59,6 +83,7 @@ class ClusterNodeList extends Component {
         };
         return (
             <div>
+                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
                 <Row>
                     <Col sm>
                         {<Button variant="secondary" block onClick={() => this.getClusters()}>Show owned cluster nodes</Button>}
@@ -101,8 +126,20 @@ class ClusterNodeList extends Component {
                     <Button variant="secondary"
                         block
                         disabled={this.state.chosenClusterNodeId === false}
-                        onClick={() => this.submitCluster(this.state.chosenClusterNodeId)}
-                    >Submit cluster node</Button>
+                        onClick={() => {
+                            this.setState({ loading: true});
+                            this.submitCluster(this.state.chosenClusterNodeId)
+                        }}
+                    >
+                         Submit cluster node 
+                            { this.state.loading &&  
+                            <Spinner as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                            /> }
+                        </Button>
                     <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Safely deactivate </Button>
                     <Button variant="secondary" disabled={!this.state.chosenClusterNodeId} > Details </Button>
                     <Link to={`/computation-resource-management/${this.state.chosenClusterNodeId}/machine-list`} style={{ textDecoration: 'none' }} className="d-flex">

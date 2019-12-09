@@ -7,7 +7,7 @@ def get_cluster_node_machine_list(cluster_node_id):
     machine_list = machine_repository.get_machines_for_cluster_node(cluster_node_id)
     if not machine_list:
         return {
-                'status': 'failure',
+                'status': 'Failure',
                 'message': 'Cluster node with id = {cluster_node_id} has no machines assigned'
                 }, 204
 
