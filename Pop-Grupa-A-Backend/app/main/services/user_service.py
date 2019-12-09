@@ -22,7 +22,7 @@ def add_user(user):
     if user.get('role') not in AccountRole._member_names_:
         response_object = {
             'status': 'fail',
-            'message': f"Cannot register user with role = {user.get('role')}",
+            'message': "Cannot register user with role = {user.get('role')}",
         }
         return response_object, 409
 
@@ -44,21 +44,23 @@ def check_user(user):
     if not db_user:
         response_object = {
             'status': 'fail',
-            'messege': 'User login failure',
+            'message': 'User login failure',
         }
         return response_object, 403
     if not flask_bcrypt.check_password_hash(db_user.password, user['password']):
         response_object = {
             'status': 'fail',
-            'messege': 'User login failure',
+            'message': 'User login failure',
         }
         return response_object, 403
     else:
         sid = str(uuid.uuid4())
         response_object = {
             'status': 'success',
-            'messege': 'User successfully logged',
-            'user_id': db_user.id
+            'message': 'User successfully logged',
+            'user_id': db_user.id,
+            'role': str(db_user.role),
+            'username': db_user.username
         }
         session['sid'] = sid
         session['username'] = user['username']
@@ -81,12 +83,12 @@ def logout_user():
     except:
         response_object = {
             'status': 'fail',
-            'messege': 'User logout failure',
+            'message': 'User logout failure',
         }
         return response_object, 406
     response_object = {
         'status': 'success',
-        'messege': 'User successfully logout',
+        'message': 'User successfully logout',
     }
     return response_object, 200
 
