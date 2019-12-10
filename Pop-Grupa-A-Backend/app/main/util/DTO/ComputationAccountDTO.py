@@ -10,3 +10,8 @@ class ComputationAccountDto:
         'role': fields.String(required=True, description='user role'),
         'id': fields.Integer(description='user Identifier')
     })
+
+    user_login = api.model('user', {
+        'username': fields.String(required=True, description='user username'),
+        'password': fields.String(required=True, description='user password')
+    })

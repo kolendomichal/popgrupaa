@@ -6,6 +6,7 @@ from ..services.user_service import add_user, check_user, logout_user
 
 api = ComputationAccountDto.api
 _user = ComputationAccountDto.user
+_user_login = ComputationAccountDto.user_login
 
 
 @api.route('/register')
@@ -25,7 +26,7 @@ class UserLogin(Resource):
     @api.response(200, 'User successfully logged')
     @api.response(403, 'User login failure')
     @api.doc('login user')
-    @api.expect(_user, validate=True)
+    @api.expect(_user_login, validate=True)
     def post(self):
         data = request.get_json()
         return check_user(user=data)
