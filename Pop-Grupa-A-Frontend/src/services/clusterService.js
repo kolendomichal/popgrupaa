@@ -32,6 +32,43 @@ function submitClusterNode(nodeId){
     return submitResponse;
 }
 
+function deleteClusterNode(nodeId){
+    var submitResponse = fetch(`${CLUSTER_URL+nodeId+"/delete"}`, {
+        crossDomain:  true,
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(response => {
+        if (response.status === "Success") {
+            return response;
+        } else {
+            throw new Error(response.message);
+        }
+    });
+    return submitResponse;
+}
+
+function deleteMachine(machineId){
+    var submitResponse = fetch(`${MACHINES_URL+machineId+"/delete"}`, {
+        crossDomain:  true,
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(response => {
+        if (response.status === "Success") {
+            return response;
+        } else {
+            throw new Error(response.message);
+        }
+    });
+    return submitResponse;
+}
+
+
 function getMachinesForClusterNode(clusterNodeId){
     var machinesList = fetch(MACHINES_URL + clusterNodeId, {
         crossDomain: true,
@@ -72,5 +109,7 @@ export {
     getClustersForUser,
     getMachinesForClusterNode,
     submitClusterNode,
-    createClusterNode
+    createClusterNode,
+    deleteClusterNode,
+    deleteMachine
 }

@@ -64,7 +64,7 @@ def check_user(user):
         }
         session['sid'] = sid
         session['username'] = user['username']
-        session['role'] = user['role']
+        session['role'] = str(db_user.role)
         new_session = Session(
             sid=sid,
             exp=datetime.datetime.utcnow() + datetime.timedelta(minutes=5)

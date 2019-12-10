@@ -1,5 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import { deleteMachine } from '../../services/clusterService';
 
 class MachineListTable extends React.Component {
     constructor(props) {
@@ -13,6 +15,12 @@ class MachineListTable extends React.Component {
         }
     };
 
+    deleteCluster(machine_id){
+        deleteMachine(machine_id)
+            .then(
+                () => {window.location.reload();})
+    }
+
     render() {
         const {data, headers} = this.props;
         return (
@@ -22,6 +30,7 @@ class MachineListTable extends React.Component {
                     {headers.map((h, idx) => (
                         <th key={idx*5}>{h.name}</th>
                     ))}
+                    <th style={{width: "5%"}} />
                 </tr>
                 </thead>
                 <tbody style={{overflowY: 'auto'}}>
@@ -30,6 +39,14 @@ class MachineListTable extends React.Component {
                         {headers.map((h, idy) => (
                             <td key={idy} onClick={() => this.onClick(d, h, idx)}>{d[h.field]}</td>
                         ))}
+                        <td>
+                            <Button variant="danger" 
+                                    onClick={() => {
+                                            this.deleteCluster(d.id)
+                                        }}>
+                                        Delete
+                            </Button> 
+                        </td>
                     </tr>
                 ))}
                 </tbody>

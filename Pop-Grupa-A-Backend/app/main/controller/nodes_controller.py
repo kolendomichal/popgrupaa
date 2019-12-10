@@ -45,3 +45,12 @@ class CreateNode(Resource):
     def post(self):
         """Creates a cluster node"""
         return node_service.create_node(request.json)
+
+@api.route('/<node_id>/delete')
+@api.response(201, 'Node successfully deleted.')
+@api.param('node_id', 'The Node identifier')
+class NodeDelete(Resource):
+    @api.doc('Delete a cluster node and it\' machines')
+    def delete(self, node_id):
+        """Deletes a cluster node"""
+        return node_service.remove_cluster_node_with_machines(node_id)

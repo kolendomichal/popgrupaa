@@ -28,7 +28,7 @@ function App() {
                     <LoginRegistrationRoute path="/sign-up" component={RegistrationContainer}/>
                     <Route path="/not-found" component={NotFoundPage}/>
                     <ProtectedRoute path="/computation-cockpit" component={ComputationCockpit} roles={[Role.AppUser.code, Role.Admin.code]}/>
-                    <ProtectedRoute exact path="/computation-resource-management/create-new-cluster-node" component={CreateNewClusterNodeForm} roles={[Role.AppUser.code]}/>
+                    <ProtectedRoute exact path="/computation-resource-management/create-new-cluster-node" component={CreateNewClusterNodeForm} roles={[Role.Supplier.code]}/>
                     <ProtectedRoute exact path="/computation-resource-management" component={ComputationResourceManagment} roles={[Role.Supplier.code, Role.AppUser.code]}/>
                     <ProtectedRoute exact path="/computation-resource-management/:chosenClusterNodeId/machine-list" component={MachineList} roles={[Role.Supplier.code, Role.AppUser.code]}/>
                 </Switch>
