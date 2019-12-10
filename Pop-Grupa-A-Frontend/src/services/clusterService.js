@@ -5,6 +5,7 @@ function getClustersForUser(userId){
     var clusterlist = fetch(CLUSTER_URL+"user/" + userId, {
         crossDomain: true,
         method: 'get',
+        credentials: 'include'
     })
         .then(response => {
             return response.status === 200 ? response.json() : [];
@@ -18,6 +19,7 @@ function submitClusterNode(nodeId){
         crossDomain:  true,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(response => {
@@ -34,6 +36,7 @@ function getMachinesForClusterNode(clusterNodeId){
     var machinesList = fetch(MACHINES_URL + clusterNodeId, {
         crossDomain: true,
         method: 'get',
+        credentials: 'include'
     })
         .then(response => {
             return response.status === 200 ? response.json() : [];
@@ -47,6 +50,7 @@ function createClusterNode(is_private, user_id, ip_list){
         crossDomain:  true,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
             is_private: is_private,
             user_id: user_id,
