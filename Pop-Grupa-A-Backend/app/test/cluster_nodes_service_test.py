@@ -52,18 +52,17 @@ class TestClusterNodesService(unittest.TestCase):
         self.assertTrue("\nMachine didn't answer for hardware verification! \nPlease check if machine's IP is correct." in str(context.exception))
         
 
-    def test_verify_ping_pong_throws_Exception(self):
+    def test_verify_ping_pong_throws_answer_Exception(self):
         self.mock_get.return_value.read.return_value = "01"
         self.mock_random.return_value = 3
         with self.assertRaises(Exception) as context:
             verify_ping_pong(self.machine)
         self.assertTrue("Wrong answer for verification message." in str(context.exception))
 
-    def test_verify_ping_pong_throws_Exception2(self):
+    def test_verify_ping_pong_throws_Exception(self):
         self.mock_get.return_value.ok = False
         self.mock_get.return_value.read.return_value = None
         with self.assertRaises(Exception) as context:
             verify_ping_pong(self.machine)
-        # self.assertEquals("\nMachine didn't answer for ping pong verification! \nPlease check if machine's IP is correct.", str(context.exception))
 
 
