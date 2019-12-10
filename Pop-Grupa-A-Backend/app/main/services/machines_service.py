@@ -14,6 +14,15 @@ def get_cluster_node_machine_list(cluster_node_id):
     return machine_list, 200
 
 
-def save_changes(data):
-    db.session.add(data)
-    db.session.commit()
+def remove_machine_by_id(machine_id):
+    if not machine_repository.get_machine_by_id(machine_id):
+        return {
+                   'status': 'fail',
+                   'message': f"Machine with id = {machine_id} does not exist",
+               }, 400
+    machine_repository.remove_machine_by_id(machine_id)
+    return { 
+        'status': 'Success',
+        'message': f'Succesfully deleted machine with id = {machine_id}'
+        }, 201
+      
