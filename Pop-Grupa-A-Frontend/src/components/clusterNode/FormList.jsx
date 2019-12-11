@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import {withRouter} from "react-router-dom";
 import { createClusterNode } from '../../services/clusterService';
 import { ModalMessege } from '../modalMesseges/MessegingModal';
-
+import * as Cookies from 'js-cookie';
 
 class DynamicFormList extends React.Component {
 
@@ -19,7 +19,8 @@ class DynamicFormList extends React.Component {
                 showModal: false,
                 title: "",
                 message: ""
-            } 
+            },
+            userId: Cookies.get("userId")
         };
     }
 
@@ -38,9 +39,9 @@ class DynamicFormList extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { isPrivate, IPTable } = this.state;
+        const { isPrivate, IPTable, userId } = this.state;
         let ip_list = IPTable.map( (IP) => {return IP.machine;});
-        createClusterNode(isPrivate,'1',ip_list)
+        createClusterNode(isPrivate, userId ,ip_list)
         .then(
             (response) => {
                 this.setState({

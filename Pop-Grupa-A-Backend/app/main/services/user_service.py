@@ -78,6 +78,7 @@ def logout_user():
         sid = session['sid']
         Session.query.filter_by(sid=sid).delete()
 
+        session.pop('role', None)
         session.pop('username', None)
         session.pop('sid', None)
     except:
