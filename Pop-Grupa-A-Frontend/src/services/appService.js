@@ -5,6 +5,7 @@ function getAppsForUser(){
     var applist = fetch(APP_URL, {
         crossDomain: true,
         method: 'get',
+        credentials: 'include'
     })
         .then(response => {
             return response.status === 200 ? response.json() : [];

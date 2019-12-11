@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table'
 import { getAppsForUser } from '../../services/appService';
 import { createTask } from '../../services/taskService';
 import { ModalMessege } from '../modalMesseges/MessegingModal';
+import * as Cookies from 'js-cookie';
 
 class AppList extends Component {
 
@@ -13,7 +14,7 @@ class AppList extends Component {
     super(props);
     this.state = {
       chosenAppId: -1,
-      userId: 1,
+      userId: Cookies.get("userId"),
       appsList: [],
       response: {
         showModal: false,

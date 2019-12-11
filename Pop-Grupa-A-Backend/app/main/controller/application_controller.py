@@ -1,6 +1,6 @@
-from flask import request
 from flask_restplus import Resource
-
+from app.main.model.AccountRole import AccountRole
+from app.main.util.user_validator import roles_required
 from ..util.DTO.ComputationApplicationDTO import ComputationApplicationDto
 from ..services.application_service import get_all_applications
 
@@ -14,6 +14,7 @@ _application = ComputationApplicationDto.application
 class ApplicationList(Resource):
     @api.doc('Get list of all applications')
     @api.marshal_with(_application, as_list=True)
+    @roles_required(AccountRole.APP_USER)
     def get(self):
         """get application list"""
         return get_all_applications()

@@ -5,6 +5,7 @@ function getTasksForUser(userId){
     var tasklist = fetch(TASK_URL + userId, {
         crossDomain: true,
         method: 'get',
+        credentials: 'include'
     })
         .then(response => {
             return response.status === 200 ? response.json() : [];
@@ -19,6 +20,7 @@ function createTask(appId, userId){
         crossDomain: true,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           app_id: appId,
           user_id: userId
@@ -37,6 +39,7 @@ function activateTask(taskId){
     var activateResponse = fetch(`${TASK_URL+taskId}`, {
         crossDomain:  true,
         method: 'post',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
     })
     .then(response => response.json())

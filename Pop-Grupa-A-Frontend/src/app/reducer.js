@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import login from './login/duck/loginReducer';
 import {reducer as form} from 'redux-form';
+import alert from './common/alert/duck/alertReducer';
 
 const rootReducer = combineReducers({
-    login,
-    form
+    form,
+    alert
 });
 
 export default rootReducer;

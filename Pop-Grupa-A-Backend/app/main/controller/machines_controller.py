@@ -1,6 +1,6 @@
-from flask import request
 from flask_restplus import Resource
-
+from app.main.util.user_validator import roles_required
+from app.main.model.AccountRole import AccountRole
 from ..util.DTO.MachineDTO import MachineDTO
 import app.main.services.machines_service as machine_service
 
@@ -16,6 +16,7 @@ _machine = MachineDTO.machine
 class ClusterMachineList(Resource):
     @api.doc('get machine list for node')
     @api.marshal_with(_machine, as_list=True)
+    @roles_required(AccountRole.SUPPLIER)
     def get(self, cluster_node_id):
         return machine_service.get_cluster_node_machine_list(cluster_node_id)
 

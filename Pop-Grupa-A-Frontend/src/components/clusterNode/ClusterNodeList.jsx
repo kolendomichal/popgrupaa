@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ModalMessege } from '../modalMesseges/MessegingModal';
 import Spinner from 'react-bootstrap/Spinner';
+import * as Cookies from 'js-cookie';
 
 const ButtonContainer = styled.div`
     display: grid;
@@ -23,7 +24,7 @@ class ClusterNodeList extends Component {
         this.state = {
             chosenClusterNodeId: false,
             clusterNodeList: [],
-            userId: 1,
+            userId: Cookies.get("userId"),
             loading: false,
             response: {
                 showModal: false,

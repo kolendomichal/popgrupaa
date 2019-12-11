@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getTasksForUser, activateTask } from '../../services/taskService';
 import { ModalMessege } from '../modalMesseges/MessegingModal';
+import * as Cookies from 'js-cookie';
 
 class TaskList extends Component {
 
@@ -18,7 +19,7 @@ class TaskList extends Component {
                 title: "",
                 message: ""
             },
-            userId: 1
+            userId: Cookies.get("userId")
         };
     }
 

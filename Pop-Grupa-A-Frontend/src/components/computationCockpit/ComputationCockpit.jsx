@@ -16,13 +16,13 @@ class ComputationCockpit extends Component {
   tasksShouldRefresh = (newTaskCreated) => {this.setState({newTaskCreated:newTaskCreated})}
   render() {
     return (
-      <div>
+      <React.Fragment>
         <ComputationCockpitNavBar />
         <Container>
           <AppList tasksShouldRefresh={this.tasksShouldRefresh} />
           <TaskList newTaskCreated={this.state.newTaskCreated} tasksShouldRefresh={this.tasksShouldRefresh}/>
         </Container>
-      </div>
+      </React.Fragment>
 
     );
   }

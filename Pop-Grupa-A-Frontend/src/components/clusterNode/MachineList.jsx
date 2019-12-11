@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { getMachinesForClusterNode } from '../../services/clusterService';
 import { ComputationResourceNavBar } from '../navigationBar/NavBars';
+import * as Cookies from 'js-cookie';
 
 const TableContainer = styled.div`
     display: flex;
@@ -22,7 +23,7 @@ class MachineList extends Component{
         this.state = {
             clusterNodeId: false,
             clusterMachinesList: [],
-            userId: 1
+            userId: Cookies.get("userId")
         };
     }
 
