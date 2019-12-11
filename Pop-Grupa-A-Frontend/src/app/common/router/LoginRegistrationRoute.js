@@ -7,11 +7,18 @@ import * as Cookies from 'js-cookie';
 const LoginRegistrationRoute = ({component: Component, ...other}) => {
     const userId = Cookies.get(UserIdPath);
     const userRole = Cookies.get(RolePath);
+
+    const getNextRoute = (props) => {
+        if(!userId || !userRole) {
+            return (<Component {...props}/>);
+        } else if(userId && (userRole === Role.Admin.code || userRole === Role.AppUser.code)) {
+            return (<Redirect to="/computation-cockpit"/>);
+        } else if(userId && userRole === Role.Supplier.code) {
+            return (<Redirect to="/computation-resource-management"/>)
+        }
+    }
     return (
-        <Route {...other} render={(props) => (
-            !userId ? <Component {...props}/> : userId && (userRole === Role.Admin || userRole === Role.AppUser) ?
-                    <Redirect to="/computation-cockpit"/> : <Redirect to="/computation-resource-management"/>
-        )}/>
+        <Route {...other} render={(props) => getNextRoute(props)}/>
     );
 };
 
