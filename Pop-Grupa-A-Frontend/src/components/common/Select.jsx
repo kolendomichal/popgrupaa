@@ -12,7 +12,7 @@ const Select = ({label, items, input, meta: {touched, invalid, error}, ...custom
                       {...input}>
             <option>Choose...</option>
             {Object.keys(items).map(key => (
-                <option value={items[key].code}>{items[key].label}</option>
+                <option key={key} value={items[key].code}>{items[key].label}</option>
             ))}
         </Form.Control>
         <Form.Control.Feedback type="invalid">

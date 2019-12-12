@@ -11,11 +11,11 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
     return action.payload.then(response => {
         if(response.status === 409) {
             const message = "Username or email are already used";
-            dispatch(alertActions.showAlert(message, Status.Error));
+            dispatch(alertActions.showAlert(message, Status.Fail));
             dispatch({type: action.types.REJECTED});
             return Promise.reject(message);
         } else if(response.status === 406) {
-            dispatch(alertActions.showAlert("Unauthorized", Status.Error));
+            dispatch(alertActions.showAlert("Unauthorized", Status.Fail));
             return Promise.reject("Unauthorized");
         }
         return response.json();

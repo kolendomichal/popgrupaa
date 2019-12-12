@@ -2,9 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import RegistrationForm from "./RegistrationForm";
 import registrationOperations from "../../redux/register/registrationOperations";
+import alertActions from "../../redux/alert/alertActions";
 import {bindActionCreators} from "redux";
 import {Redirect} from 'react-router-dom';
 import {LoginRegistrationNavBar} from '../navigationBar/NavBars';
+import { Status } from "../../commons/Constants";
 
 class RegistrationContainer extends React.PureComponent {
 
@@ -13,11 +15,11 @@ class RegistrationContainer extends React.PureComponent {
         this.state = {registered: false}
     }
 
-    register = (formValues) => {
+    register = (formValues) =>  {
         this.props.registrationOperations.sendRegisterRequest(formValues).then(data => {
             if (data.payload) {
                 this.setState(state => ({...state, registered: true}));
-                alert("Registration successful");
+                this.props.showModal("New account has been successfully created", Status.Success);
             }
         })
     };
@@ -35,9 +37,9 @@ class RegistrationContainer extends React.PureComponent {
     }
 }
 
-const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
-    registrationOperations: bindActionCreators(registrationOperations, dispatch)
+    registrationOperations: bindActionCreators(registrationOperations, dispatch),
+    showModal: (message, title) => dispatch(alertActions.showAlert(message, title))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationContainer)
+export default connect(null, mapDispatchToProps)(RegistrationContainer)

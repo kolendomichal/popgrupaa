@@ -4,7 +4,7 @@ export const FormNames = {
 };
 
 export const Status = {
-    Fail: 'fail',
+    Fail: 'Fail',
     Success: 'Success',
     Error: "Error"
 };
