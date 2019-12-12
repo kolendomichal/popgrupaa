@@ -1,4 +1,4 @@
-import {createFetchActionTypes} from "../../utils";
+import {createFetchActionTypes} from "../utils";
 
 const SEND_REGISTRATION_DATA = createFetchActionTypes('SEND_REGISTRATION_DATA');
 

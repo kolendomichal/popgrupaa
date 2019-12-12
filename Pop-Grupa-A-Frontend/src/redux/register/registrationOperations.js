@@ -1,4 +1,4 @@
-import {createRequestAction} from "../../utils";
+import {createRequestAction} from "../utils";
 import types  from './registrationTypes';
 
 const sendRegisterRequest = (formValues) => (dispatch) => {

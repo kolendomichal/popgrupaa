@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import LoginForm from "../component/LoginForm";
+import LoginForm from "./LoginForm";
 import {bindActionCreators} from "redux";
 import {Redirect} from 'react-router-dom';
-import loginOperations from '../duck/loginOperations';
-import { LoginRegistrationNavBar } from '../../../components/navigationBar/NavBars';
+import loginOperations from '../../redux/login/loginOperations';
+import { LoginRegistrationNavBar } from '../navigationBar/NavBars';
 
 class LoginContainer extends React.PureComponent {
 

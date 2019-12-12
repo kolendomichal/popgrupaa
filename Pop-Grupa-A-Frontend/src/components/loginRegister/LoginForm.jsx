@@ -1,12 +1,12 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
-import {FormNames, Role} from "../../constants";
-import Input from "../../common/form/Input";
-import Button from "../../common/form/Button";
+import {FormNames, Role} from "../../commons/Constants";
+import Input from "../common/Input";
+import StandardButton from "../common/StandardButton";
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import {StyledCard} from '../../common/form/StyledCard';
+import {StyledCard} from '../common/StyledCard';
 
 const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
     return (
@@ -20,7 +20,7 @@ const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
                         <Field name="password" component={Input} type="password" label="Password"/>
                     </Row>
                     <Row className="justify-content-md-center">
-                        <Button label="Sign in" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
+                        <StandardButton label="Sign in" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Card.Text id="register-link">

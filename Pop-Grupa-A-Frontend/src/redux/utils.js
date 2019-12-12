@@ -1,7 +1,9 @@
+
 export const createRequestAction = (object) => {
     const serverUrl = 'http://localhost:5000'; // fixme put serverUrl here
     return createRequest(object, serverUrl);
 };
+
 const createRequest = ({types, url, method, body, successHandler}, server) => {
     const headers = method === "POST" ? {'Content-Type': 'application/json'} : {};
     const param = {

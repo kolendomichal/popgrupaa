@@ -1,5 +1,5 @@
-import { Status } from "./constants";
-import alertActions from './common/alert/duck/alertActions';
+import { Status } from "../commons/Constants";
+import alertActions from './alert/alertActions';
 
 export const requestActionMiddleware = ({dispatch}) => next => action => {
     if (!action.fetchAction) {
@@ -11,17 +11,17 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
     return action.payload.then(response => {
         if(response.status === 409) {
             const message = "Username or email are already used";
-            dispatch(alertActions.showAlert(message));
+            dispatch(alertActions.showAlert(message, Status.Error));
             dispatch({type: action.types.REJECTED});
             return Promise.reject(message);
         } else if(response.status === 406) {
-            dispatch(alertActions.showAlert("Unauthorized"));
+            dispatch(alertActions.showAlert("Unauthorized", Status.Error));
             return Promise.reject("Unauthorized");
         }
         return response.json();
     }).then(data => {
         if (data.status === Status.Fail) {
-            dispatch(alertActions.showAlert(data.message));
+            dispatch(alertActions.showAlert(data.message, Status.Fail));
             dispatch({type: action.types.REJECTED});
             return Promise.reject(data.message);
         }
@@ -33,7 +33,7 @@ export const requestActionMiddleware = ({dispatch}) => next => action => {
             return Promise.resolve(action.successHandler(data))
         }
     }).catch(error => {
-        dispatch(alertActions.showAlert(error));
+        dispatch(alertActions.showAlert(error, Status.Error));
         dispatch({type: action.types.REJECTED});
         return Promise.reject(error);
     })

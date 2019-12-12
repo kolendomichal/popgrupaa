@@ -1,4 +1,5 @@
-import {createFetchActionTypes} from "../../utils";
+import {createFetchActionTypes} from "../utils";
+
 const SUCCESSFUL_LOGIN = "SUCCESSFUL_LOGIN";
 
 const FETCH_LOGIN_INFO = createFetchActionTypes("FETCH_LOGIN_INFO");

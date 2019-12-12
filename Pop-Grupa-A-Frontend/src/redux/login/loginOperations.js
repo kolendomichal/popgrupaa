@@ -1,6 +1,6 @@
-import {createRequestAction} from "../../utils";
+import {createRequestAction} from "../utils";
 import types from './loginTypes';
-import {UserIdPath, RolePath, Role} from "../../constants";
+import {UserIdPath, RolePath, Role} from "../../commons/Constants";
 import * as Cookies from 'js-cookie';
 
 const sendLoginRequest = (formValues) => (dispatch) => {

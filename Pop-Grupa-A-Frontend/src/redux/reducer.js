@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {reducer as form} from 'redux-form';
-import alert from './common/alert/duck/alertReducer';
+import alert from './alert/alertReducer';
 
 const rootReducer = combineReducers({
     form,

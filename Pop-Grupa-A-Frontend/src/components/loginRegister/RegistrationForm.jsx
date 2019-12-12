@@ -1,13 +1,13 @@
 import React from 'react';
-import Input from "../../common/form/Input";
+import Input from "../common/Input";
 import {Field, reduxForm} from "redux-form";
-import Button from "../../common/form/Button";
-import {FormNames, Role} from "../../constants";
+import StandardButton from "../common/StandardButton";
+import {FormNames, Role} from "../../commons/Constants";
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import {StyledCard} from '../../common/form/StyledCard';
-import Select from "../../common/form/Select";
+import {StyledCard} from '../common/StyledCard';
+import Select from "../common/Select";
 
 const RegistrationForm = ({handleSubmit, pristine, submitting, invalid}) => (
     <StyledCard>
@@ -26,7 +26,7 @@ const RegistrationForm = ({handleSubmit, pristine, submitting, invalid}) => (
                     <Field name="role" component={Select} items={Role} label="Role"/>
                 </Row>
                 <Row className="justify-content-md-center">
-                    <Button label="Registration" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
+                    <StandardButton label="Registration" onClick={handleSubmit} disabled={pristine || submitting || invalid}/>
                 </Row>
             </Container>
         </Card.Body>

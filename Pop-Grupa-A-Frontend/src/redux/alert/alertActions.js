@@ -1,8 +1,11 @@
 import types from './alertTypes';
 
-const showAlert = (message) => ({
+const showAlert = (message, title) => ({
     type: types.SHOW_ALERT,
-    payload: message
+    payload: { 
+        message,
+        title
+    }
 });
 
 const hideAlert = () => ({
