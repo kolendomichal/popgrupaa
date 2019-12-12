@@ -27,12 +27,12 @@ def add_task(task):
                 }, 201
     if not db_app:
         return {
-                'status': 'Failure',
+                'status': 'Fail',
                 'message': f"App with id = {task['app_id']} does not exist",
                 }, 400
      
     return {
-            'status': 'Failure',
+            'status': 'Fail',
             'message': f"User with id = {task['user_id']} does not exist",
             }, 400
 
@@ -50,7 +50,7 @@ def activate_task(task_id):
         return response_object, 200
     except:
         response_object = {
-            'status': 'Failure',
+            'status': 'Fail',
             'message': 'Error occur while activating task'
         }
         return response_object, 404

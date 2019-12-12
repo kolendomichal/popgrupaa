@@ -17,13 +17,13 @@ def submit_node(node_id):
     node = nodes_repository.get_node_for_id(node_id)
     if not node:
         return {
-                   'status': 'fail',
+                   'status': 'Fail',
                    'message': f"Node with id = {node_id} does not exist",
                }, 400
 
     if node.status is NodeStatus.SUBMITTED:
         return {
-                   'status': 'fail',
+                   'status': 'Fail',
                    'message': f"Node with id = {node_id} is already submitted.",
                }, 400
 
@@ -32,7 +32,7 @@ def submit_node(node_id):
             verify_machine(machine)
         except Exception as e:
             return {
-                       'status': 'fail',
+                       'status': 'Fail',
                        'message': f"Couldn't verify machine with IP = {machine.ip_address}." + str(e),
                    }, 400
 
@@ -89,13 +89,13 @@ def create_node(createNodeDto):
     for ip in createNodeDto.get('ip_list', []):
         if ip == '' or ' ' in ip:
             return { 
-                'status': 'fail',
+                'status': 'Fail',
                 'message':'\nCluster node could not be created.\n ' \
                     + 'Ip list element cannot be empty string or contain a white space'
                 }, 400
         if machines_repository.get_machine_by_ip(ip):
             return { 
-                'status': 'fail',
+                'status': 'Fail',
                 'message':'\nCluster node could not be created.\n' \
                     + f'There already is a machine with ip address: {ip}'
                 }, 400
@@ -119,7 +119,7 @@ def create_node(createNodeDto):
 def remove_cluster_node_with_machines(node_id):
     if not nodes_repository.get_node_for_id(node_id):
         return {
-                   'status': 'fail',
+                   'status': 'Fail',
                    'message': f"Node with id = {node_id} does not exist",
                }, 400
     machines_repository.remove_machines_by_node_id(node_id)

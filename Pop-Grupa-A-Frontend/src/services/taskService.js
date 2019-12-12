@@ -15,7 +15,6 @@ function getTasksForUser(userId){
 }
 
 function createTask(appId, userId){
-
     var createResponse = fetch(TASK_URL, {
         crossDomain: true,
         method: 'post',
@@ -23,7 +22,7 @@ function createTask(appId, userId){
         credentials: 'include',
         body: JSON.stringify({
           app_id: appId,
-          user_id: userId
+          user_id: parseInt(userId)
         })
       })
         .then(response => response.json())

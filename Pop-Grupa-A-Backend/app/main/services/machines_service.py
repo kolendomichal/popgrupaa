@@ -7,7 +7,7 @@ def get_cluster_node_machine_list(cluster_node_id):
     machine_list = machine_repository.get_machines_for_cluster_node(cluster_node_id)
     if not machine_list:
         return {
-                'status': 'Failure',
+                'status': 'Fail',
                 'message': 'Cluster node with id = {cluster_node_id} has no machines assigned'
                 }, 204
 
@@ -17,7 +17,7 @@ def get_cluster_node_machine_list(cluster_node_id):
 def remove_machine_by_id(machine_id):
     if not machine_repository.get_machine_by_id(machine_id):
         return {
-                   'status': 'fail',
+                   'status': 'Fail',
                    'message': f"Machine with id = {machine_id} does not exist",
                }, 400
     machine_repository.remove_machine_by_id(machine_id)
