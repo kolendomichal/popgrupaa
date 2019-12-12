@@ -1,5 +1,4 @@
-import {Status, UserIdPath} from "./constants";
-import loginActions from './login/duck/loginActions';
+import { Status } from "./constants";
 import alertActions from './common/alert/duck/alertActions';
 
 export const requestActionMiddleware = ({dispatch}) => next => action => {

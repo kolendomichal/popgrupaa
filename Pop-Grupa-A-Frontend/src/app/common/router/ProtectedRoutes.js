@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from "react-router-dom";
 import {Redirect} from 'react-router-dom';
-import {UserIdPath, RolePath, Role} from "../../constants";
+import {UserIdPath, RolePath } from "../../constants";
 import * as Cookies from 'js-cookie';
 
 const ProtectedRoute = ({component: Component, roles, ...other}) => {

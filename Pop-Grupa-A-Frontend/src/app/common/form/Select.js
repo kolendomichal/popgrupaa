@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 
 const Select = ({label, items, input, meta: {touched, invalid, error}, ...custom}) => (
-    <Form.Group validationState={invalid} style={{width: '100%'}}>
+    <Form.Group validationstate={invalid.toString()} style={{width: '100%'}}>
         <Form.Control as="select"
                       placeholder={label}
                       value={input.value}

@@ -7,7 +7,6 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import {StyledCard} from '../../common/form/StyledCard';
-import Select from "../../common/form/Select";
 
 const LoginForm = ({handleSubmit, pristine, submitting, invalid}) => {
     return (
