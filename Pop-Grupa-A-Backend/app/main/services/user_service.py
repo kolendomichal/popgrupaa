@@ -1,17 +1,13 @@
-import datetime
 import uuid
-
-from app.main import db
-from app.main.model.ComputationAccount import ComputationAccount
-from app.main.model.Session import Session
-from app.main.model.AccountRole import AccountRole
 from flask import session
 from .. import flask_bcrypt
 
+import app.main.repositories.user_repository as user_repository
+from app.main.model.AccountRole import AccountRole
 
 def add_user(user):
-    db_user = ComputationAccount.query.filter_by(email=user['email']).first()
-    db_user2 = ComputationAccount.query.filter_by(username=user['username']).first()
+    db_user = user_repository.get_user_by_email(user['email'])
+    db_user2 = user_repository.get_user_by_username(user['username'])
     if db_user or db_user2:
         response_object = {
             'status': 'Fail',
@@ -26,13 +22,7 @@ def add_user(user):
         }
         return response_object, 409
 
-    new_user = ComputationAccount(username=user['username'],
-                                  password=flask_bcrypt.generate_password_hash(user['password']).decode('utf-8'),
-                                  created=datetime.datetime.now(),
-                                  lastLogin=datetime.datetime.now(),
-                                  email=user['email'],
-                                  role=user['role'])
-    save_changes(new_user)
+    user_repository.add_new_user(user)
     response_object = {
         'status': 'Success',
         'message': f'New account has been successfully created'
@@ -40,7 +30,7 @@ def add_user(user):
     return response_object, 201
 
 def check_user(user):
-    db_user = ComputationAccount.query.filter_by(username=user['username']).first()
+    db_user = user_repository.get_user_by_username(user['username'])
     if not db_user:
         response_object = {
             'status': 'Fail',
@@ -65,19 +55,14 @@ def check_user(user):
         session['sid'] = sid
         session['username'] = user['username']
         session['role'] = str(db_user.role)
-        new_session = Session(
-            sid=sid,
-            exp=datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
-        )
-        save_changes(new_session)
+        user_repository.add_new_session(sid)
         return response_object, 200
 
 
 def logout_user():
     try:
         sid = session['sid']
-        Session.query.filter_by(sid=sid).delete()
-
+        user_repository.remove_session(sid)
         session.pop('role', None)
         session.pop('username', None)
         session.pop('sid', None)
@@ -95,8 +80,3 @@ def logout_user():
 
 def get_role_of_current_user():
     return session.get('role')
-
-def save_changes(data):
-    db.session.add(data)
-    db.session.commit()
-

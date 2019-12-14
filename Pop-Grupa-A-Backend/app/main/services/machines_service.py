@@ -1,5 +1,3 @@
-from app.main import db
-from app.main.model.Machine import Machine
 import app.main.repositories.machines_repository as machine_repository
 
 

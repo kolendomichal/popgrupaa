@@ -1,14 +1,10 @@
 import app.main.repositories.cluster_nodes_repository as nodes_repository
 import app.main.repositories.machines_repository as machines_repository
-
 from app.main.model.NodeStatus import NodeStatus
-from app.main.model.ClusterNode import ClusterNode
-from app.main.model.Machine import Machine
 
 import random
 from urllib.request import urlopen
 import json
-
 
 def get_nodes_for_user(userId):
     return nodes_repository.get_cluster_nodes_for_user(userId)
@@ -36,8 +32,7 @@ def submit_node(node_id):
                        'message': f"Couldn't verify machine with IP = {machine.ip_address}." + str(e),
                    }, 400
 
-    node.status = NodeStatus.SUBMITTED
-    nodes_repository.save_changes(node)
+    nodes_repository.change_state_to_submitted(node)
     return {
                'status': 'Success',
                'message': 'Cluster node successfuly submitted.'
@@ -45,15 +40,9 @@ def submit_node(node_id):
 
 
 def verify_machine(machine):
-    threshold = 10000
-    number = random.randrange(threshold)
-    url = 'http://' + machine.ip_address + '/verify/' + str(number)
-    response = urlopen(url).read()
-    return bin(number) == bin(int(response,2))
-
-def verify_machine(machine):
     verify_ping_pong(machine)
     fill_machine_data(machine)
+
 
 def verify_ping_pong(machine):
     threshold = 10000
@@ -65,6 +54,7 @@ def verify_ping_pong(machine):
         raise Exception("\nMachine didn't answer for ping pong verification! \nPlease check if machine's IP is correct.")
     if bin(number) != bin(int(response, 2)):
         raise Exception("Wrong answer for verification message.")
+
 
 def fill_machine_data(machine):
     url = 'http://' + machine.ip_address + '/machine-data'
@@ -79,35 +69,16 @@ def fill_machine_data(machine):
 
 
 def create_node(createNodeDto):
-    new_node = ClusterNode(
-        is_private = createNodeDto.get('is_private', False),
-        user_id = createNodeDto.get('user_id'),
-        status = NodeStatus.CREATED
-    )
-    inserted_node = nodes_repository.save_and_return(new_node)
-    machines_list = []
-    for ip in createNodeDto.get('ip_list', []):
-        if ip == '' or ' ' in ip:
-            return { 
+    inserted_node = nodes_repository.create_node_and_return(createNodeDto)
+    try:
+        machines_were_created = machines_repository.create_new_machines_list(createNodeDto, inserted_node.id)
+    except Exception as e:
+        return { 
                 'status': 'Fail',
-                'message':'\nCluster node could not be created.\n ' \
-                    + 'Ip list element cannot be empty string or contain a white space'
+                'message': str(e)
                 }, 400
-        if machines_repository.get_machine_by_ip(ip):
-            return { 
-                'status': 'Fail',
-                'message':'\nCluster node could not be created.\n' \
-                    + f'There already is a machine with ip address: {ip}'
-                }, 400
-        machines_list.append(Machine(
-            ip_address = ip,
-            cluster_node_id = inserted_node.id,
-            cpus = '',
-            gpus = ''
-        ))
-    if len(machines_list) > 0:
-        machines_repository.save_machines_list(machines_list)
-    else: 
+
+    if not machines_were_created: 
         nodes_repository.commit_changes()
 
     return { 

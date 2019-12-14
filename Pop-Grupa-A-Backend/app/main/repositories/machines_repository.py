@@ -1,6 +1,27 @@
 from app.main import db
 from app.main.model.Machine import Machine
 
+def create_new_machines_list(createNodeDto, newClusterId):
+    machines_list = []
+    for ip in createNodeDto.get('ip_list', []):
+        if ip == '' or ' ' in ip:
+            raise Exception('\nCluster node could not be created.\n ' \
+                             + 'Ip list element cannot be empty string or contain a white space')
+        if get_machine_by_ip(ip):
+            raise Exception('\nCluster node could not be created.\n' \
+                            + f'There already is a machine with ip address: {ip}')
+
+        machines_list.append(Machine(
+            ip_address = ip,
+            cluster_node_id = newClusterId,
+            cpus = '',
+            gpus = ''
+        )) 
+    if len(machines_list) > 0:
+        save_machines_list(machines_list)
+        return True
+    else:
+        return False       
 
 def get_all_machines():
     return Machine.query.all()
