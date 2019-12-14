@@ -26,6 +26,7 @@ const sendLogoutRequest = () => (dispatch) => {
         body: {},
         successHandler: () => {
             Cookies.remove(UserIdPath);
+            window.location.reload();
             return ({payload: true});
         }
     }))
