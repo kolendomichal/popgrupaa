@@ -3,13 +3,20 @@ from flask import request, abort
 import app.main.repositories.task_repository as task_repository
 import app.main.repositories.user_repository as user_repository
 import app.main.repositories.application_repository as application_repository
+from app.main.model.ComputationStatus import ComputationStatus
+from app.main.model.ComputationTask import ComputationTask
 
 def add_task(task):
     db_user = user_repository.get_user(task['user_id'])   
     db_app =  application_repository.get_app_by_id(task['app_id'])
 
     if db_user and db_app:
-        task_repository.add_new_task(task)
+        new_task = ComputationTask(
+            status = ComputationStatus.SUBMITTED,
+            user_id = task['user_id'],
+            app_id = task['app_id']
+        )
+        task_repository.add_new_task(new_task)
         return {
                 'status': 'Success',
                 'message': 'Task successfuly created.'
@@ -27,7 +34,7 @@ def add_task(task):
 
 def activate_task(task_id):
     try:
-        task = task_repository.change_task_status_to_active(task_id)
+        task = task_repository.change_task_status(task_id, ComputationStatus.WORKING)
         response_object = {
             'status': 'Success',
             'message': 'Task successfuly activated.'

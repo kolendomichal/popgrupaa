@@ -1,6 +1,8 @@
 import app.main.repositories.cluster_nodes_repository as nodes_repository
 import app.main.repositories.machines_repository as machines_repository
 from app.main.model.NodeStatus import NodeStatus
+from app.main.model.Machine import Machine
+from app.main.model.ClusterNode import ClusterNode
 
 import random
 from urllib.request import urlopen
@@ -69,17 +71,36 @@ def fill_machine_data(machine):
 
 
 def create_node(createNodeDto):
-    inserted_node = nodes_repository.create_node_and_return(createNodeDto)
+    new_node = ClusterNode(
+        is_private = createNodeDto.get('is_private', False),
+        user_id = createNodeDto.get('user_id'),
+        status = NodeStatus.CREATED
+    )
     try:
-        machines_were_created = machines_repository.create_new_machines_list(createNodeDto, inserted_node.id)
+        machines_list = []
+        for ip in createNodeDto.get('ip_list', []):
+            if ip == '' or ' ' in ip:
+                raise Exception('\nCluster node could not be created.\n ' \
+                                + 'Ip list element cannot be empty string or contain a white space')
+            if machines_repository.get_machine_by_ip(ip):
+                raise Exception('\nCluster node could not be created.\n' \
+                                + f'There already is a machine with ip address: {ip}')
+
+            machines_list.append(Machine(
+                ip_address = ip,
+                cluster_node_id = new_node.id,
+                cpus = '',
+                gpus = ''
+            )) 
+        if len(machines_list) > 0:
+            machines_repository.save_machines_list(machines_list)
+        else:
+            nodes_repository.commit_changes()
     except Exception as e:
         return { 
                 'status': 'Fail',
                 'message': str(e)
                 }, 400
-
-    if not machines_were_created: 
-        nodes_repository.commit_changes()
 
     return { 
         'status': 'Success',

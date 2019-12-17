@@ -10,12 +10,7 @@ def get_node_for_id(node_id):
     return ClusterNode.query.filter_by(id=node_id).first()
 
 
-def create_node_and_return(createNodeDto):
-    new_node = ClusterNode(
-        is_private = createNodeDto.get('is_private', False),
-        user_id = createNodeDto.get('user_id'),
-        status = NodeStatus.CREATED
-    )
+def create_node_and_return(new_node):
     db.session.add(new_node)
     db.session.flush()
     return new_node

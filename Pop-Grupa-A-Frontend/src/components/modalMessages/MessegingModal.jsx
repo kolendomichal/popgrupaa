@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import alertActions from "../../redux/alert/alertActions";
 
 const ModalMessage = ({show, message, title, close}) => {
-    return (
+    return(
         <Modal show={show} onHide={close}>
                 <Modal.Header closeButton>
                 <Modal.Title>

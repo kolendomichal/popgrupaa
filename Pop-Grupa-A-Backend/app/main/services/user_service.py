@@ -1,9 +1,11 @@
 import uuid
 from flask import session
 from .. import flask_bcrypt
-
+import datetime
+from app.main.model.Session import Session
 import app.main.repositories.user_repository as user_repository
 from app.main.model.AccountRole import AccountRole
+from app.main.model.ComputationAccount import ComputationAccount
 
 def add_user(user):
     db_user = user_repository.get_user_by_email(user['email'])
@@ -22,6 +24,12 @@ def add_user(user):
         }
         return response_object, 409
 
+    new_user = ComputationAccount(username=user['username'],
+                                  password=flask_bcrypt.generate_password_hash(user['password']).decode('utf-8'),
+                                  created=datetime.datetime.now(),
+                                  lastLogin=datetime.datetime.now(),
+                                  email=user['email'],
+                                  role=user['role'])
     user_repository.add_new_user(user)
     response_object = {
         'status': 'Success',
@@ -55,7 +63,11 @@ def check_user(user):
         session['sid'] = sid
         session['username'] = user['username']
         session['role'] = str(db_user.role)
-        user_repository.add_new_session(sid)
+        new_session = Session(
+            sid=sid,
+            exp=datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+        )
+        user_repository.add_new_session(new_session)
         return response_object, 200
 
 

@@ -24,20 +24,10 @@ def check_session():
     return False
 
 
-def add_new_user(user):
-    new_user = ComputationAccount(username=user['username'],
-                                  password=flask_bcrypt.generate_password_hash(user['password']).decode('utf-8'),
-                                  created=datetime.datetime.now(),
-                                  lastLogin=datetime.datetime.now(),
-                                  email=user['email'],
-                                  role=user['role'])
+def add_new_user(new_user):  
     save_changes(new_user)
 
-def add_new_session(sid):
-    new_session = Session(
-            sid=sid,
-            exp=datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
-    )
+def add_new_session(new_session):
     save_changes(new_session)
 
 def remove_session(sid):

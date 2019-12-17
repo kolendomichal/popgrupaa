@@ -12,18 +12,13 @@ def get_task_for_task_id(id=id):
 def get_status(task_id):
     return ComputationTask.query.filter_by(task_id=task_id).first()['status']
 
-def add_new_task(task):
-    new_task = ComputationTask(
-            status = ComputationStatus.SUBMITTED,
-            user_id = task['user_id'],
-            app_id = task['app_id']
-    )
+def add_new_task(new_task):
     save_changes(new_task)
 
-def change_task_status_to_active(task_id):
+def change_task_status(task_id, newStatus):
     try:
         task = get_task_for_task_id(task_id)
-        task.status = ComputationStatus.WORKING
+        task.status = newStatus
         save_changes(task)
     except:
         raise Exception
