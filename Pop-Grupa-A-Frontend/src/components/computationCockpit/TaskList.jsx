@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import alertActions from "../../redux/alert/alertActions";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getTasksForUser, activateTask } from '../../services/taskService';
-import { ModalMessege } from '../modalMesseges/MessegingModal';
 import * as Cookies from 'js-cookie';
 
 class TaskList extends Component {
@@ -14,11 +15,6 @@ class TaskList extends Component {
         this.state = {
             chosenTaskId: -1,
             listitems: [],
-            response: {
-                showModal: false,
-                title: "",
-                message: ""
-            },
             userId: Cookies.get("userId")
         };
     }
@@ -26,22 +22,14 @@ class TaskList extends Component {
     onTaskClick = (chosenTaskId) => {
         this.setState({ chosenTaskId });
     }
-
-    onModalHide = () => {
-        this.setState({ response: { showModal: false } });
-    }
     
     useActivateTask = () => {
         activateTask(this.state.chosenTaskId)
         .then(response => {
             this.setState({
-                chosenTaskId: -1,
-                response:{
-                    showModal: true,
-                    title: response.status,
-                    message: response.message
-                }
+                chosenTaskId: -1
             })
+            this.props.showModal(response.message, response.status);
         }).then(() => this.props.tasksShouldRefresh(true))
     }
 
@@ -74,8 +62,7 @@ class TaskList extends Component {
           };
 
         return (
-            <div>
-                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
+            <React.Fragment>
                 <Row className="p-1 mb-3">
                     <Col sm style={{ maxHeight: '30vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
                         <Table striped bordered hover>
@@ -121,9 +108,13 @@ class TaskList extends Component {
                         <Button variant="secondary" block>Abort</Button>
                     </Col>
                 </Row>
-            </div>
+            </React.Fragment>
         );
     }
 }
 
-export default TaskList;
+const mapDispatchToProps = (dispatch) => ({
+    showModal: (message, title) => dispatch(alertActions.showAlert(message, title))
+  });
+  
+  export default connect(null, mapDispatchToProps)(TaskList);

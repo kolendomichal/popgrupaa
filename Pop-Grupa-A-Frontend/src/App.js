@@ -2,17 +2,17 @@ import React from 'react';
 import ComputationCockpit from './components/computationCockpit/ComputationCockpit';
 import './App.css';
 import {Provider} from 'react-redux';
-import store from './app/store';
-import LoginContainer from "./app/login/conteiner/LoginContainer";
+import store from './redux/store';
+import LoginContainer from "./components/loginRegister/LoginContainer";
 import {Route, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
-import RegistrationContainer from "./app/registration/container/RegistrationContainer";
-import ProtectedRoute from "./app/common/router/ProtectedRoutes";
-import LoginRegistrationRoute from "./app/common/router/LoginRegistrationRoute";
+import RegistrationContainer from "./components/loginRegister/RegistrationContainer";
+import ProtectedRoute from "./redux/routing/ProtectedRoutes";
+import LoginRegistrationRoute from "./redux/routing/LoginRegistrationRoute";
 import ComputationResourceManagment from './components/clusterNode/ComputationResourceManagement';
 import MachineList from './components/clusterNode/MachineList';
-import NotFoundPage from "./app/common/router/NotFoundPage";
-import {Role} from "./app/constants";
-import AlertComponent from './app/common/alert/AlertComponent';
+import NotFoundPage from "./components/common/NotFoundPage";
+import {Role} from "./commons/Constants";
+import ModalMessage from "./components/modalMessages/MessegingModal";
 import CreateNewClusterNodeForm from './components/clusterNode/CreateNewClusterNodeForm';
 
 
@@ -20,7 +20,7 @@ import CreateNewClusterNodeForm from './components/clusterNode/CreateNewClusterN
 function App() {
     return (
         <Provider store={store}>
-            <AlertComponent/>
+            <ModalMessage />
             <Router>
                 <Switch>
                     <Route exact path="/" render={() => <Redirect from="/" to="/login" />} />

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import alertActions from "../../redux/alert/alertActions";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { getAppsForUser } from '../../services/appService';
 import { createTask } from '../../services/taskService';
-import { ModalMessege } from '../modalMesseges/MessegingModal';
 import * as Cookies from 'js-cookie';
 
 class AppList extends Component {
@@ -15,12 +16,7 @@ class AppList extends Component {
     this.state = {
       chosenAppId: -1,
       userId: Cookies.get("userId"),
-      appsList: [],
-      response: {
-        showModal: false,
-        title: "",
-        message: ""
-      } 
+      appsList: []
     };
   }
 
@@ -33,11 +29,6 @@ class AppList extends Component {
     );
   }
 
-  onModalHide = () => {
-    this.setState({ response: { showModal: false } });
-  }
-
-
   onAppClick = (chosenAppId) => {
     this.setState({ chosenAppId });
   }
@@ -46,14 +37,11 @@ class AppList extends Component {
       createTask(this.state.chosenAppId, this.state.userId)
       .then(response => {
         this.setState({
-          chosenAppId: -1,
-          response:{
-            showModal: true,
-            title: response.status,
-            message: response.message
-          }
+          chosenAppId: -1
         })
-      }).then(() => this.props.tasksShouldRefresh(true))
+        this.props.showModal(response.message, response.status);
+      })
+      .then(() => this.props.tasksShouldRefresh(true))
   }
 
   render() {
@@ -65,7 +53,6 @@ class AppList extends Component {
 
     return (
       <React.Fragment>
-        <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
         <Row className="pl-1 mb-4">
           <Col sm style={{ maxHeight: '40vh', overflow: 'hidden', overflowY: 'scroll', paddingRight: '0px' }}>
             <Table striped bordered hover>
@@ -106,4 +93,8 @@ class AppList extends Component {
   }
 }
 
-export default AppList;
+const mapDispatchToProps = (dispatch) => ({
+  showModal: (message, title) => dispatch(alertActions.showAlert(message, title))
+});
+
+export default connect(null, mapDispatchToProps)(AppList);

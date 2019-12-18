@@ -24,5 +24,25 @@ def check_session():
     return False
 
 
+def add_new_user(new_user):  
+    save_changes(new_user)
+
+def add_new_session(new_session):
+    save_changes(new_session)
+
+def remove_session(sid):
+    Session.query.filter_by(sid=sid).delete()
+
 def get_user(userId):
     return ComputationAccount.query.filter_by(id=userId).first()
+
+def get_user_by_username(username):
+    return ComputationAccount.query.filter_by(username=username).first()
+
+def get_user_by_email(email):
+    return ComputationAccount.query.filter_by(email=email).first()
+
+def save_changes(data):
+    db.session.add(data)
+    db.session.commit()
+

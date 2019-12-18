@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
@@ -6,9 +7,10 @@ import Table from 'react-bootstrap/Table'
 import { getClustersForUser, submitClusterNode, deleteClusterNode } from '../../services/clusterService';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ModalMessege } from '../modalMesseges/MessegingModal';
+import alertActions from "../../redux/alert/alertActions";
 import Spinner from 'react-bootstrap/Spinner';
 import * as Cookies from 'js-cookie';
+import { Status } from "../../commons/Constants";
 
 const ButtonContainer = styled.div`
     display: grid;
@@ -25,17 +27,12 @@ class ClusterNodeList extends Component {
             chosenClusterNodeId: false,
             clusterNodeList: [],
             userId: Cookies.get("userId"),
-            loading: false,
-            response: {
-                showModal: false,
-                title: "",
-                message: ""
-            } 
+            loading: false
         };
     }
 
-    onModalHide = () => {
-        this.setState({ response: { showModal: false } });
+    componentDidMount() {
+        this.getClusters();
     }
 
     onClusterNodeClick = (chosenClusterNodeId) => {
@@ -56,40 +53,28 @@ class ClusterNodeList extends Component {
             .then(
                 (response) => {
                     this.setState({
-                        listitems: this.getClusters(),
-                        response:{
-                            showModal: true,
-                            title: response.status,
-                            message: response.message
-                        }
+                        listitems: this.getClusters()
                     })
+                    this.props.showModal(response.message, response.status);
                 }
             )
     }
 
-    submitCluster() {
+    submitCluster = () => {
         submitClusterNode(this.state.chosenClusterNodeId)
             .then(
                 (response) => {
                     this.setState({
                         listitems: this.getClusters(),
-                        loading: false,
-                        response:{
-                            showModal: true,
-                            title: response.status,
-                            message: response.message
-                        }
+                        loading: false
                     })
+                    this.props.showModal(response.message, response.status);
                 },
                 (error) => {
                     this.setState({
-                        loading: false,
-                        response:{
-                            showModal: true,
-                            title: "Error",
-                            message: error.message
-                        }
+                        loading: false
                     })
+                    this.props.showModal(error.message, Status.Error);
                 }
             );
     }
@@ -99,8 +84,7 @@ class ClusterNodeList extends Component {
             backgroundColor: "DodgerBlue"
         };
         return (
-            <div>
-                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
+            <React.Fragment>
                 <Row>
                     <Col sm>
                         {<Button variant="secondary" block onClick={() => this.getClusters()}>Show owned cluster nodes</Button>}
@@ -174,9 +158,14 @@ class ClusterNodeList extends Component {
                     </Link>
 
                 </ButtonContainer>
-            </div>
+            </React.Fragment>
         );
     }
 }
 
-export default ClusterNodeList;
+const mapDispatchToProps = (dispatch) => ({
+    showModal: (message, title) => dispatch(alertActions.showAlert(message, title))
+});
+
+export default connect(null, mapDispatchToProps)(ClusterNodeList);
+

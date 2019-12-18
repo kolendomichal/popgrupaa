@@ -33,7 +33,6 @@ class TaskCreate(Resource):
     def post(self):
         """Creates a new Task"""
         data = request.json
-
         return add_task(task=data)
 
 

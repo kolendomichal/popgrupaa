@@ -1,12 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import alertActions from "../../redux/alert/alertActions";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {withRouter} from "react-router-dom";
 import { createClusterNode } from '../../services/clusterService';
-import { ModalMessege } from '../modalMesseges/MessegingModal';
 import * as Cookies from 'js-cookie';
+import { withRouter } from 'react-router'
+import { Status } from "../../commons/Constants";
 
 class DynamicFormList extends React.Component {
 
@@ -15,11 +17,6 @@ class DynamicFormList extends React.Component {
         this.state = {
             isPrivate: false,
             IPTable: [{ machine: "" }],
-            response: {
-                showModal: false,
-                title: "",
-                message: ""
-            },
             userId: Cookies.get("userId")
         };
     }
@@ -44,33 +41,17 @@ class DynamicFormList extends React.Component {
         createClusterNode(isPrivate, userId ,ip_list)
         .then(
             (response) => {
-                this.setState({
-                    response:{
-                      showModal: true,
-                      title: response.status,
-                      message: response.message
-                    }
-                })
+                this.props.showModal(response.message, response.status);
+                this.props.history.push('/computation-resource-management');
             },
             (error) => {
                 this.setState({
-                    chosenAppId: -1,
-                    response:{
-                      showModal: true,
-                      title: "Error",
-                      message: error.message
-                    }
+                    chosenAppId: -1
                   })
+                  this.props.showModal(error.message, Status.Error);
             }
         );
     };
-
-    onModalHide = () => {
-        this.setState({ response: { showModal: false } });
-        if(this.state.response.title !== "Error"){
-            this.props.history.push('/computation-resource-management');
-        }
-    }
 
     handleAddIP = () => {
         this.setState({
@@ -86,8 +67,7 @@ class DynamicFormList extends React.Component {
 
     render() {
         return (
-            <div>
-                <ModalMessege show={this.state.response.showModal} response={this.state.response} onHide={() => this.onModalHide()}/> 
+            <React.Fragment>
                 <h4>Create new Cluster Node</h4>
                 <hr></hr>
                 <Row>
@@ -139,9 +119,14 @@ class DynamicFormList extends React.Component {
                         </Form>
                     </Col>
                 </Row>
-            </div>
+            </React.Fragment>
         );
     }
 }
 
-export default withRouter(DynamicFormList);
+
+const mapDispatchToProps = (dispatch) => ({
+    showModal: (message, title) => dispatch(alertActions.showAlert(message, title))
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(DynamicFormList));
