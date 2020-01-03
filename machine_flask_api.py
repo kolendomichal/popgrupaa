@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 import os
 import netifaces as ni
+import subprocess
 
 app = Flask(__name__)
 port = os.environ['FLASK_RUN_PORT']
@@ -30,11 +31,12 @@ def get_macine_task_info():
     if is_free:
         return jsonify({"status":"FREE", "message":"No tasks are running on machine."})
     else:
-        return jsonify({"status":"BUSY", "message":"At least one task is currently running on machine."})
+        return jsonify({"status":"BUSY", "message":"At least one task is currently running 
+        on machine."})
  
 @app.route("/get-machine-load-info", methods=['GET'])
 def get_machine_load_info():
-    CPU_Pct=str(round(float(os.popen('''grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage }' ''').readline()),2))
+    CPU_Pct = str(subprocess.check_output('ps -aux --sort=-pcpu | head -n 2 | tail -n 1', shell=True)).split()[2]
     return jsonify({"load_percent":CPU_Pct})
 
 @app.route("/task/<id>/create")
@@ -45,9 +47,10 @@ def create_new_task(id):
     return jsonify("Task created")
  
 @app.route("/task/<id>/activate")
-def activate_task():
-    # uruchomic wczesniej zapisany task
-    return jsonify("Task activted")
+def activate_task(id):
+    proc = subprocess.Popen(['/entrypoint.sh'], shell=True,
+             stdin=None, stdout=None, stderr=None, close_fds=True)
+    return jsonify(proc)
 
 @app.route("/verify/<number>", methods=['GET'])
 def get_binary_string(number):
