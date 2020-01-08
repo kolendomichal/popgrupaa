@@ -30,6 +30,20 @@ services:
     depends_on:
       - postgres
 
+  storage:
+    container_name: storage
+    build:
+      context: ./Pop-Grupa-A-Storage
+      dockerfile: Dockerfile
+    volumes:
+      - './Pop-Grupa-A-Storage:/app'
+    ports:
+      - '8000:8000'
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: ./app/app.py
+
+
   front-pop:
     container_name: front-pop
     build: ./Pop-Grupa-A-Frontend
@@ -55,3 +69,4 @@ services:
       FLASK_DEBUG: 1
 volumes:
   flask-app-db:
+
