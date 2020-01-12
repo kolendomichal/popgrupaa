@@ -30,6 +30,17 @@ services:
     depends_on:
       - postgres
 
+  scheduler-pop:
+    container_name: scheduler-pop
+    build:
+      context: ./Pop-Grupa-A-Scheduler
+      dockerfile: Dockerfile
+    ports:
+      - '5555:5555'
+    volumes:
+      - './Pop-Grupa-A-Scheduler:/app'
+
+
   front-pop:
     container_name: front-pop
     build: ./Pop-Grupa-A-Frontend
