@@ -34,12 +34,26 @@ def add_task(task):
 
 def activate_task(task_id):
     try:
-        task = task_repository.change_task_status(task_id, ComputationStatus.ACTIVATED)
-        response_object = {
-            'status': 'Success',
-            'message': 'Task successfuly activated.'
-        }
-        return response_object, 200
+        task_status = task_repository.get_status(task_id)
+        if(task_status == ComputationStatus.SUBMITTED):
+            task = task_repository.change_task_status(task_id, ComputationStatus.ACTIVATED)
+            response_object = {
+                'status': 'Success',
+                'message': 'Task successfuly activated.'
+            }
+            return response_object, 200
+        elif(task_status == ComputationStatus.ACTIVATED):
+            response_object = {
+                'status': 'Fail',
+                'message': 'Task already activated.'
+            }
+            return response_object, 400
+        else:
+            response_object = {
+                'status': 'Fail',
+                'message': 'Task must have status SUBMITTED to be activated'
+            }
+            return response_object, 400
     except:
         response_object = {
             'status': 'Fail',

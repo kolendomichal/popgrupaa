@@ -7,6 +7,7 @@ import app.main.services.user_service as user_service
 api = ComputationAccountDto.api
 _user = ComputationAccountDto.user
 _user_login = ComputationAccountDto.user_login
+_user_register = ComputationAccountDto.user_register
 
 
 @api.route('/register')
@@ -14,7 +15,7 @@ class UserCreate(Resource):
     @api.response(201, 'User successfully created.')
     @api.response(409, 'User already exist')
     @api.doc('create a new user')
-    @api.expect(_user, validate=True)
+    @api.expect(_user_register, validate=True)
     def post(self):
         """Creates a new User """
         data = request.json

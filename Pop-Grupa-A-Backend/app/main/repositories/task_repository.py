@@ -10,7 +10,9 @@ def get_task_for_task_id(id=id):
     return ComputationTask.query.filter_by(id=id).first()
 
 def get_status(task_id):
-    return ComputationTask.query.filter_by(task_id=task_id).first()['status']
+    task = ComputationTask.query.filter_by(id=task_id).first()
+    print(task.status)
+    return ComputationTask.query.filter_by(id=task_id).first().status
 
 def add_new_task(new_task):
     save_changes(new_task)

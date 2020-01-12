@@ -6,7 +6,10 @@ MACHINE_TASK_INFO = "/get-machine-task-info"
 MACHINE_DATA = "/machine-data"
 
 def fetchMachines():
-    data = requests.get(BACKEND + ALL_MACHINES).json()
+    try:
+        data = requests.get(BACKEND + ALL_MACHINES).json()
+    except ValueError:
+        data = []
     return data;
 
 def machineHealthCheck(address):
