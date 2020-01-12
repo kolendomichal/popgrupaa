@@ -18,6 +18,7 @@ class LoginContainer extends React.PureComponent {
 
     login = (formValues) => {
         this.props.loginOperations.sendLoginRequest(formValues).then(data => {
+            console.log(data)
             if (data.payload) {
                 this.setState(state => ({...state, loggedIn: true, uri: data.payload}));
             }

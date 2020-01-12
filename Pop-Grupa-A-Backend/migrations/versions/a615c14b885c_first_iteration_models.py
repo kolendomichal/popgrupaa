@@ -30,7 +30,7 @@ def upgrade():
     sa.Column('status',
                 sa.Enum('SUBMITTED', 'ASSIGNED', 'WORKING', 'COMPLETED',
                        'FAILED', 'REJECTED', 'ABORTED', 'PAUSED',
-                       'INTERACTION_REQUIRED',
+                       'INTERACTION_REQUIRED', "ACTIVATED",
                        name='computationstatus'), nullable=False),
     sa.Column('start_time', sa.Date(), nullable=False),
     sa.Column('end_time', sa.Date(), nullable=False),

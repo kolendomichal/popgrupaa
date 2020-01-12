@@ -11,7 +11,14 @@ class ComputationAccountDto:
         'id': fields.Integer(description='user Identifier')
     })
 
-    user_login = api.model('user', {
+    user_register= api.model('user', {
+        'username': fields.String(required=True, description='user username'),
+        'password': fields.String(required=True, description='user password'),
+        'email': fields.String(required=True, description='user email'),
+        'role': fields.String(required=True, description='user role'),
+    })
+
+    user_login= api.model('user', {
         'username': fields.String(required=True, description='user username'),
         'password': fields.String(required=True, description='user password')
     })
