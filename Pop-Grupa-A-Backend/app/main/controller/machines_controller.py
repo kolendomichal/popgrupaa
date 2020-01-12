@@ -8,6 +8,15 @@ api = MachineDTO.api
 _machine = MachineDTO.machine
 
 
+@api.route('/all')
+@api.response(200, 'Succes')
+class AllMachinesList(Resource):
+    @api.doc('get all machines')
+    @api.marshal_with(_machine, as_list=True)
+    def get(self):
+        return machine_service.get_all_machines_list()
+
+
 @api.route('/<cluster_node_id>')
 @api.param('cluster_node_id', 'Cluster node id (int)')
 @api.response(200, 'Succes')
