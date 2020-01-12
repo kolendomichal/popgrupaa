@@ -15,7 +15,7 @@ EXPOSE 5555
 RUN ls -la
 RUN pwd
 
-CMD [ "python", "scheduler.py"]
+CMD [ "python", "-u","scheduler.py"]
 
 
 
