@@ -88,14 +88,11 @@ def create_node(createNodeDto):
 
             machines_list.append(Machine(
                 ip_address = ip,
-                cluster_node_id = new_node.id,
                 cpus = '',
                 gpus = ''
-            )) 
-        if len(machines_list) > 0:
-            machines_repository.save_machines_list(machines_list)
-        else:
-            nodes_repository.commit_changes()
+            ))
+        new_node.machines = machines_list
+        nodes_repository.save_changes(new_node)
     except Exception as e:
         return { 
                 'status': 'Fail',
