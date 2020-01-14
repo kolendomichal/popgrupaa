@@ -9,17 +9,18 @@ _machine = MachineDTO.machine
 
 
 @api.route('/all')
-@api.response(200, 'Succes')
+@api.response(200, 'Success')
 class AllMachinesList(Resource):
     @api.doc('get all machines')
     @api.marshal_with(_machine, as_list=True)
+    @roles_required(AccountRole.SCHEDULER)
     def get(self):
         return machine_service.get_all_machines_list()
 
 
 @api.route('/<cluster_node_id>')
 @api.param('cluster_node_id', 'Cluster node id (int)')
-@api.response(200, 'Succes')
+@api.response(200, 'Success')
 @api.response(406, 'Cannot parse string into int')
 @api.response(204, 'No machines assigned to passed cluster node')
 class ClusterMachineList(Resource):
@@ -35,6 +36,7 @@ class ClusterMachineList(Resource):
 @api.param('machine_id', 'The Machine identifier')
 class MachineDelete(Resource):
     @api.doc('Delete machine by id')
+    @roles_required(AccountRole.SCHEDULER)
     def delete(self, machine_id):
         """Deletes a machine"""
         return machine_service.remove_machine_by_id(machine_id)
