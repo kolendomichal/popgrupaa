@@ -37,7 +37,7 @@ class GetApplication(Resource):
 @api.route('/storage/task/<task_id>')
 @api.param('task_id', 'Task identifier')
 @api.response(200, 'Success')
-@api.response(404, 'Task with given id could not be found!')
+@api.response(400, 'Could not find results to save')
 class SaveTaskResults(Resource):
     @api.doc('get task')
     # @roles_required(AccountRole.APP_USER)
