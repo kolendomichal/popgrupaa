@@ -3,6 +3,7 @@ from flask_restplus import Resource, Api
 import os
 from flask import Flask, request, abort, jsonify, send_from_directory
 import zipfile
+import pathlib
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,12 +23,22 @@ class GetApplication(Resource):
         if not os.path.exists(path):
             return 403
         else:
+            print("exists")
             zipf = zipfile.ZipFile("application_" + app_id + ".zip", 'w', zipfile.ZIP_DEFLATED)
             # fix so it doesnt save the whole tree
-            with os.listdir(path) as entries:
-                for entry in entries:
-                    zipf.write("application_" + app_id + "/" + entry.name)
-            zipf.close()
+            print("path" ,  path)
+            dirPath = path
+            with zipfile.ZipFile("application_" + app_id + ".zip", 'w', zipfile.ZIP_DEFLATED) as z:
+                lenDirPath = len(dirPath)
+                for root, _, files in os.walk(dirPath):
+                    for file in files:
+                        filePath = os.path.join(root, file)
+                        zipf.write(filePath, filePath[lenDirPath:])
+            # with os.listdir(path) as entries:
+            #     print(entries)
+            #     for entry in entries:
+            #         zipf.write("application_" + app_id + "/" + entry.name)
+            # zipf.close()
             return send_file("application_" + app_id + ".zip",
                              mimetype='zip',
                              attachment_filename="application_" + app_id + ".zip",
