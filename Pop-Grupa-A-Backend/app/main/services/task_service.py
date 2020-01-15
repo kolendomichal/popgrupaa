@@ -40,6 +40,11 @@ def send_message_to_scheduler(task_id):
     # ;replace task_id in body with the full message
     ActivateComputationTaskMessage = ""
     #todo verify connection parameters
+    app_id = (task_repository.get_task_for_task_id(task_id)).app_id
+    body = {
+        'app_id': app_id,
+        'task_id': task_id
+    }
     url = os.environ.get('CLOUDAMQP_URL',
                          'amqp://rabbitmq:rabbitmq@172.18.0.6:5672/%2f')  # adres się zmienia, ja miałem 172.18.0.5 więc trzeba to do zmiennej wrzucić, pewnie ta sama sytuacja jest też z adresem backendu
     params = pika.URLParameters(url)
@@ -50,7 +55,7 @@ def send_message_to_scheduler(task_id):
     channel.basic_publish(
         exchange='',
         routing_key='ActivateComputationTask',
-        body=task_id,
+        body=body,
         properties=pika.BasicProperties(
             delivery_mode=2,  # make message persistent
         ))
