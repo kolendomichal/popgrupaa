@@ -3,7 +3,7 @@ import os
 from flask.sessions import SecureCookieSessionInterface
 from itsdangerous import URLSafeTimedSerializer
 
-BACKEND = "http://172.18.0.6:5000"
+BACKEND = os.environ.get('BACKEND_URL')
 ALL_MACHINES = "/machines/all"
 MACHINE_TASK_INFO = "/get-machine-task-info"
 MACHINE_DATA = "/machine-data"

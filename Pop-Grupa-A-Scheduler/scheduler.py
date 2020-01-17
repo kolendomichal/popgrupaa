@@ -2,8 +2,7 @@ import pika, os, time
 from app.helper import fetchMachines
 from app.roundRobin import applyRoundRobinAlgorithm, prepareDict
 
-url = os.environ.get('CLOUDAMQP_URL', 'amqp://rabbitmq:rabbitmq@172.18.0.6:5672/%2f')  # adres się zmienia, ja miałem 172.18.0.5 więc trzeba to do zmiennej wrzucić, pewnie ta sama sytuacja jest też z adresem backendu
-params = pika.URLParameters(url)
+params = pika.URLParameters(os.environ.get('RABBIT_URL'))
 #params.socket_timeout = 5
 
 connection = pika.BlockingConnection(params) # Connect to CloudAMQP

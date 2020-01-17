@@ -42,6 +42,11 @@ services:
       - './Pop-Grupa-A-Scheduler:/app'
     environment:
       SECRET_KEY: 'FREEDOM_IS_A_MEME'
+      RABBIT_URL: 'amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f'
+      BACKEND_URL: 'http://backend-pop:5000'
+    depends_on:
+      - rabbit-mq
+      - backend-pop
 
 
   front-pop:
@@ -55,6 +60,7 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+      
   machine:
     container_name: test-machine
     build:
@@ -67,6 +73,7 @@ services:
       FLASK_RUN_PORT: 5500
       FLASK_APP_IP: 127.0.0.1 #just for decoration, changing that value WILL not affect the real IP where flask app is hosted.
       FLASK_DEBUG: 1
+
   
   rabbit-mq:
     container_name: rabbit-queue
