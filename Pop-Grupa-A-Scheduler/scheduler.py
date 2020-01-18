@@ -1,7 +1,7 @@
-import pika, os, time
+import pika, os
 import json
 from app.helper import fetchMachines
-from app.roundRobin import applyRoundRobinAlgorithm, prepareDict
+from app.algorithm.algorithmManager import AlgorithmManager
 
 EXCHANGE = "task_assign"
 params = pika.URLParameters(os.environ.get("RABBIT_URL"))
@@ -11,16 +11,17 @@ channel = connection.channel()
 channel.queue_declare(queue="ActivateComputationTask", durable=True)
 channel.exchange_declare(exchange=EXCHANGE, exchange_type="direct")
 
-machines = prepareDict(fetchMachines())
+machines = fetchMachines()
+algorithmManager = AlgorithmManager(machines)
 print(" [*] Waiting for messages from ActivateComputationTask")
 
 
 def consumeNewTask(ch, method, properties, body):
     body = json.loads(body)
     print("-- [x] -- Received task: " + str(body.get("task_id")))
-    global machines
-    choosenMachine, machines = applyRoundRobinAlgorithm(machines)  # tu jakaś logika zamiany tych algorytmów
-    sendTaskToChoosenMachine(choosenMachine, body)
+    global algorithmManager
+    chosenMachine = algorithmManager.assignMachineForTask()
+    sendTaskToChoosenMachine(chosenMachine, body)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 

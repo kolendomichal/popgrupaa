@@ -10,6 +10,7 @@ MACHINE_DATA = "/machine-data"
 SECRET_KEY = os.getenv('SECRET_KEY')
 ROLE = 'SCHEDULER'
 
+
 def fetchMachines():
     try:
         data = requests.get(BACKEND + ALL_MACHINES, cookies=generateCookiesToAuthorize()).json()
@@ -36,7 +37,6 @@ def machineHealthCheck(address):
 
 def generateCookiesToAuthorize():
     return dict(session=encodeFlaskCookie(SECRET_KEY, dict(role=ROLE)))
-
 
 class SimpleSecureCookieSessionInterface(SecureCookieSessionInterface):
     def get_signing_serializer(self, secret_key):
