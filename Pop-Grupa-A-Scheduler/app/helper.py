@@ -17,6 +17,15 @@ def fetchMachines():
         data = []
     return data
 
+def sendTaskStatusChangeRequest(task_id, address):
+    try:
+        send_url = BACKEND + '/task/' + task_id + '/' + address
+        print(send_url)
+        requests.post(send_url, cookies=generateCookiesToAuthorize())
+    except Exception as e:
+        print(str(e))
+
+
 def machineHealthCheck(address):
     try:
         req = requests.get("http://{}:5500".format(address) + MACHINE_DATA, cookies=generateCookiesToAuthorize())
