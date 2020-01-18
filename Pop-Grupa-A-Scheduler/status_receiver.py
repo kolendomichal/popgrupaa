@@ -22,6 +22,7 @@ print(" [*] Waiting for messages from TaskStatus")
 def readTaskAndChangeStatus(ch, method, properties, body):
     data = json.loads(body)
     task_id = data.get('task_id')
+    print("-- [x] -- Received status for task: " + str(task_id))
     address = changeStatusToAddress(data.get('status'))
     sendTaskStatusChangeRequest(str(task_id), address)
     ch.basic_ack(delivery_tag=method.delivery_tag)
