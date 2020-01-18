@@ -14,22 +14,17 @@ services:
     ports:
       - '5433:5432'
 
-  backend-pop:
-    container_name: backend-pop
-    build:
-      context: ./Pop-Grupa-A-Backend
-      dockerfile: Dockerfile
-    volumes:
-      - './Pop-Grupa-A-Backend:/app'
-    ports:
-      - '5000:5000'
+  rabbit-mq:
+    container_name: rabbit-queue
+    image: "rabbitmq:3-management"
     environment:
-      FLASK_DEBUG: 1
-      FLASK_APP: ./app/manage.py
-      DATABASE_URL: 'postgresql://admin:123456@postgres:5432/balticlsc'
-      SECRET_KEY: 'FREEDOM_IS_A_MEME'
-    depends_on:
-      - postgres
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
   scheduler-pop:
     container_name: scheduler-pop
@@ -47,6 +42,23 @@ services:
     depends_on:
       - rabbit-mq
       - backend-pop
+
+  backend-pop:
+    container_name: backend-pop
+    build:
+      context: ./Pop-Grupa-A-Backend
+      dockerfile: Dockerfile
+    volumes:
+      - './Pop-Grupa-A-Backend:/app'
+    ports:
+      - '5000:5000'
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: ./app/manage.py
+      DATABASE_URL: 'postgresql://admin:123456@postgres:5432/balticlsc'
+      SECRET_KEY: 'FREEDOM_IS_A_MEME'
+    depends_on:
+      - postgres
 
 
   front-pop:
@@ -73,19 +85,6 @@ services:
       FLASK_RUN_PORT: 5500
       FLASK_APP_IP: 127.0.0.1 #just for decoration, changing that value WILL not affect the real IP where flask app is hosted.
       FLASK_DEBUG: 1
-
-  
-  rabbit-mq:
-    container_name: rabbit-queue
-    image: "rabbitmq:3-management"
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/"
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    
+ 
 volumes:
   flask-app-db:
