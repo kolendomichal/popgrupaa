@@ -18,8 +18,9 @@ class AlgorithmManager:
         config = configparser.ConfigParser()
         config.read(AlgorithmManager.CONFIG_PATH)
         mode = config['scheduler']['algorithm']
+        healthCheck = True if config['scheduler']['healthCheck'] == 'ON' else False
         if mode == 'RR':
-            return RoundRobinAlgorithm(machines)
+            return RoundRobinAlgorithm(machines, healthCheck)
         if mode == 'LB':
-            return LoadBalancingAlgorithm(machines)
+            return LoadBalancingAlgorithm(machines, healthCheck)
         raise Exception('No algorithm defined for {} abbreviation'.format(mode))

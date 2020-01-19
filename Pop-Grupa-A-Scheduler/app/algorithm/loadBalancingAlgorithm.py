@@ -4,9 +4,10 @@ import pika, os
 
 class LoadBalancingAlgorithm(Algorithm):
 
-    def __init__(self, machines):
+    def __init__(self, machines, healthCheck):
         self.machinesWorkLoad, self.machinesAdress = self.prepareData(machines)
         self.queues = self.loadQueues()
+        self.healthCheck = healthCheck
         print('Loaded load balancing algorithm.')
 
     def assignNewMachineForTask(self):
@@ -14,8 +15,10 @@ class LoadBalancingAlgorithm(Algorithm):
         self.updateMachinesWorkLoad()
         sortedMachines = sorted(self.machinesWorkLoad, key=self.machinesWorkLoad.get)
         for machine in sortedMachines:
-            # if machineHealthCheck(self.machinesAdress[machine]):
-            return str(machine)
+            if self.healthCheck is False:
+                return str(machine)
+            if machineHealthCheck(self.machinesAdress[machine]):
+                return str(machine)
 
     def prepareData(self, machines):
         machinesAdress = dict()

@@ -4,16 +4,20 @@ from app.helper import machineHealthCheck
 
 class RoundRobinAlgorithm(Algorithm):
 
-    def __init__(self, machines):
+    def __init__(self, machines, healthCheck):
         self.machinesWorkLoad, self.machinesAdress = self.prepareData(machines)
+        self.healthCheck = healthCheck
         print('Loaded round robin algorithm.')
 
     def assignNewMachineForTask(self):
         sortedMachines = sorted(self.machinesWorkLoad, key=self.machinesWorkLoad.get)
         for machine in sortedMachines:
-            #if machineHealthCheck(self.machinesAdress[machine]):
-            self.machinesWorkLoad[machine] += 1
-            return machine
+            if self.healthCheck is False:
+                self.machinesWorkLoad[machine] += 1
+                return str(machine)
+            if machineHealthCheck(self.machinesAdress[machine]):
+                self.machinesWorkLoad[machine] += 1
+                return str(machine)
 
     def prepareData(self, machines):
         machinesAdress = dict()
