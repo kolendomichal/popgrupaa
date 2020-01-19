@@ -5,13 +5,13 @@ import configparser
 
 class AlgorithmManager:
 
-    CONFIG_PATH = '../../config.ini'
+    CONFIG_PATH = 'config.ini'
 
     def __init__(self, machines):
         self.algorithm = self.loadAlgorithmModeFromConfigFile(machines)
 
     def assignMachineForTask(self):
-        self.algorithm.assignNewMachineForTask()
+        return self.algorithm.assignNewMachineForTask()
 
 
     def loadAlgorithmModeFromConfigFile(self, machines):

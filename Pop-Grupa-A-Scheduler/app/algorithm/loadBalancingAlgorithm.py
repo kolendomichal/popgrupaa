@@ -11,10 +11,10 @@ class LoadBalancingAlgorithm(Algorithm):
 
     def assignNewMachineForTask(self):
         self.updateMachinesWorkLoad()
-        sortedMachines = sorted(self.machineWorkLoad, key=self.machineWorkLoad.get)
+        sortedMachines = sorted(self.machinesWorkLoad, key=self.machinesWorkLoad.get)
         for machine in sortedMachines:
-            if machineHealthCheck(machine):
-                return self.machineAdress[machine]
+            # if machineHealthCheck(self.machinesAdress[machine]):
+            return str(machine)
 
     def prepareData(self, machines):
         machinesAdress = dict()
@@ -30,15 +30,13 @@ class LoadBalancingAlgorithm(Algorithm):
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
         queues = dict()
-        for machine_id in self.machineWorkLoad:
-            queues[machine_id] = channel.queue_bind(exchange='machine_tasks',
-                                    queue='machine',
-                                    routing_key=machine_id)
+        for machine_id in self.machinesWorkLoad:
+            queues[machine_id] = channel.queue_declare(queue='machine_{}'.format(machine_id), durable=True)
         return queues
 
     def updateMachinesWorkLoad(self):
-        for machine_id in self.machineWorkLoad:
-            self.machineWorkLoad[machine_id] = self.getNumberOfTasksForMachine(machine_id)
+        for machine_id in self.machinesWorkLoad:
+            self.machinesWorkLoad[machine_id] = self.getNumberOfTasksForMachine(machine_id)
 
     def getNumberOfTasksForMachine(self, machineId):
             return self.queues[machineId].method.message_count

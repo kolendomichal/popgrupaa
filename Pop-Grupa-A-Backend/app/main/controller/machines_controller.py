@@ -36,7 +36,7 @@ class ClusterMachineList(Resource):
 @api.param('machine_id', 'The Machine identifier')
 class MachineDelete(Resource):
     @api.doc('Delete machine by id')
-    @roles_required(AccountRole.SCHEDULER)
+    @roles_required(AccountRole.SUPPLIER)
     def delete(self, machine_id):
         """Deletes a machine"""
         return machine_service.remove_machine_by_id(machine_id)
