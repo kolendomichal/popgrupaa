@@ -10,6 +10,7 @@ class LoadBalancingAlgorithm(Algorithm):
         print('Loaded load balancing algorithm.')
 
     def assignNewMachineForTask(self):
+        self.queues = self.loadQueues()
         self.updateMachinesWorkLoad()
         sortedMachines = sorted(self.machinesWorkLoad, key=self.machinesWorkLoad.get)
         for machine in sortedMachines:
