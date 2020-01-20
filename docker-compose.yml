@@ -53,5 +53,14 @@ services:
       FLASK_RUN_PORT: 5500
       FLASK_APP_IP: 127.0.0.1 #just for decoration, changing that value WILL not affect the real IP where flask app is hosted.
       FLASK_DEBUG: 1
+
+  rabbitmq:
+    container_name: rabbitmq
+    build:
+      context: ./RabbitMQ
+      dockerfile: Dockerfile
+    ports:
+      - '5672:5672'
+      - '15672:15672'
 volumes:
   flask-app-db:
