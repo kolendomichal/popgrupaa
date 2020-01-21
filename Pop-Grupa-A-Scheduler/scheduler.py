@@ -1,35 +1,41 @@
-import pika, os, time
+import pika, os
+import json
 from app.helper import fetchMachines
-from app.roundRobin import applyRoundRobinAlgorithm, prepareDict
+from app.algorithm.algorithmManager import AlgorithmManager
 
-url = os.environ.get('CLOUDAMQP_URL', 'amqp://rabbitmq:rabbitmq@172.18.0.6:5672/%2f')  # adres się zmienia, ja miałem 172.18.0.5 więc trzeba to do zmiennej wrzucić, pewnie ta sama sytuacja jest też z adresem backendu
-params = pika.URLParameters(url)
-#params.socket_timeout = 5
+params = pika.URLParameters(os.environ.get("RABBIT_URL"))
 
-connection = pika.BlockingConnection(params) # Connect to CloudAMQP
-channel = connection.channel() # start a channel
-channel.queue_declare(queue='scheduling2', durable=True)
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+channel.queue_declare(queue="ActivateComputationTask", durable=True)
 
 
-#Przykładowe wywołanie pod algorytm round robin, machines to aktualizowany słownik maszyn z licznikami ile zadań dostały
-machines = prepareDict(fetchMachines())
-
-#Nowe zadanie pobrano z kolejki, tu o id = 1
-task_id = 1
-choosenMachine, machines = applyRoundRobinAlgorithm(machines)
-#Wstaw do kolejki 'queue' + choosenMachine zadanie 'task_id' (?)
+machines = fetchMachines()
+algorithmManager = AlgorithmManager(machines)
+print(" [*] Waiting for messages from ActivateComputationTask")
 
 
-print(' [*] Waiting for messages. To exit press CTRL+C')
-
-def callback(ch, method, properties, body):
-    print(" [x] Received %r" % body)
-    time.sleep(body.count(b'.'))
-    print(" [x] Done")
+def consumeNewTask(ch, method, properties, body):
+    body = json.loads(body)
+    print("-- [x] -- Received task: " + str(body.get("task_id")))
+    global algorithmManager
+    chosenMachine = algorithmManager.assignMachineForTask()
+    sendTaskToChoosenMachine(chosenMachine, body)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume(queue='scheduling2', on_message_callback=callback)
+def sendTaskToChoosenMachine(chosenMachine, messageBody):
+    print("Sending {} to machine with ID = {}".format(messageBody, chosenMachine))
+    channel.basic_publish(
+        exchange='',
+        routing_key='machine_{}'.format(chosenMachine),
+        body=json.dumps(messageBody),
+        properties=pika.BasicProperties(delivery_mode=2,)
+    )
 
+
+channel.basic_qos(prefetch_count=1)
+channel.basic_consume(
+    queue="ActivateComputationTask", on_message_callback=consumeNewTask
+)
 channel.start_consuming()

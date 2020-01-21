@@ -22,8 +22,8 @@ def change_task_status(task_id, newStatus):
         task = get_task_for_task_id(task_id)
         task.status = newStatus
         save_changes(task)
-    except:
-        raise Exception
+    except Exception as e:
+        raise Exception(str(e))
 
 def save_changes(data):
     db.session.add(data)

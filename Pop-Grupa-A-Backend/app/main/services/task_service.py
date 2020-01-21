@@ -8,10 +8,9 @@ import app.main.repositories.application_repository as application_repository
 from app.main.model.ComputationStatus import ComputationStatus
 from app.main.model.ComputationTask import ComputationTask
 
-
 def add_task(task):
-    db_user = user_repository.get_user(task['user_id'])
-    db_app = application_repository.get_app_by_id(task['app_id'])
+    db_user = user_repository.get_user(task['user_id'])   
+    db_app =  application_repository.get_app_by_id(task['app_id'])
 
     if db_user and db_app:
         new_task = ComputationTask(
@@ -91,7 +90,6 @@ def activate_task(task_id):
         }
         return response_object, 404
 
-
 def assign_task(task_id):
     try:
         task = task_repository.change_task_status(task_id, ComputationStatus.ASSIGNED)
@@ -106,7 +104,6 @@ def assign_task(task_id):
             'message': 'Error occur while assigning task'
         }
         return response_object, 404
-
 
 def start_task(task_id):
     try:
@@ -123,7 +120,6 @@ def start_task(task_id):
         }
         return response_object, 404
 
-
 def fail_task(task_id):
     try:
         task = task_repository.change_task_status(task_id, ComputationStatus.FAILED)
@@ -138,7 +134,6 @@ def fail_task(task_id):
             'message': 'Error occur while marking task as failed'
         }
         return response_object, 404
-
 
 def complete_task(task_id):
     try:

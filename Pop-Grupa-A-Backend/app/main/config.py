@@ -6,11 +6,11 @@ load_dotenv(dotenv_path=find_dotenv()
             )
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-postgres_local_base = os.getenv('DATABASE_URL')
+postgres_local_base = os.getenv('DATABASE_URL') #'postgresql://admin:123456@localhost:5434/balticlsc'
 
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
+    SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = False
 
 
