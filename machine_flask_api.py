@@ -59,9 +59,9 @@ def get_machine_load_info():
 
 #Function to mock downloading files from storage, because IStorage is not working right now
 def create_files(id):
-    f= open("entrypoint"+id+".sh","w+")
+    f= open("entrypoint"+id+".sh","w")
     f.write("#!/bin/sh \n")
-    f.write("python3 application"+id+".py \n")
+    f.write("python3 application"+id+".py\n")
     f.close()
 
     os.chmod("entrypoint"+id+".sh", 509)
