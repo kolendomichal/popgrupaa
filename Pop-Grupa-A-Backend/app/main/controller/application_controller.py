@@ -2,7 +2,7 @@ from flask_restplus import Resource
 from app.main.model.AccountRole import AccountRole
 from app.main.util.user_validator import roles_required
 from ..util.DTO.ComputationApplicationDTO import ComputationApplicationDto
-from ..services.application_service import get_all_applications
+import app.main.services.application_service as application_service
 
 api = ComputationApplicationDto.api
 _application = ComputationApplicationDto.application
@@ -17,4 +17,4 @@ class ApplicationList(Resource):
     @roles_required(AccountRole.APP_USER)
     def get(self):
         """get application list"""
-        return get_all_applications()
+        return application_service.get_all_applications()

@@ -1,0 +1,4 @@
+flask
+itsdangerous
+pika==1.1.0
+requests==2.22.0
