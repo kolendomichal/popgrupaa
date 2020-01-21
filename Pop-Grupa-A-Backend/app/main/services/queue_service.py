@@ -2,15 +2,15 @@ import pika
 import json
 
 def push_machine_task(machine_id, task_id, application_id):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     queue_id = 'machine_' + machine_id
     body = json.dumps({"task_id": task_id, "application_id": application_id})
-    channel.basic_publish(exchange='', routing_key=machine_id, body=body)
+    channel.basic_publish(exchange='', routing_key=queue_id, body=body)
     connection.close()
 
 def push_unassigned_task(task_id, application_id):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='activate_computation_task')
     body = json.dumps({"task_id": task_id, "application_id": application_id})
@@ -18,7 +18,7 @@ def push_unassigned_task(task_id, application_id):
     connection.close()
 
 def push_task_status(task_status, task_id, reason):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='queue_task_status')
     body = json.dumps({"task_status": task_status ,"task_id": task_id, "reason": reason})
@@ -38,7 +38,7 @@ def pop_machine_task(machine_id):
     return body
 
 def pop_unassigned_task():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='activate_computation_task')
     method_frame, header_frame, body = channel.basic_get('activate_computation_task')
@@ -49,7 +49,7 @@ def pop_unassigned_task():
     return body
 
 def pop_taks_status():
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='queue_task_status')
     method_frame, header_frame, body = channel.basic_get('queue_task_status')
