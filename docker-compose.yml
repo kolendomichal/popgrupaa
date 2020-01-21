@@ -53,12 +53,14 @@ services:
     ports:
       - '5000:5000'
     environment:
+      RABBIT_URL: 'amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f'
       FLASK_DEBUG: 1
       FLASK_APP: ./app/manage.py
       DATABASE_URL: 'postgresql://admin:123456@postgres:5432/balticlsc'
       SECRET_KEY: 'FREEDOM_IS_A_MEME'
     depends_on:
       - postgres
+      - rabbit-mq
 
 
   front-pop:
