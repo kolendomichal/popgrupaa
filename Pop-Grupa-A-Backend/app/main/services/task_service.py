@@ -37,8 +37,6 @@ def add_task(task):
 
 def send_message_to_scheduler(task_id):
     #todo verify the form of ActivateComputationTaskMessage- is it a class defined somewhere
-    # ;replace task_id in body with the full message
-    ActivateComputationTaskMessage = ""
     #todo verify connection parameters
     app_id = (task_repository.get_task_for_task_id(task_id)).app_id
     body = {
