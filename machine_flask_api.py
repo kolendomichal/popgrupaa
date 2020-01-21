@@ -4,6 +4,24 @@ import os
 import netifaces as ni
 import subprocess
 
+MOCK_FILE_CONTENT ="""# Python program to print all 
+# prime number in an interval
+
+start = 11
+end = 50025
+
+for val in range(start, end + 1): 
+    
+# If num is divisible by any number   
+# between 2 and val, it is not prime  
+\tif val > 1: 
+\t\tfor n in range(2, val): 
+\t\t\tif (val % n) == 0: 
+\t\t\t\tbreak
+\t\telse: 
+\t\t\tprint(val)
+"""
+
 app = Flask(__name__)
 port = os.environ['FLASK_RUN_PORT']
 ip_address = os.environ['FLASK_APP_IP']
@@ -24,33 +42,48 @@ def get_machine_data():
                     
     return jsonify({ "CPU": CPU, "GPU": GPU, "IP_ADDRESS": ip_address + ':' + str(port), "CONTAINER_IP_ADDRESS": container_ip + ':' + str(port)})
 
+#Check if currently any application is running on this machine
 @app.route("/get-machine-task-info", methods=['GET'])
 def get_macine_task_info():
-    # sprawdz czy jakies zadanie chodzi na maszynie
-    is_free = True
-    if is_free:
+    try:
+        TASK_PID = str(subprocess.check_output('ps -aux | grep application | grep -v grep', shell=True)).split()[1]
+        return jsonify({"status":"BUSY", "message":"At least one task is currently running on machine.","PID":TASK_PID})
+    except:
         return jsonify({"status":"FREE", "message":"No tasks are running on machine."})
-    else:
-        return jsonify({"status":"BUSY", "message":"At least one task is currently running 
-        on machine."})
- 
+
+#Get Percentage CPU usage
 @app.route("/get-machine-load-info", methods=['GET'])
 def get_machine_load_info():
     CPU_Pct = str(subprocess.check_output('ps -aux --sort=-pcpu | head -n 2 | tail -n 1', shell=True)).split()[2]
     return jsonify({"load_percent":CPU_Pct})
 
+#Function to mock downloading files from storage, because IStorage is not working right now
+def create_files(id):
+    f= open("entrypoint"+id+".sh","w+")
+    f.write("#!/bin/sh \n")
+    f.write("python3 application"+id+".py \n")
+    f.close()
+
+    os.chmod("entrypoint"+id+".sh", 509)
+    
+    with open("application"+id+".py", "w") as file:
+        for line in MOCK_FILE_CONTENT:
+            file.write(line)
+
+#Create files for machine
 @app.route("/task/<id>/create")
 def create_new_task(id):
-    # pobierz aplikacje za pomocą IStorage
-    # zapisz aplikcaje na dysku
-    # trzeba jeszcze uwzglednić id taska
+    #Mock downloading, IStorage is not working right now
+    create_files(id)
+
     return jsonify("Task created")
  
+#Run files on machine
 @app.route("/task/<id>/activate")
 def activate_task(id):
-    proc = subprocess.Popen(['/entrypoint.sh'], shell=True,
+    proc = subprocess.Popen(['/entrypoint'+id+'.sh'], shell=True,
              stdin=None, stdout=None, stderr=None, close_fds=True)
-    return jsonify(proc)
+    return jsonify({"Sucess":"OK"})
 
 @app.route("/verify/<number>", methods=['GET'])
 def get_binary_string(number):

@@ -12,7 +12,8 @@ RUN apt-get update && \
         python3.6 -m pip install pip --upgrade && \
         python3.6 -m pip install wheel && \
         python3.6 -m pip install netifaces && \
-        python3.6 -m pip install flask
+        python3.6 -m pip install flask && \
+        python3.6 -m pip install pika
 # copy flask project        
 COPY machine_flask_api.py ./
 ENV LANG C.UTF-8
