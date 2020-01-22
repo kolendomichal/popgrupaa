@@ -35,7 +35,7 @@ function createTask(appId, userId){
 
 function activateTask(taskId){
     
-    var activateResponse = fetch(`${TASK_URL+taskId}`, {
+    var activateResponse = fetch(`${TASK_URL+taskId}/activate`, {
         crossDomain:  true,
         method: 'post',
         credentials: 'include',
