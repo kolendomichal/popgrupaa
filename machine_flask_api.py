@@ -4,23 +4,29 @@ import pika
 import os
 import netifaces as ni
 import subprocess
-
-params = pika.URLParameters('amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f')
-
-connection = pika.BlockingConnection(params)
-channel = connection.channel()
+import requests
 
 
-channel.queue_declare(queue="machine_1", durable=True)
-channel.basic_consume(
-    queue="machine_1", on_message_callback=consumeNewTask
-)
+# params = pika.URLParameters('amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f')
 
-def consumeNewTask(ch, method, properties, body):
-    body = json.loads(body)
-    print("-- [x] -- Received task: " + str(body.get("task_id")))
-    create_new_task(str(body.get("task_id")))
-    activate_task(str(body.get("task_id")))
+# connection = pika.BlockingConnection(params)
+# channel = connection.channel()
+
+
+# def consumeNewTask(ch, method, properties, body):
+#     body = json.loads(body)
+#     print("-- [x] -- Received task: " + str(body.get("task_id")))
+#     create_new_task(str(body.get("task_id")))
+#     activate_task(str(body.get("task_id")))
+
+# container_ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+# response = requests.get('http://localhost:5000/machines/get-machine-by-ip/'+str(container_ip) )
+# print(response.json())
+
+# channel.queue_declare(queue="machine_1", durable=True)
+# channel.basic_consume(
+#     queue="machine_1", on_message_callback=consumeNewTask
+# )
 
 
 MOCK_FILE_CONTENT ="""# Python program to print all 
@@ -71,6 +77,14 @@ def get_macine_task_info():
     except:
         return jsonify({"status":"FREE", "message":"No tasks are running on machine."})
 
+
+# @app.route("/get-machine-id", methods=['GET'])
+# def get_machine_load_info():
+#     container_ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+#     response = requests.get(f'http://localhost:5000/machines/get-machine-by-ip/'+str(container_ip) )
+#     return jsonify(response.json())
+
+
 #Get Percentage CPU usage
 @app.route("/get-machine-load-info", methods=['GET'])
 def get_machine_load_info():
@@ -81,16 +95,12 @@ def get_machine_load_info():
 def create_files(id):
     f= open("entrypoint"+id+".sh","w")
     f.write("#!/bin/sh \n")
-    f.write("python3 application"+id+".py && python3 addmessage.py\n")
+    f.write("python3 application"+id+".py")
     f.close()
 
     os.chmod("entrypoint"+id+".sh", 509)
     
     with open("application"+id+".py", "w") as file:
-        for line in MOCK_FILE_CONTENT:
-            file.write(line)
-    
-     with open("addmessage"+id+".py", "w") as file:
         for line in MOCK_FILE_CONTENT:
             file.write(line)
 

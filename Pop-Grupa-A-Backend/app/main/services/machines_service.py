@@ -26,4 +26,14 @@ def remove_machine_by_id(machine_id):
         'status': 'Success',
         'message': f'Succesfully deleted machine with id = {machine_id}'
         }, 201
-      
+
+
+def get_machine_by_id(machine_ip):
+    machine = machine_repository.get_machine_by_ip(machine_ip)
+    if not machine:
+        return {
+                   'status': 'Fail',
+                   'message': f"Machine with id = {machine_ip} does not exist",
+               }, 400
+    else:
+        return machine, 200
