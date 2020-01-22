@@ -1,4 +1,7 @@
+import pika
+import os
 from flask import request, abort
+import json
 
 import app.main.repositories.task_repository as task_repository
 import app.main.repositories.user_repository as user_repository
@@ -12,37 +15,61 @@ def add_task(task):
 
     if db_user and db_app:
         new_task = ComputationTask(
-            status = ComputationStatus.SUBMITTED,
-            user_id = task['user_id'],
-            app_id = task['app_id']
+            status=ComputationStatus.SUBMITTED,
+            user_id=task['user_id'],
+            app_id=task['app_id']
         )
         task_repository.add_new_task(new_task)
         return {
-                'status': 'Success',
-                'message': 'Task successfuly created.'
-                }, 201
+                   'status': 'Success',
+                   'message': 'Task successfuly created.'
+               }, 201
     if not db_app:
         return {
-                'status': 'Fail',
-                'message': f"App with id = {task['app_id']} does not exist",
-                }, 400
+                   'status': 'Fail',
+                   'message': f"App with id = {task['app_id']} does not exist",
+               }, 400
     return {
-            'status': 'Fail',
-            'message': f"User with id = {task['user_id']} does not exist",
-            }, 400
+               'status': 'Fail',
+               'message': f"User with id = {task['user_id']} does not exist",
+           }, 400
+
+
+def send_message_to_scheduler(task_id):
+    app_id = (task_repository.get_task_for_task_id(task_id)).app_id
+    body = {
+        'app_id': app_id,
+        'task_id': task_id
+    }
+  
+    params = pika.URLParameters(os.environ.get("RABBIT_URL"))
+    connection = pika.BlockingConnection(params)
+    channel = connection.channel()
+    channel.queue_declare(queue='ActivateComputationTask', durable=True)
+
+    channel.basic_publish(
+        exchange='',
+        routing_key='ActivateComputationTask',
+        body=json.dumps(body),
+        properties=pika.BasicProperties(
+            delivery_mode=2,  # make message persistent
+        ))
+    print(" #[x] Generated task ".format(str(task_id)))
+    connection.close()
 
 
 def activate_task(task_id):
     try:
         task_status = task_repository.get_status(task_id)
-        if(task_status == ComputationStatus.SUBMITTED):
+        if (task_status == ComputationStatus.SUBMITTED):
+            send_message_to_scheduler(task_id)
             task = task_repository.change_task_status(task_id, ComputationStatus.ACTIVATED)
             response_object = {
                 'status': 'Success',
                 'message': 'Task successfuly activated.'
             }
             return response_object, 200
-        elif(task_status == ComputationStatus.ACTIVATED):
+        elif (task_status == ComputationStatus.ACTIVATED):
             response_object = {
                 'status': 'Fail',
                 'message': 'Task already activated.'
@@ -120,16 +147,16 @@ def complete_task(task_id):
             'message': 'Error occur while completing task'
         }
         return response_object, 404
-    
+
 
 def get_tasks_for_user(user_id):
-        user = user_repository.get_user(user_id)
-        if not user:
-            return abort(404, 'User with given id could not be found!')
+    user = user_repository.get_user(user_id)
+    if not user:
+        return abort(404, 'User with given id could not be found!')
 
-        tasks_list = task_repository.get_tasks_for_user(user_id)
+    tasks_list = task_repository.get_tasks_for_user(user_id)
 
-        if len(tasks_list) == 0:
-            return tasks_list, 204
-        return tasks_list, 200
+    if len(tasks_list) == 0:
+        return tasks_list, 204
+    return tasks_list, 200
 
