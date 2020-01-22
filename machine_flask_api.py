@@ -1,8 +1,27 @@
 from flask import Flask
 from flask import jsonify
+import pika
 import os
 import netifaces as ni
 import subprocess
+
+params = pika.URLParameters('amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f')
+
+connection = pika.BlockingConnection(params)
+channel = connection.channel()
+
+
+channel.queue_declare(queue="machine_1", durable=True)
+channel.basic_consume(
+    queue="machine_1", on_message_callback=consumeNewTask
+)
+
+def consumeNewTask(ch, method, properties, body):
+    body = json.loads(body)
+    print("-- [x] -- Received task: " + str(body.get("task_id")))
+    create_new_task(str(body.get("task_id")))
+    activate_task(str(body.get("task_id")))
+
 
 MOCK_FILE_CONTENT ="""# Python program to print all 
 # prime number in an interval
@@ -28,6 +47,7 @@ ip_address = os.environ['FLASK_APP_IP']
 @app.route("/", methods=['GET'])
 def hello():
     return "Hello, World!"
+
 
 @app.route("/machine-data", methods=['GET'])
 def get_machine_data():
@@ -61,7 +81,7 @@ def get_machine_load_info():
 def create_files(id):
     f= open("entrypoint"+id+".sh","w")
     f.write("#!/bin/sh \n")
-    f.write("python3 application"+id+".py\n")
+    f.write("python3 application"+id+".py && python3 addmessage.py\n")
     f.close()
 
     os.chmod("entrypoint"+id+".sh", 509)
@@ -69,9 +89,13 @@ def create_files(id):
     with open("application"+id+".py", "w") as file:
         for line in MOCK_FILE_CONTENT:
             file.write(line)
+    
+     with open("addmessage"+id+".py", "w") as file:
+        for line in MOCK_FILE_CONTENT:
+            file.write(line)
 
 #Create files for machine
-@app.route("/task/<id>/create")
+#@app.route("/task/<id>/create")
 def create_new_task(id):
     #Mock downloading, IStorage is not working right now
     create_files(id)
@@ -79,7 +103,7 @@ def create_new_task(id):
     return jsonify("Task created")
  
 #Run files on machine
-@app.route("/task/<id>/activate")
+#@app.route("/task/<id>/activate")
 def activate_task(id):
     proc = subprocess.Popen(['/entrypoint'+id+'.sh'], shell=True,
              stdin=None, stdout=None, stderr=None, close_fds=True)
