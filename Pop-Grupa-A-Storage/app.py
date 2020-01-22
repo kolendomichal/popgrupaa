@@ -45,7 +45,7 @@ class SaveTaskResults(Resource):
         print(path)
         if not os.path.exists(path):
             os.makedirs(path)
-        if request.date:
+        if request.data:
             with open(path + "/task_result_" + task_id + ".txt", "wb") as fp:
                 fp.write(request.data)
             return 200
