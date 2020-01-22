@@ -7,7 +7,6 @@ import pathlib
 
 app = Flask(__name__)
 api = Api(app)
-# todo change in dockerfile
 UPLOAD_DIRECTORY = "storage"
 
 
@@ -17,7 +16,7 @@ UPLOAD_DIRECTORY = "storage"
 @api.route('/storage/app/<app_id>')
 class GetApplication(Resource):
     @api.doc('Get application')
-    # @roles_required(AccountRole.APP_USER)
+    #@roles_required(AccountRole.APP_USER)
     def get(self, app_id):
         path = os.path.join(UPLOAD_DIRECTORY, "applications", app_id)
         if not os.path.exists(path):
@@ -25,20 +24,10 @@ class GetApplication(Resource):
         else:
             print("exists")
             zipf = zipfile.ZipFile("application_" + app_id + ".zip", 'w', zipfile.ZIP_DEFLATED)
-            # fix so it doesnt save the whole tree
             print("path" ,  path)
             dirPath = path
             with zipfile.ZipFile("application_" + app_id + ".zip", 'w', zipfile.ZIP_DEFLATED) as z:
-                lenDirPath = len(dirPath)
-                for root, _, files in os.walk(dirPath):
-                    for file in files:
-                        filePath = os.path.join(root, file)
-                        zipf.write(filePath, filePath[lenDirPath:])
-            # with os.listdir(path) as entries:
-            #     print(entries)
-            #     for entry in entries:
-            #         zipf.write("application_" + app_id + "/" + entry.name)
-            # zipf.close()
+                zipf.write(dirPath)
             return send_file("application_" + app_id + ".zip",
                              mimetype='zip',
                              attachment_filename="application_" + app_id + ".zip",
@@ -51,9 +40,9 @@ class GetApplication(Resource):
 @api.response(400, 'Could not find results to save')
 class SaveTaskResults(Resource):
     @api.doc('get task')
-    # @roles_required(AccountRole.APP_USER)
     def post(self, task_id):
         path = os.path.join(UPLOAD_DIRECTORY, "tasks", task_id)
+        print(path)
         if not os.path.exists(path):
             os.makedirs(path)
         if request.date:
