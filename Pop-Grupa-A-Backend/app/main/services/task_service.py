@@ -34,16 +34,90 @@ def add_task(task):
 
 def activate_task(task_id):
     try:
-        task = task_repository.change_task_status(task_id, ComputationStatus.WORKING)
+        task_status = task_repository.get_status(task_id)
+        if(task_status == ComputationStatus.SUBMITTED):
+            task = task_repository.change_task_status(task_id, ComputationStatus.ACTIVATED)
+            response_object = {
+                'status': 'Success',
+                'message': 'Task successfuly activated.'
+            }
+            return response_object, 200
+        elif(task_status == ComputationStatus.ACTIVATED):
+            response_object = {
+                'status': 'Fail',
+                'message': 'Task already activated.'
+            }
+            return response_object, 400
+        else:
+            response_object = {
+                'status': 'Fail',
+                'message': 'Task must have status SUBMITTED to be activated'
+            }
+            return response_object, 400
+    except:
+        response_object = {
+            'status': 'Fail',
+            'message': 'Error occur while activating task'
+        }
+        return response_object, 404
+
+def assign_task(task_id):
+    try:
+        task = task_repository.change_task_status(task_id, ComputationStatus.ASSIGNED)
         response_object = {
             'status': 'Success',
-            'message': 'Task successfuly activated.'
+            'message': 'Task successfuly assigned.'
         }
         return response_object, 200
     except:
         response_object = {
             'status': 'Fail',
-            'message': 'Error occur while activating task'
+            'message': 'Error occur while assigning task'
+        }
+        return response_object, 404
+
+def start_task(task_id):
+    try:
+        task = task_repository.change_task_status(task_id, ComputationStatus.WORKING)
+        response_object = {
+            'status': 'Success',
+            'message': 'Task successfuly started.'
+        }
+        return response_object, 200
+    except:
+        response_object = {
+            'status': 'Fail',
+            'message': 'Error occur while starting task'
+        }
+        return response_object, 404
+
+def fail_task(task_id):
+    try:
+        task = task_repository.change_task_status(task_id, ComputationStatus.FAILED)
+        response_object = {
+            'status': 'Success',
+            'message': 'Task successfuly marked as failed.'
+        }
+        return response_object, 200
+    except:
+        response_object = {
+            'status': 'Fail',
+            'message': 'Error occur while marking task as failed'
+        }
+        return response_object, 404
+
+def complete_task(task_id):
+    try:
+        task = task_repository.change_task_status(task_id, ComputationStatus.COMPLETED)
+        response_object = {
+            'status': 'Success',
+            'message': 'Task successfuly completed.'
+        }
+        return response_object, 200
+    except:
+        response_object = {
+            'status': 'Fail',
+            'message': 'Error occur while completing task'
         }
         return response_object, 404
     

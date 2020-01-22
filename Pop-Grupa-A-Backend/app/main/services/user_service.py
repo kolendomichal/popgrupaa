@@ -30,7 +30,7 @@ def add_user(user):
                                   lastLogin=datetime.datetime.now(),
                                   email=user['email'],
                                   role=user['role'])
-    user_repository.add_new_user(user)
+    user_repository.add_new_user(new_user)
     response_object = {
         'status': 'Success',
         'message': f'New account has been successfully created'

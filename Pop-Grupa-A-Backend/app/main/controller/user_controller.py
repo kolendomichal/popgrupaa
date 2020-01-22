@@ -2,11 +2,12 @@ from flask import request
 from flask_restplus import Resource
 from ..util.DTO.ComputationAccountDTO import ComputationAccountDto
 from ..repositories.user_repository import get_user
-from ..services.user_service import add_user, check_user, logout_user
+import app.main.services.user_service as user_service
 
 api = ComputationAccountDto.api
 _user = ComputationAccountDto.user
 _user_login = ComputationAccountDto.user_login
+_user_register = ComputationAccountDto.user_register
 
 
 @api.route('/register')
@@ -14,11 +15,11 @@ class UserCreate(Resource):
     @api.response(201, 'User successfully created.')
     @api.response(409, 'User already exist')
     @api.doc('create a new user')
-    @api.expect(_user, validate=True)
+    @api.expect(_user_register, validate=True)
     def post(self):
         """Creates a new User """
         data = request.json
-        return add_user(user=data)
+        return user_service.add_user(user=data)
 
 
 @api.route('/login')
@@ -29,7 +30,7 @@ class UserLogin(Resource):
     @api.expect(_user_login, validate=True)
     def post(self):
         data = request.get_json()
-        return check_user(user=data)
+        return user_service.check_user(user=data)
 
 
 @api.route('/logout')
@@ -38,7 +39,7 @@ class UserLogout(Resource):
     @api.response(406, 'User logout failure')
     @api.doc('logout user')
     def post(self):
-        return logout_user()
+        return user_service.logout_user()
 
 
 @api.route('/<public_id>')
