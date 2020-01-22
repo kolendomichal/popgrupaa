@@ -31,6 +31,17 @@ class ClusterMachineList(Resource):
         return machine_service.get_cluster_node_machine_list(cluster_node_id)
 
 
+@api.route('/get-machine-by-ip/<machine_ip>')
+@api.param('machine_ip', 'Cluster node ip (string)')
+@api.response(200, 'Success')
+@api.response(406, 'err')
+class ClusterMachineList(Resource):
+    @api.doc('get machine by ip')
+    @api.marshal_with(_machine)
+    def get(self, machine_ip):
+        return machine_service.get_machine_by_id(machine_ip)
+
+
 @api.route('/<machine_id>/delete')
 @api.response(201, 'Machine successfully deleted.')
 @api.param('machine_id', 'The Machine identifier')

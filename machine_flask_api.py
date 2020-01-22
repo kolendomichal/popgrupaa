@@ -1,7 +1,51 @@
 from flask import Flask
 from flask import jsonify
+import pika
 import os
 import netifaces as ni
+import subprocess
+import requests
+
+
+# params = pika.URLParameters('amqp://rabbitmq:rabbitmq@rabbit-mq:5672/%2f')
+
+# connection = pika.BlockingConnection(params)
+# channel = connection.channel()
+
+
+# def consumeNewTask(ch, method, properties, body):
+#     body = json.loads(body)
+#     print("-- [x] -- Received task: " + str(body.get("task_id")))
+#     create_new_task(str(body.get("task_id")))
+#     activate_task(str(body.get("task_id")))
+
+# container_ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+# response = requests.get('http://localhost:5000/machines/get-machine-by-ip/'+str(container_ip) )
+# print(response.json())
+
+# channel.queue_declare(queue="machine_1", durable=True)
+# channel.basic_consume(
+#     queue="machine_1", on_message_callback=consumeNewTask
+# )
+
+
+MOCK_FILE_CONTENT ="""# Python program to print all 
+# prime number in an interval
+
+start = 11
+end = 50025
+
+for val in range(start, end + 1): 
+    
+# If num is divisible by any number   
+# between 2 and val, it is not prime  
+\tif val > 1: 
+\t\tfor n in range(2, val): 
+\t\t\tif (val % n) == 0: 
+\t\t\t\tbreak
+\t\telse: 
+\t\t\tprint(val)
+"""
 
 app = Flask(__name__)
 port = os.environ['FLASK_RUN_PORT']
@@ -9,6 +53,7 @@ ip_address = os.environ['FLASK_APP_IP']
 @app.route("/", methods=['GET'])
 def hello():
     return "Hello, World!"
+
 
 @app.route("/machine-data", methods=['GET'])
 def get_machine_data():
@@ -22,6 +67,57 @@ def get_machine_data():
                 break
                     
     return jsonify({ "CPU": CPU, "GPU": GPU, "IP_ADDRESS": ip_address + ':' + str(port), "CONTAINER_IP_ADDRESS": container_ip + ':' + str(port)})
+
+#Check if currently any application is running on this machine
+@app.route("/get-machine-task-info", methods=['GET'])
+def get_macine_task_info():
+    try:
+        TASK_PID = str(subprocess.check_output('ps -aux | grep application | grep -v grep', shell=True)).split()[1]
+        return jsonify({"status":"BUSY", "message":"At least one task is currently running on machine.","PID":TASK_PID})
+    except:
+        return jsonify({"status":"FREE", "message":"No tasks are running on machine."})
+
+
+# @app.route("/get-machine-id", methods=['GET'])
+# def get_machine_load_info():
+#     container_ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+#     response = requests.get(f'http://localhost:5000/machines/get-machine-by-ip/'+str(container_ip) )
+#     return jsonify(response.json())
+
+
+#Get Percentage CPU usage
+@app.route("/get-machine-load-info", methods=['GET'])
+def get_machine_load_info():
+    CPU_Pct = str(subprocess.check_output('ps -aux --sort=-pcpu | head -n 2 | tail -n 1', shell=True)).split()[2]
+    return jsonify({"load_percent":CPU_Pct})
+
+#Function to mock downloading files from storage, because IStorage is not working right now
+def create_files(id):
+    f= open("entrypoint"+id+".sh","w")
+    f.write("#!/bin/sh \n")
+    f.write("python3 application"+id+".py")
+    f.close()
+
+    os.chmod("entrypoint"+id+".sh", 509)
+    
+    with open("application"+id+".py", "w") as file:
+        for line in MOCK_FILE_CONTENT:
+            file.write(line)
+
+#Create files for machine
+#@app.route("/task/<id>/create")
+def create_new_task(id):
+    #Mock downloading, IStorage is not working right now
+    create_files(id)
+
+    return jsonify("Task created")
+ 
+#Run files on machine
+#@app.route("/task/<id>/activate")
+def activate_task(id):
+    proc = subprocess.Popen(['/entrypoint'+id+'.sh'], shell=True,
+             stdin=None, stdout=None, stderr=None, close_fds=True)
+    return jsonify({"Sucess":"OK"})
 
 @app.route("/verify/<number>", methods=['GET'])
 def get_binary_string(number):
