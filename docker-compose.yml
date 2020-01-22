@@ -60,7 +60,19 @@ services:
       SECRET_KEY: 'FREEDOM_IS_A_MEME'
     depends_on:
       - postgres
-
+      
+  storage:
+    container_name: storage
+    build:
+      context: ./Pop-Grupa-A-Storage
+      dockerfile: Dockerfile
+    volumes:
+      - './Pop-Grupa-A-Storage:/app'
+    ports:
+      - '8000:8000'
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: ./app/app.py
 
   front-pop:
     container_name: front-pop
@@ -89,3 +101,4 @@ services:
  
 volumes:
   flask-app-db:
+
